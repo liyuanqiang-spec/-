@@ -1,0 +1,36 @@
+<view class="container">
+  <view class="card">
+    <view class="section-title">订单商品</view>
+    <picker mode="selector" range="{{productNames}}" value="{{selectedIndex}}" bindchange="selectProduct">
+      <view class="picker">{{product.name}} ></view>
+    </picker>
+    <view class="summary-row"><text>单价</text><text>¥{{product.price}}</text></view>
+    <view class="summary-row"><text>预计时效</text><text>{{product.shipping}}</text></view>
+    <view class="quantity-row">
+      <text>数量</text>
+      <view>
+        <button class="qty" bindtap="decrease">-</button>
+        <text class="qty-number">{{form.quantity}}</text>
+        <button class="qty" bindtap="increase">+</button>
+      </view>
+    </view>
+    <view class="total">合计：¥{{total}}</view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">马来西亚收货信息</view>
+    <input class="input" placeholder="收货人姓名 / Name" value="{{form.name}}" data-field="name" bindinput="updateField" />
+    <input class="input" placeholder="手机号或 WhatsApp" value="{{form.phone}}" data-field="phone" bindinput="updateField" />
+    <input class="input" placeholder="城市，例如 Kuala Lumpur" value="{{form.city}}" data-field="city" bindinput="updateField" />
+    <textarea class="textarea" placeholder="详细地址 / Full address" value="{{form.address}}" data-field="address" bindinput="updateField" />
+    <input class="input" placeholder="护照/证件尾号（可选，用于客服核对）" value="{{form.documentTail}}" data-field="documentTail" bindinput="updateField" />
+    <textarea class="textarea" placeholder="备注：颜色、规格、送礼需求等" value="{{form.remark}}" data-field="remark" bindinput="updateField" />
+  </view>
+
+  <view class="card channel-card">
+    <view class="section-title">渠道归因</view>
+    <view class="muted">{{channel.label}} · {{channel.code || channel.source}}</view>
+  </view>
+
+  <button class="primary-button" bindtap="submitOrder">提交订单草稿</button>
+</view>

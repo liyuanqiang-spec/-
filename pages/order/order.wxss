@@ -1,0 +1,62 @@
+.section-title {
+  font-size: 34rpx;
+  font-weight: 900;
+  margin-bottom: 22rpx;
+}
+
+.picker,
+.input,
+.textarea {
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 20rpx;
+  padding: 24rpx;
+  border-radius: 20rpx;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.textarea {
+  min-height: 150rpx;
+}
+
+.summary-row,
+.quantity-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 24rpx;
+  margin: 18rpx 0;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.qty {
+  display: inline-block;
+  width: 56rpx;
+  height: 56rpx;
+  padding: 0;
+  line-height: 56rpx;
+  border-radius: 50%;
+  background: #ccfbf1;
+  color: #0f766e;
+  font-weight: 900;
+}
+
+.qty-number {
+  display: inline-block;
+  min-width: 70rpx;
+  text-align: center;
+  font-weight: 900;
+}
+
+.total {
+  margin-top: 24rpx;
+  text-align: right;
+  color: #dc2626;
+  font-size: 38rpx;
+  font-weight: 900;
+}
+
+.channel-card {
+  background: #f0fdfa;
+}

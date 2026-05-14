@@ -1,0 +1,23 @@
+<view class="container">
+  <view class="top card">
+    <view class="badge">精选跨境小包</view>
+    <view class="title">扫码后可直接购买的回购商品</view>
+    <view class="muted">价格为人民币示例价，后续可对接实时汇率、微信支付与优惠券。</view>
+  </view>
+
+  <view class="product-card card" wx:for="{{products}}" wx:key="id" bindtap="openDetail" data-id="{{item.id}}">
+    <image class="cover" src="{{item.cover}}" mode="aspectFill" />
+    <view class="product-body">
+      <view class="product-name">{{item.name}}</view>
+      <view class="product-subtitle">{{item.subtitle}}</view>
+      <view class="tags">
+        <text class="tag" wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this">{{tag}}</text>
+      </view>
+      <view class="meta">{{item.origin}} · 库存 {{item.stock}}</view>
+      <view class="row">
+        <view><text class="price">¥{{item.price}}</text><text class="market">¥{{item.marketPrice}}</text></view>
+        <button class="mini-buy" catchtap="buyNow" data-id="{{item.id}}">下单</button>
+      </view>
+    </view>
+  </view>
+</view>
