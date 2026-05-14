@@ -1,0 +1,33 @@
+<view class="container">
+  <view class="hero card">
+    <view class="badge">Malaysia Tourist Scan Buy</view>
+    <view class="hero-title">游客扫码下单，中国仓直接发货</view>
+    <view class="hero-subtitle">适合旅行社、门店、展会、导游二维码推广。游客不用现场扛货，回国/回家后等待跨境配送。</view>
+    <view class="channel-box">
+      <text class="muted">当前渠道</text>
+      <text class="channel-name">{{channel.label}} · {{channel.code || channel.source}}</text>
+    </view>
+    <button class="primary-button" bindtap="goProducts">马上选购</button>
+    <button class="secondary-button scan-button" bindtap="scanCode">扫描渠道二维码</button>
+  </view>
+
+  <view class="card">
+    <view class="section-title">业务流程</view>
+    <view class="steps">
+      <view class="step" wx:for="{{steps}}" wx:key="title">
+        <view class="step-index">{{index + 1}}</view>
+        <view>
+          <view class="step-title">{{item.title}}</view>
+          <view class="step-desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card notice">
+    <view class="section-title">游客承诺展示</view>
+    <view class="notice-item">✓ 商品从中国国内仓或保税仓发出</view>
+    <view class="notice-item">✓ 下单后客服确认马来西亚收货信息</view>
+    <view class="notice-item">✓ 支持物流追踪、售后咨询与复购提醒</view>
+  </view>
+</view>

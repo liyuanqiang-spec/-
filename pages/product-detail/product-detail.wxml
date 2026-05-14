@@ -1,0 +1,27 @@
+<view class="container" wx:if="{{product}}">
+  <image class="detail-cover" src="{{product.cover}}" mode="aspectFill" />
+  <view class="card detail-card">
+    <view class="badge">{{product.origin}}</view>
+    <view class="name">{{product.name}}</view>
+    <view class="subtitle">{{product.subtitle}}</view>
+    <view class="price-row"><text class="price">¥{{product.price}}</text><text class="market">¥{{product.marketPrice}}</text></view>
+    <view class="shipping">{{product.shipping}}</view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">购买说明</view>
+    <view class="detail-item" wx:for="{{product.detail}}" wx:key="*this">{{item}}</view>
+  </view>
+
+  <view class="card service-card">
+    <view class="section-title">跨境发货与售后</view>
+    <view class="service-grid">
+      <view class="service-item">中国仓打包</view>
+      <view class="service-item">马来西亚配送</view>
+      <view class="service-item">客服复核地址</view>
+      <view class="service-item">物流轨迹同步</view>
+    </view>
+  </view>
+
+  <button class="primary-button bottom-button" bindtap="buyNow">立即下单</button>
+</view>
