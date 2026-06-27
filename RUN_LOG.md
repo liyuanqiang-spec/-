@@ -124,3 +124,13 @@ This file records safe worker runs and Codex execution events.
 
 - Event: gpt_handshake
 - Detail: Task TASK-000-GPT-HANDSHAKE completed by local worker without codex exec; safety mode remained PHASE_1_SIMULATION_ONLY
+
+## 2026-06-27 17:48:45 +0800
+
+- Event: started
+- Detail: Task TASK-001 started
+
+## 2026-06-27 17:48:45 +0800
+
+- Event: failed
+- Detail: Task TASK-001 failed; see logs/worker.log

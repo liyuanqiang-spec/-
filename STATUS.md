@@ -172,3 +172,17 @@ Status: `GPT_HANDSHAKE_OK`
 
 - Detail: Task TASK-000-GPT-HANDSHAKE completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-27 17:48:45 +0800
+
+Status: `WORKER_RUNNING`
+
+- Detail: Task TASK-001 started
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-27 17:48:45 +0800
+
+Status: `WORKER_FAILED`
+
+- Detail: Task TASK-001 failed; see logs/worker.log
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
