@@ -214,3 +214,18 @@ Status: `WORKER_COMPLETED`
 
 - Detail: Task TASK-001 completed
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-27 17:58:05 +0800
+
+Status: `WORKER_REPAIRED`
+
+- Detail: Added worker PATH setup, non-interactive Git mode, Git timeout, Codex execution timeout, and outer-worker-only Git commit handling.
+- Verification: `scripts/codex_worker.sh --dry-run` selected `TASK-002`.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-27 17:56:29 +0800
+
+Status: `BLOCKED_PULL`
+
+- Detail: git pull failed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

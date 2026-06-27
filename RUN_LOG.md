@@ -154,3 +154,13 @@ This file records safe worker runs and Codex execution events.
 
 - Event: completed
 - Detail: Task TASK-001 completed
+
+## 2026-06-27 17:58:05 +0800
+
+- Event: worker_repaired
+- Detail: Added worker PATH setup, non-interactive Git mode, Git timeout, Codex execution timeout, and outer-worker-only Git commit handling; dry-run selected TASK-002.
+
+## 2026-06-27 17:56:29 +0800
+
+- Event: blocked
+- Detail: git pull failed

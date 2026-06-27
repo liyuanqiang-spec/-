@@ -10,12 +10,37 @@ LOG="$ROOT/logs/worker.log"
 TASK_FILE="$ROOT/logs/worker_task.txt"
 INTERVAL_SECONDS="${WORKER_INTERVAL_SECONDS:-300}"
 EXPECTED_REMOTE="https://github.com/liyuanqiang-spec/-.git"
+GIT_TIMEOUT_SECONDS="${GIT_TIMEOUT_SECONDS:-120}"
+CODEX_EXEC_TIMEOUT_SECONDS="${CODEX_EXEC_TIMEOUT_SECONDS:-1800}"
+
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PATH:-}"
+export GIT_TERMINAL_PROMPT=0
 
 mkdir -p "$ROOT/logs"
 touch "$LOG"
 
 log() {
   printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S %z')" "$*" | tee -a "$LOG"
+}
+
+run_with_timeout() {
+  local timeout_seconds="$1"
+  shift
+  "$@" &
+  local cmd_pid="$!"
+  local elapsed=0
+  while kill -0 "$cmd_pid" 2>/dev/null; do
+    if [ "$elapsed" -ge "$timeout_seconds" ]; then
+      kill "$cmd_pid" 2>/dev/null || true
+      sleep 1
+      kill -9 "$cmd_pid" 2>/dev/null || true
+      wait "$cmd_pid" 2>/dev/null || true
+      return 124
+    fi
+    sleep 1
+    elapsed=$((elapsed + 1))
+  done
+  wait "$cmd_pid"
 }
 
 append_decision() {
@@ -142,7 +167,7 @@ run_once() {
     return 1
   fi
 
-  git pull --ff-only origin main >> "$LOG" 2>&1 || {
+  run_with_timeout "$GIT_TIMEOUT_SECONDS" git pull --ff-only origin main >> "$LOG" 2>&1 || {
     append_decision "git pull failed; manual conflict/auth check required"
     append_status "BLOCKED_PULL" "git pull failed"
     append_run_log "blocked" "git pull failed"
@@ -163,7 +188,7 @@ run_once() {
     append_run_log "blocked" "Task $task_id blocked by risk control"
     git add TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md
     git commit -m "Block unsafe worker task $task_id" >> "$LOG" 2>&1 || true
-    git push origin main >> "$LOG" 2>&1 || true
+    run_with_timeout "$GIT_TIMEOUT_SECONDS" git push origin main >> "$LOG" 2>&1 || true
     return 1
   fi
 
@@ -180,7 +205,7 @@ run_once() {
     git add TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md
     if ! git diff --cached --quiet; then
       git commit -m "Worker completed GPT handshake $task_id" >> "$LOG" 2>&1 || true
-      git push origin main >> "$LOG" 2>&1 || {
+      run_with_timeout "$GIT_TIMEOUT_SECONDS" git push origin main >> "$LOG" 2>&1 || {
         append_decision "git push failed after GPT handshake task $task_id"
         append_status "BLOCKED_PUSH" "git push failed after GPT handshake task $task_id"
         append_run_log "blocked" "git push failed after GPT handshake task $task_id"
@@ -196,7 +221,11 @@ run_once() {
 
   prompt="Read AGENTS.md and TASK_QUEUE.md. Execute only task $task_id from TASK_QUEUE.md. Stay in PHASE_1_SIMULATION_ONLY. Do not connect real trading accounts. Do not place or cancel real orders. Do not transfer funds. Do not delete original data. Do not expose secrets. Do not use danger-full-access. Update STATUS.md and RUN_LOG.md with the result. Do not run git add, git commit, or git push inside codex exec; the outer worker will commit and push after you exit."
 
-  if codex exec --sandbox workspace-write -C "$ROOT" "$prompt" >> "$LOG" 2>&1; then
+  if ! command -v codex >/dev/null 2>&1; then
+    update_task_status "$task_id" "failed" "codex command not found in worker environment"
+    append_status "WORKER_FAILED" "Task $task_id failed; codex command not found in worker environment"
+    append_run_log "failed" "Task $task_id failed; codex command not found in worker environment"
+  elif run_with_timeout "$CODEX_EXEC_TIMEOUT_SECONDS" codex exec --sandbox workspace-write -C "$ROOT" "$prompt" >> "$LOG" 2>&1; then
     update_task_status "$task_id" "completed" "codex exec completed"
     append_status "WORKER_COMPLETED" "Task $task_id completed"
     append_run_log "completed" "Task $task_id completed"
@@ -209,7 +238,7 @@ run_once() {
   git add AGENTS.md TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md RISK_CONTROL.md README.md PROJECT_PLAN.md DATA_SCHEMA.md DATA REPORTS scripts logs src tests data reports .gitignore
   if ! git diff --cached --quiet; then
     git commit -m "Worker processed $task_id" >> "$LOG" 2>&1 || true
-    git push origin main >> "$LOG" 2>&1 || {
+    run_with_timeout "$GIT_TIMEOUT_SECONDS" git push origin main >> "$LOG" 2>&1 || {
       append_decision "git push failed after worker processed $task_id"
       append_status "BLOCKED_PUSH" "git push failed after worker processed $task_id"
       append_run_log "blocked" "git push failed after worker processed $task_id"
