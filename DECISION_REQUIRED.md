@@ -19,6 +19,15 @@ The worker and Codex must stop before any blocked action below and write the exa
 
 ## Open Decisions
 
+### DR-20260627-GITHUB-REMOTE
+- Status: waiting_user
+- Created: 2026-06-27
+- Item: Requested GitHub repository is `liyuanqiang-spec/-`, but `git remote -v` returned no remote in this local project. Per user rule, execution stopped before pull, file regeneration, worker changes, email test, push, or PR work.
+- Required confirmation: connect this local folder to `liyuanqiang-spec/-` or provide the correct repository/remote URL.
+- A 推荐: add remote `origin` pointing to `liyuanqiang-spec/-`, then rerun the initialization and push workflow.
+- B: choose a different GitHub repository and update this decision.
+- C: keep local-only mode and skip GitHub supervision.
+
 ### DR-0001
 - Status: waiting_user
 - Created: 2026-06-27
