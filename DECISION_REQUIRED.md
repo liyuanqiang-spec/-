@@ -20,13 +20,10 @@ The worker and Codex must stop before any blocked action below and write the exa
 ## Open Decisions
 
 ### DR-20260627-GITHUB-REMOTE
-- Status: waiting_user
+- Status: resolved
 - Created: 2026-06-27
-- Item: Requested GitHub repository is `liyuanqiang-spec/-`, but `git remote -v` returned no remote in this local project. Per user rule, execution stopped before pull, file regeneration, worker changes, email test, push, or PR work.
-- Required confirmation: connect this local folder to `liyuanqiang-spec/-` or provide the correct repository/remote URL.
-- A 推荐: add remote `origin` pointing to `liyuanqiang-spec/-`, then rerun the initialization and push workflow.
-- B: choose a different GitHub repository and update this decision.
-- C: keep local-only mode and skip GitHub supervision.
+- Item: Remote was missing, then repaired by setting `origin` to `https://github.com/liyuanqiang-spec/-.git` and pulling `origin/main`.
+- Required confirmation: none for this item.
 
 ### DR-0001
 - Status: waiting_user
@@ -35,3 +32,11 @@ The worker and Codex must stop before any blocked action below and write the exa
 - A 推荐: keep local commits now, connect a GitHub remote later when you want PRs.
 - B: authorize GitHub CLI/browser login and provide or create the target remote.
 - C: skip Git/PR automation and use status files only.
+
+## Decision Required 2026-06-27 16:45:37 +0800
+
+- Item: Task TASK-001 contains a blocked trading/fund/secret/deletion/danger risk
+- Current action: worker stopped before execution
+- A 推荐: keep simulation-only and rewrite the task as safe research work
+- B: explicitly authorize the blocked setup/action
+- C: cancel this task

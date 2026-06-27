@@ -138,3 +138,10 @@ Status: `WORKER_RAN_SAFE_TASK`
 - Task: TQ-0003
 - Result: status files readable; worker is alive
 - Safety mode: `SIMULATION_ONLY`
+
+## Worker Update 2026-06-27 16:45:38 +0800
+
+Status: `DECISION_REQUIRED`
+
+- Detail: Task TASK-001 blocked by risk control
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

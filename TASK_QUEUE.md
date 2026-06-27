@@ -1,38 +1,40 @@
 # TASK_QUEUE.md
 
-Purpose: ChatGPT/Codex uses this file as the safe handoff queue. The worker only executes `pending` or `queued` tasks whose type is explicitly safe.
+This queue is the GitHub handoff channel from ChatGPT to Codex.
 
-Allowed task types:
+Worker rule: execute the first task whose status is `pending` and whose type is safe. If a task touches real trading, money, original-data deletion, secrets, or `danger-full-access`, stop and write `DECISION_REQUIRED.md`.
 
-- `pipeline`
-- `report`
-- `test`
-- `status_check`
+## Tasks
 
-Blocked without confirmation: real trading, real orders, cancels, fund transfer, broker permission change, raw-data deletion, secret exposure, danger-full-access, system-level changes, and large paid calls.
-
-## Queue
-
-### TQ-0001
-- Status: completed
-- Type: pipeline
-- Request: Run the sample silver options/futures research pipeline and regenerate the latest report.
+### TASK-001
+- Status: decision_required
+- Type: development
+- Title: 白银期权价差策略 MVP 初始化
+- Request: 建立项目结构；建立期权合约扫描模块框架；建立价差计算模块框架；建立简单回测模块框架；建立报告输出模块框架；建立风险控制检查模块；不接实盘，不真实下单。
+- Expected output: runnable MVP scaffold and updated status/report files.
+- Safety: simulation_only
 - Created: 2026-06-27
-- Last update: 2026-06-27T12:56:30+08:00
-- Result: pipeline completed: contracts=7, candidates=4, report=/Users/zhoujiali/Documents/学习codex/REPORTS/latest_report.md
+- Last update: updated by worker
+- Result: blocked by risk control
 
-### TQ-0002
-- Status: completed
-- Type: test
-- Request: Run the local test suite after the unattended worker scaffold is installed.
+### TASK-002
+- Status: pending
+- Type: data_schema
+- Title: 数据字段标准化
+- Request: 定义期权日线、Tick、盘口、成交、持仓、保证金、手续费字段；输出 DATA_SCHEMA.md。
+- Expected output: DATA_SCHEMA.md
+- Safety: data_only
 - Created: 2026-06-27
-- Last update: 2026-06-27T12:56:31+08:00
-- Result: tests passed: ---------------------------------------------------------------------- Ran 3 tests in 0.000s  OK
+- Last update:
+- Result:
 
-### TQ-0003
-- Status: completed
-- Type: status_check
-- Request: Verify the launchd scheduled worker can process a new queue item.
+### TASK-003
+- Status: pending
+- Type: research
+- Title: 低流动性合约扫描
+- Request: 扫描不活跃但有持仓的合约；输出候选合约列表；输出筛选理由。
+- Expected output: REPORTS/low_liquidity_candidates.md
+- Safety: data_and_report_only
 - Created: 2026-06-27
-- Last update: 2026-06-27T13:04:16+08:00
-- Result: status files readable; worker is alive
+- Last update:
+- Result:

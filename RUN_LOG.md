@@ -79,3 +79,8 @@ This file records safe worker runs and Codex execution events.
 - Event: completed
 - Task: TQ-0003
 - Summary: status files readable; worker is alive
+
+## 2026-06-27 16:45:38 +0800
+
+- Event: blocked
+- Detail: Task TASK-001 blocked by risk control
