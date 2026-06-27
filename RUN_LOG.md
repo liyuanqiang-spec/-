@@ -134,3 +134,23 @@ This file records safe worker runs and Codex execution events.
 
 - Event: failed
 - Detail: Task TASK-001 failed; see logs/worker.log
+
+## 2026-06-27 17:50:01 +0800
+
+- Event: started
+- Detail: Task TASK-001 started
+
+## 2026-06-27 17:51:23 +0800
+
+- Event: completed
+- Detail: Task TASK-001 completed in PHASE_1_SIMULATION_ONLY. Verified runnable MVP scaffold: contract scanner, spread calculator, simple backtester, report writer, and risk control checker. Pipeline result: 7 scanned contracts, 4 spread candidates, report `REPORTS/latest_report.md`. Verification passed: run_pipeline, 3 unit tests, compileall. No real account connection, real order placement/cancellation, fund transfer, original-data deletion, secret exposure, or danger-full-access used.
+
+## 2026-06-27 17:52:31 +0800
+
+- Event: commit_skipped
+- Detail: `git add -- TASK_QUEUE.md STATUS.md RUN_LOG.md` failed because the current sandbox grants read-only access to `.git` and could not create `.git/index.lock`. No danger-full-access escalation was used.
+
+## 2026-06-27 17:53:11 +0800
+
+- Event: completed
+- Detail: Task TASK-001 completed

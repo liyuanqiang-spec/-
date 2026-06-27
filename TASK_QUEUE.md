@@ -18,7 +18,7 @@ Worker rule: execute the first task whose status is `pending` and whose type is 
 - Result: GPT handshake completed by local worker
 
 ### TASK-001
-- Status: pending
+- Status: completed
 - Type: development
 - Title: 白银期权价差策略 MVP 初始化
 - Request: 建立项目结构；建立期权合约扫描模块框架；建立价差计算模块框架；建立简单回测模块框架；建立报告输出模块框架；建立风险控制检查模块；不接实盘，不真实下单。
@@ -26,7 +26,7 @@ Worker rule: execute the first task whose status is `pending` and whose type is 
 - Safety: simulation_only
 - Created: 2026-06-27
 - Last update: updated by worker
-- Result: retrying after Codex CLI compatibility repair
+- Result: codex exec completed
 
 ### TASK-002
 - Status: pending
