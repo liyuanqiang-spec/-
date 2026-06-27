@@ -11,9 +11,11 @@ def _preferred_dir(primary: str, fallback: str) -> Path:
 
 DATA_DIR = _preferred_dir("DATA", "data")
 CONTRACTS_DIR = DATA_DIR / "contracts"
-REPORTS_DIR = _preferred_dir("REPORTS", "reports")
+REPORTS_DIR = PROJECT_ROOT / "REPORTS"
 SAMPLE_CONTRACTS = CONTRACTS_DIR / "sample_options.csv"
 LATEST_REPORT = REPORTS_DIR / "latest_report.md"
+FIRST_COMPLETE_REPORT = REPORTS_DIR / "first_complete_simulation_report.md"
+FIRST_COMPLETE_SUMMARY = REPORTS_DIR / "first_complete_simulation_summary.json"
 TASK_QUEUE = PROJECT_ROOT / "TASK_QUEUE.md"
 STATUS_FILE = PROJECT_ROOT / "STATUS.md"
 RUN_LOG = PROJECT_ROOT / "RUN_LOG.md"
@@ -24,4 +26,4 @@ WORKER_OUTPUT = PROJECT_ROOT / ".codex_worker.out"
 
 DEFAULT_MIN_VOLUME = 30
 DEFAULT_MAX_SPREAD_PCT = 0.25
-TRADING_MODE = "SIMULATION_ONLY"
+TRADING_MODE = "PHASE_1_SIMULATION_ONLY"

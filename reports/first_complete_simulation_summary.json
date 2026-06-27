@@ -1,0 +1,22 @@
+{
+  "contracts_scanned": 7,
+  "spread_candidates": 4,
+  "rejected_candidates": 1,
+  "accepted_candidates": 3,
+  "average_simulated_edge": 2.398,
+  "worst_simulated_slippage": 3.2571,
+  "trade_count": 3,
+  "win_rate": 1.0,
+  "max_drawdown": 0.0,
+  "reliability": "LOW_SAMPLE",
+  "risk_flags": [
+    "LOW_PASSIVE_FILL",
+    "LOW_SAMPLE",
+    "WIDE_LEG_SPREAD"
+  ],
+  "risk_issues": [
+    "LOW_SAMPLE: candidate count is below 20",
+    "REJECTED_CANDIDATES: 1 candidate(s) failed simulation gates",
+    "LOW_TRADE_COUNT: fewer than 5 simulated accepted spreads"
+  ]
+}

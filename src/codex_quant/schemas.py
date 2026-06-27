@@ -38,3 +38,37 @@ class SpreadCandidate:
     net_debit: float
     width: float
     liquidity_score: float
+
+
+@dataclass(frozen=True)
+class SpreadSimulation:
+    candidate: SpreadCandidate
+    first_leg_symbol: str
+    first_leg_action: str
+    passive_limit_price: float
+    passive_fill_probability: float
+    passive_edge: float
+    hedge_leg_symbol: str
+    hedge_action: str
+    hedge_slippage: float
+    simulated_net_debit: float
+    simulated_edge: float
+    max_loss: float
+    accepted: bool
+    rejection_reason: str
+    risk_flags: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class SimulationSummary:
+    contracts_scanned: int
+    spread_candidates: int
+    rejected_candidates: int
+    accepted_candidates: int
+    average_simulated_edge: float
+    worst_simulated_slippage: float
+    trade_count: int
+    win_rate: float
+    max_drawdown: float
+    reliability: str
+    risk_flags: tuple[str, ...]

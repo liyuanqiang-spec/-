@@ -51,6 +51,22 @@ Worker logs:
 logs/worker.log
 ```
 
+## First Complete Simulation Command
+
+Run the TASK-007 simulation-only silver option liquidity radar:
+
+```bash
+python3 -m src.codex_quant.run_pipeline --first-complete-simulation
+```
+
+Outputs:
+
+- `REPORTS/first_complete_simulation_report.md`: complete Markdown report.
+- `REPORTS/first_complete_simulation_summary.json`: dashboard metrics for contracts scanned, candidates, rejected candidates, average simulated edge, worst simulated slippage, and risk flags.
+- `REPORTS/latest_report.md`: compatibility report for the earlier minimal pipeline.
+
+This command uses only local sample data from `data/contracts/sample_options.csv`. It does not connect to real trading accounts, place or cancel real orders, transfer funds, read credentials, or use `danger-full-access`.
+
 ## Main Files
 
 - `AGENTS.md`: unattended agent rules

@@ -22,6 +22,8 @@
 ## Risk Issues
 
 - LOW_SAMPLE: candidate count is below 20
+- REJECTED_CANDIDATES: 1 candidate(s) failed simulation gates
+- LOW_TRADE_COUNT: fewer than 5 simulated accepted spreads
 
 ## Safety
 

@@ -14,6 +14,7 @@ from .config import (
     STATUS_FILE,
     TASK_QUEUE,
     WORKER_DASHBOARD,
+    FIRST_COMPLETE_SUMMARY,
 )
 
 
@@ -137,6 +138,33 @@ def _latest_report(root: Path) -> str:
     return f"[`{rel}`]({rel})"
 
 
+def _latest_simulation_summary(root: Path) -> str:
+    candidates = [
+        root / FIRST_COMPLETE_SUMMARY.relative_to(PROJECT_ROOT),
+        root / "reports" / FIRST_COMPLETE_SUMMARY.name,
+    ]
+    path = next((candidate for candidate in candidates if candidate.exists()), None)
+    if path is None:
+        return "None"
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return "Unreadable"
+    flags = payload.get("risk_flags", [])
+    if isinstance(flags, list):
+        flag_text = ", ".join(str(flag) for flag in flags[:4]) or "None"
+    else:
+        flag_text = str(flags)
+    return (
+        f"contracts `{payload.get('contracts_scanned', 0)}`, "
+        f"candidates `{payload.get('spread_candidates', 0)}`, "
+        f"rejected `{payload.get('rejected_candidates', 0)}`, "
+        f"avg edge `{payload.get('average_simulated_edge', 0)}`, "
+        f"worst slip `{payload.get('worst_simulated_slippage', 0)}`, "
+        f"flags `{flag_text}`"
+    )
+
+
 def _worker_poll_intervals(root: Path) -> str:
     worker_script = _read_text(root / "scripts" / "codex_worker.sh")
     idle_match = re.search(r"WORKER_IDLE_POLL_INTERVAL_SECONDS:-(\d+)", worker_script)
@@ -237,6 +265,7 @@ def build_dashboard(root: Path = PROJECT_ROOT) -> str:
         ("Recently completed task", _task_summary(completed)),
         ("Recent failed or blocked task", _task_summary(failed)),
         ("Latest report link", _latest_report(root)),
+        ("Latest simulation summary", _latest_simulation_summary(root)),
         ("Worker poll interval", _worker_poll_intervals(root)),
         ("Latest push/commit", _latest_commit(root)),
         ("DECISION_REQUIRED blocking", decision),
