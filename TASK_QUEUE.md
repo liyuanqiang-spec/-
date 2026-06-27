@@ -58,9 +58,15 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Status: completed
 - Type: simulation_development
 - Title: Build first complete simulation version for silver option liquidity radar
-- Request: Continue from the existing `src/codex_quant` framework. Do not restart from zero. Build the first complete simulation-only version that can run on sample data on Sunday without market connection. Required outputs: 1) a runnable command that scans sample silver option contracts, generates vertical spread candidates, estimates passive-first-leg fill opportunity, simulates second-leg hedging, applies risk checks, and writes a Markdown report; 2) a simple dashboard/report entry showing contracts scanned, candidates, rejected candidates, average simulated edge, worst simulated slippage, and risk flags; 3) update tests so the pipeline, low-liquidity scanner, spread calculator, backtester, and risk checker all run; 4) update README with the exact command to run the first complete simulation version. Keep all work in PHASE_1_SIMULATION_ONLY. Use sample/local data only. No broker connection. No live order logic. No credentials.
-- Expected output: updated Python modules under `src/codex_quant/`, updated tests, `REPORTS/first_complete_simulation_report.md`, updated `STATUS.md`, updated `RUN_LOG.md`, updated `WORKER_DASHBOARD.md` if present. Verification must include compileall and unit tests.
-- Safety: simulation_only
+- Result: codex exec completed.
+
+### TASK-008
+- Status: pending
+- Type: repo_automation_setup
+- Title: Add GPT review automation layer
+- Request: Add the repository automation layer that lets GPT review completed worker output and append the next safe task. Create or update: `.github/workflows/gpt_orchestrator.yml`, `scripts/gpt_orchestrator.py`, `GPT_REVIEW.md`, `GPT_VISIBLE_STATUS.md`, and `.gpt_state.json`. The workflow should support manual run and a 10-minute schedule. The script should read PROJECT_MEMORY.md, TASK_QUEUE.md, STATUS.md, RUN_LOG.md, WORKER_DASHBOARD.md, DECISION_REQUIRED.md, and REPORTS. If there is already a pending or running task, update GPT_VISIBLE_STATUS.md only and do not run the model. If no task is pending, run the model review, append GPT_REVIEW.md, optionally append one next safe task to TASK_QUEUE.md, update GPT_VISIBLE_STATUS.md, and store state to avoid repeated reviews. Use the repository Actions setting named OPENAI_API_KEY and optional OPENAI_MODEL. If the setting is absent, write NEEDS_OPENAI_API_KEY to GPT_VISIBLE_STATUS.md and exit cleanly. Keep this layer limited to review, planning, and queue updates.
+- Expected output: workflow file, orchestration script, GPT review log, visible GPT status page, state file, README or dashboard link if practical, STATUS.md and RUN_LOG.md setup notes.
+- Safety: repo_automation_only
 - Created: 2026-06-28
-- Last update: updated by worker
-- Result: codex exec completed
+- Last update: created by ChatGPT
+- Result: pending
