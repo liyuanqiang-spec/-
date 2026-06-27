@@ -194,7 +194,7 @@ run_once() {
   append_status "WORKER_RUNNING" "Task $task_id started"
   append_run_log "started" "Task $task_id started"
 
-  prompt="Read AGENTS.md and TASK_QUEUE.md. Execute only task $task_id from TASK_QUEUE.md. Stay in PHASE_1_SIMULATION_ONLY. Do not connect real trading accounts. Do not place or cancel real orders. Do not transfer funds. Do not delete original data. Do not expose secrets. Do not use danger-full-access. Update STATUS.md and RUN_LOG.md with the result."
+  prompt="Read AGENTS.md and TASK_QUEUE.md. Execute only task $task_id from TASK_QUEUE.md. Stay in PHASE_1_SIMULATION_ONLY. Do not connect real trading accounts. Do not place or cancel real orders. Do not transfer funds. Do not delete original data. Do not expose secrets. Do not use danger-full-access. Update STATUS.md and RUN_LOG.md with the result. Do not run git add, git commit, or git push inside codex exec; the outer worker will commit and push after you exit."
 
   if codex exec --sandbox workspace-write -C "$ROOT" "$prompt" >> "$LOG" 2>&1; then
     update_task_status "$task_id" "completed" "codex exec completed"
