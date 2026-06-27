@@ -99,3 +99,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: worker_started
 - Detail: launchd label `com.codex.github-supervised-worker`, interval 300 seconds, log `logs/worker.log`
+
+## 2026-06-27 16:49:00 +0800
+
+- Event: push_failed
+- Detail: `git push origin main` failed because GitHub HTTPS credentials are not configured on this Mac mini

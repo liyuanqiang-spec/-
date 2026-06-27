@@ -133,7 +133,7 @@ Status: `LOCAL_COMMIT_CREATED`
 
 ## 2026-06-27 GitHub Supervised Unattended Init
 
-Status: `READY_FOR_GITHUB_SUPERVISION`
+Status: `BLOCKED_GITHUB_PUSH_AUTH`
 
 - 初始化是否完成: yes
 - GitHub remote: `https://github.com/liyuanqiang-spec/-.git`
@@ -143,16 +143,16 @@ Status: `READY_FOR_GITHUB_SUPERVISION`
 - Worker start command: `scripts/start_worker.sh`
 - Worker stop command: `scripts/stop_worker.sh`
 - Worker launchd label: `com.codex.github-supervised-worker`
-- Worker status: scheduled every 300 seconds; log path `logs/worker.log`
+- Worker status: script and launchd config created; worker stopped until GitHub push authorization is fixed
 - Worker sandbox: `workspace-write`
 - Worker danger-full-access: disabled/not used
 - Local Python check: passed, Python 3.13.13
 - Unit tests: passed, 3 tests
 - Compile check: passed for `src` and `tests`
 - Mail test: `/usr/bin/mail` accepted test email to `liyuanqiang@gmail.com` with subject `Codex 已启动` and body `可以了`
-- Current GitHub supervision state: ready after push to `main`
-- Next recommendation: let ChatGPT edit `TASK_QUEUE.md` on GitHub; the Mac mini worker will pull, execute the first pending safe task, update status files, commit, and push back
-- Confirmation required now: no, unless a future task touches real trading, funds, raw-data deletion, secrets, `danger-full-access`, or system-level changes
+- Current GitHub supervision state: blocked because local `git push origin main` cannot authenticate to GitHub
+- Next recommendation: authorize GitHub CLI or Git credentials on this Mac mini, then rerun push and start worker
+- Confirmation required now: yes, GitHub write authentication is required
 
 ## Worker Update 2026-06-27T13:04:16+08:00
 
