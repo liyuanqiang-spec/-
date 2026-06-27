@@ -51,6 +51,22 @@ Status: `INITIALIZED_SIMULATION_ONLY`
 - No real market data source has been selected yet.
 - Sample report warns `LOW_SAMPLE`, which is expected because the initial dataset is intentionally tiny.
 
+## Pending User Authorization
+
+Desktop login folder:
+
+```text
+/Users/zhoujiali/Library/Mobile Documents/com~apple~CloudDocs/Desktop/待你处理-Codex/云服务登录
+```
+
+Created login launchers:
+
+- `01-GitHub登录.command`
+- `02-Vercel登录.command`
+- `03-Supabase登录.command`
+- `04-HuggingFace登录.command`
+- `05-完成后检查登录状态.command`
+
 ## Safety Mode
 
 Current mode: `SIMULATION_ONLY`

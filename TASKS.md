@@ -11,7 +11,7 @@
 - [x] Generate initialization report
 - [ ] Add real market data source configuration
 - [ ] Add full unit tests for all modules
-- [ ] Add user-visible login action files for required account authorizations
+- [x] Add user-visible login action files for required account authorizations
 
 ## Next
 

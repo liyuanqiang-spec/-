@@ -27,3 +27,7 @@
 
 - Project initialized as `SIMULATION_ONLY`.
 - Sample pipeline verified without broker or real trading access.
+
+### Authorization
+
+- Added desktop-visible login launchers for GitHub, Vercel, Supabase, and Hugging Face under iCloud Desktop.
