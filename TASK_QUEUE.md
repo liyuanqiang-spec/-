@@ -40,12 +40,12 @@ Worker rule: execute the first task whose status is `pending` and whose type is 
 - Result: codex exec completed
 
 ### TASK-003
-- Status: pending
+- Status: completed
 - Type: research
 - Title: 低流动性合约扫描
 - Request: 扫描不活跃但有持仓的合约；输出候选合约列表；输出筛选理由。
 - Expected output: REPORTS/low_liquidity_candidates.md
 - Safety: data_and_report_only
 - Created: 2026-06-27
-- Last update:
-- Result:
+- Last update: updated by worker
+- Result: codex exec completed
