@@ -223,13 +223,6 @@ Status: `WORKER_REPAIRED`
 - Verification: `scripts/codex_worker.sh --dry-run` selected `TASK-002`.
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 
-## Worker Update 2026-06-27 17:56:29 +0800
-
-Status: `BLOCKED_PULL`
-
-- Detail: git pull failed
-- Safety mode: `PHASE_1_SIMULATION_ONLY`
-
 ## Worker Update 2026-06-27 17:59:21 +0800
 
 Status: `WORKER_RUNNING`
