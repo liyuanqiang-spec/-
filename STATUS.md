@@ -155,7 +155,7 @@ Status: `READY_FOR_GITHUB_SUPERVISION`
 - Current GitHub supervision state: active
 - Worker launchd status: scheduled every 300 seconds under `com.codex.github-supervised-worker`
 - Worker plist check: passed
-- Next recommendation: start worker and let ChatGPT update `TASK_QUEUE.md` on GitHub
+- Next recommendation: let ChatGPT update `TASK_QUEUE.md` on GitHub; the Mac mini worker is already scheduled
 - Confirmation required now: no for normal safe worker tasks
 
 ## Worker Update 2026-06-27T13:04:16+08:00
