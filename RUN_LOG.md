@@ -104,3 +104,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: push_failed
 - Detail: `git push origin main` failed because GitHub HTTPS credentials are not configured on this Mac mini
+
+## 2026-06-27 17:00:00 +0800
+
+- Event: github_auth_completed
+- Detail: GitHub device login completed; `gh` logged in as `liyuanqiang-spec`

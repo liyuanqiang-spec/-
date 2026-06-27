@@ -20,13 +20,11 @@ The worker and Codex must stop before any blocked action below and write the exa
 ## Open Decisions
 
 ### DR-20260627-GITHUB-PUSH-AUTH
-- Status: waiting_user
+- Status: resolved
 - Created: 2026-06-27
 - Item: Local `git push origin main` failed with `fatal: could not read Username for 'https://github.com': Device not configured`.
-- Required confirmation: authorize GitHub on this Mac mini so unattended `git push` can work.
-- A 推荐: run `gh auth login` or configure a GitHub credential/token for repository `liyuanqiang-spec/-`, then rerun the push.
-- B: provide an SSH remote and install an SSH key with write permission.
-- C: keep local-only mode and do not use GitHub supervision.
+- Resolution: GitHub device login completed on this Mac mini. `gh` is logged in as `liyuanqiang-spec`.
+- Required confirmation: none for GitHub status-file supervision.
 
 ### DR-20260627-GITHUB-REMOTE
 - Status: resolved
