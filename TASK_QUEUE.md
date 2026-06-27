@@ -29,15 +29,15 @@ Worker rule: execute the first task whose status is `pending` and whose type is 
 - Result: codex exec completed
 
 ### TASK-002
-- Status: pending
+- Status: completed
 - Type: data_schema
 - Title: 数据字段标准化
 - Request: 定义期权日线、Tick、盘口、成交、持仓、保证金、手续费字段；输出 DATA_SCHEMA.md。
 - Expected output: DATA_SCHEMA.md
 - Safety: data_only
 - Created: 2026-06-27
-- Last update:
-- Result:
+- Last update: updated by worker
+- Result: codex exec completed
 
 ### TASK-003
 - Status: pending

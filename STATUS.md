@@ -229,3 +229,30 @@ Status: `BLOCKED_PULL`
 
 - Detail: git pull failed
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-27 17:59:21 +0800
+
+Status: `WORKER_RUNNING`
+
+- Detail: Task TASK-002 started
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-27 18:00:27 +0800
+
+Status: `TASK_002_COMPLETED`
+
+- Detail: DATA_SCHEMA.md updated with standardized fields for option daily data, ticks, order book snapshots, trades, positions, margin assumptions, and fee assumptions.
+- Current scanner input standard: `symbol`, `underlying`, `expiry`, `strike`, `option_type`, `bid`, `ask`, `volume`, `open_interest`.
+- Result: `DATA_SCHEMA.md`
+- Verification: documentation reviewed against current MVP scanner schema in `src/codex_quant/schemas.py` and `src/codex_quant/contract_scanner.py`.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original data deletion, no secret exposure, no danger-full-access.
+- Git commit: not created inside codex exec; outer worker remains responsible for git add/commit/push.
+- Confirmation required: no.
+
+## Worker Update 2026-06-27 18:02:14 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-002 completed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

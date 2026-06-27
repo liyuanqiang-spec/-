@@ -164,3 +164,18 @@ This file records safe worker runs and Codex execution events.
 
 - Event: blocked
 - Detail: git pull failed
+
+## 2026-06-27 17:59:21 +0800
+
+- Event: started
+- Detail: Task TASK-002 started
+
+## 2026-06-27 18:00:27 +0800
+
+- Event: completed
+- Detail: Task TASK-002 completed in PHASE_1_SIMULATION_ONLY. Updated `DATA_SCHEMA.md` with standardized fields for option daily data, ticks, order book snapshots, trades, positions, margin assumptions, and fee assumptions. Reviewed against current MVP scanner fields: `symbol`, `underlying`, `expiry`, `strike`, `option_type`, `bid`, `ask`, `volume`, `open_interest`. No real account connection, real order placement/cancellation, fund transfer, original-data deletion, secret exposure, or danger-full-access used.
+
+## 2026-06-27 18:02:14 +0800
+
+- Event: completed
+- Detail: Task TASK-002 completed
