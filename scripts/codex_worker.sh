@@ -334,7 +334,7 @@ run_once_body() {
     log "no pending task"
     write_heartbeat "idle" "no pending task"
     update_dashboard
-    commit_and_push "Update worker dashboard" "$DASHBOARD_FILE" >> "$LOG" 2>&1 || true
+    commit_and_push "Update worker dashboard" "$DASHBOARD_FILE" logs/worker_heartbeat.json >> "$LOG" 2>&1 || true
     return 0
   fi
 
