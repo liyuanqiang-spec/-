@@ -189,3 +189,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: completed
 - Detail: Task TASK-003 completed
+
+## 2026-06-27 18:12:11 +0800
+
+- Event: worker_launchd_repair_ready
+- Detail: LaunchAgent changed to run from an ASCII worker clone under `~/Library/Application Support/CodexGithubWorker/repo` because macOS denied background access to the project under `Documents`.

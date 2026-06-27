@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+if [ -n "${CODEX_WORKER_ROOT:-}" ]; then
+  ROOT="$CODEX_WORKER_ROOT"
+else
+  ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+fi
 QUEUE="$ROOT/TASK_QUEUE.md"
 STATUS="$ROOT/STATUS.md"
 RUN_LOG="$ROOT/RUN_LOG.md"

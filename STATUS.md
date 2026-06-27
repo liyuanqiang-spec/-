@@ -276,3 +276,11 @@ Status: `WORKER_COMPLETED`
 
 - Detail: Task TASK-003 completed
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-27 18:12:11 +0800
+
+Status: `WORKER_LAUNCHD_REPAIR_READY`
+
+- Detail: LaunchAgent was changed to run from an ASCII worker clone under `~/Library/Application Support/CodexGithubWorker/repo` because macOS denied background access to the project under `Documents`.
+- GitHub target: `https://github.com/liyuanqiang-spec/-.git`
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
