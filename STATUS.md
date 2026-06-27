@@ -1,0 +1,124 @@
+# STATUS.md
+
+## 2026-06-27
+
+Status: `INITIALIZED_SIMULATION_ONLY`
+
+## Completed
+
+- Checked local project root.
+- Checked official connectors and local CLI tools.
+- Installed Vercel CLI.
+- Installed Supabase CLI through Homebrew after npm package failed on Apple Silicon.
+- Installed Hugging Face CLI through isolated `uv tool`.
+- Installed Python safety tools: `bandit` and `pip-audit`.
+- Created project-level skills under `.codex/skills/`.
+- Created project rule and planning files.
+- Created minimal safe quant scaffold.
+- Ran minimal sample pipeline.
+- Generated `reports/latest_report.md`.
+
+## Verification
+
+| Check | Result |
+|---|---:|
+| Sample pipeline | Passed: 7 contracts, 4 spread candidates |
+| Unit test | Passed: 1 test |
+| Python compile check | Passed |
+| Bandit security scan | Passed |
+
+## Capability Status
+
+| Capability | Status | Note |
+|---|---:|---|
+| GitHub plugin | Available | Connector available; local `gh` not logged in |
+| OpenAI Developers | Connected | Organization and default project visible |
+| Browser / Chrome | Available | Bundled plugin present |
+| Google Drive | Connected | Profile visible |
+| Google Sheets | Connected | Available through Google Drive plugin |
+| Vercel / Sites | CLI installed | Login required before deployment |
+| Supabase | CLI installed | Login or `SUPABASE_ACCESS_TOKEN` required |
+| Codex Security | Available | `security-best-practices`, `bandit`, `pip-audit` ready |
+| Figma | Connected | Account visible; current seat is View |
+| Hugging Face | CLI installed | Login required |
+
+## Current Issues
+
+- GitHub CLI is not logged in.
+- Vercel login status could not be confirmed without interactive login.
+- Supabase requires login or access token.
+- Hugging Face is not logged in.
+- No real market data source has been selected yet.
+- Sample report warns `LOW_SAMPLE`, which is expected because the initial dataset is intentionally tiny.
+
+## Safety Mode
+
+Current mode: `SIMULATION_ONLY`
+
+Allowed work: data, cleaning, scanning, backtesting, simulation, reports.
+
+Blocked work: real trading, real order placement, fund movement, destructive deletion.
+
+## 2026-06-27 Unattended Worker Scaffold
+
+Status: `SCAFFOLD_CREATED`
+
+Completed phase:
+
+- Added `TASK_QUEUE.md`, `RUN_LOG.md`, `DECISION_REQUIRED.md`, `scripts/`, and safe background worker controls.
+- Set `DATA/` and `REPORTS/` as the active data/report directories.
+- Expanded hard-stop rules for cancels, broker permission changes, secrets, danger-full-access, system-level changes, and large paid calls.
+
+Current worker mode: `SIMULATION_ONLY_SAFE_TASKS_ONLY`
+
+## Worker Update 2026-06-27T12:56:30+08:00
+
+Status: `WORKER_RAN_SAFE_TASK`
+
+- Task: TQ-0001
+- Result: pipeline completed: contracts=7, candidates=4, report=/Users/zhoujiali/Documents/学习codex/REPORTS/latest_report.md
+- Safety mode: `SIMULATION_ONLY`
+
+## Worker Update 2026-06-27T12:56:31+08:00
+
+Status: `WORKER_RAN_SAFE_TASK`
+
+- Task: TQ-0002
+- Result: tests passed: ---------------------------------------------------------------------- Ran 3 tests in 0.000s  OK
+- Safety mode: `SIMULATION_ONLY`
+
+## 2026-06-27 Worker Runtime
+
+Status: `SCHEDULED_AND_VERIFIED`
+
+- First background start used a plain detached process; the worker logic ran, but the process did not persist in this execution environment.
+- Repair action: `scripts/start_worker.sh` now registers a user-level LaunchAgent named `com.codex.quant.worker`.
+- Second repair action: LaunchAgent now uses the active project Python instead of macOS system Python 3.9.
+- Third repair action: LaunchAgent now starts through `scripts/worker_launchd_entry.sh`, which sets the project PATH before launching Python.
+- Final repair action: worker now runs as a launchd scheduled job every 300 seconds instead of a permanently alive loop.
+- LaunchAgent execution repair: plist now invokes `/bin/bash scripts/worker_launchd_entry.sh` so launchd does not directly exec the project script.
+- Path repair: LaunchAgent now uses an ASCII support entry under `~/Library/Application Support/CodexQuantWorker/` and logs under `~/Library/Logs/CodexQuantWorker/`.
+- Verified queue item: `TQ-0003` completed through the launchd scheduled worker at 2026-06-27T13:04:16+08:00.
+- LaunchAgent state after run: scheduled, not constantly running, last exit code 0.
+
+## 2026-06-27 Git Phase
+
+Status: `LOCAL_COMMIT_CREATED`
+
+- Local Git repository initialized on branch `main`.
+- Initial commit created for the unattended quant research worker scaffold.
+- GitHub PR was not opened because no remote/authenticated GitHub target is configured.
+- Unrelated existing workspace files were left untracked.
+- Worker output file: `.codex_worker.out`
+- Worker error file: `.codex_worker.err`
+- Full tests: passed, 3 tests.
+- Compile check: passed for `src` and `tests`.
+- Confirmation required for real trading or PR remote setup: yes.
+
+## Worker Update 2026-06-27T13:04:16+08:00
+
+Status: `WORKER_RAN_SAFE_TASK`
+
+- Task: TQ-0003
+- Result: status files readable; worker is alive
+- Safety mode: `SIMULATION_ONLY`

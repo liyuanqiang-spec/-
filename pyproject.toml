@@ -1,0 +1,10 @@
+[project]
+name = "codex-quant-workflow"
+version = "0.1.0"
+description = "Safe minimal quant research scaffold for Codex."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
