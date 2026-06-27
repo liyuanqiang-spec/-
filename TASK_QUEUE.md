@@ -52,9 +52,15 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Status: completed
 - Type: worker_stability_status_only
 - Title: Change idle poll interval to 10 minutes
-- Request: Update the local worker idle polling interval from 60 seconds to 600 seconds. If the config has separate idle and active intervals, set idle_poll_interval_seconds=600 and active_poll_interval_seconds=60. During idle polls, only check the repository and task queue. If there is no new pending safe task, do not call any model, do not commit, do not push, and do not write noisy logs. If a GPT orchestrator workflow exists, make sure its scheduled frequency is not faster than once every 10 minutes. Estimate from RUN_LOG.md or logs/worker.log how many polls, tasks, executions, pushes, Codex calls, and OpenAI calls occurred in the last hour; mark unclear numbers as estimates.
-- Expected output: Updated worker config or equivalent startup configuration; STATUS.md section TASK-006 with current interval and last-hour estimates; RUN_LOG.md entries POLL_INTERVAL_10MIN_UPDATE_STARTED and POLL_INTERVAL_10MIN_UPDATE_DONE; dashboard updated if present.
-- Safety: status_only_repo_maintenance
-- Created: 2026-06-27
-- Last update: updated by worker
-- Result: codex exec completed
+- Result: codex exec completed.
+
+### TASK-007
+- Status: pending
+- Type: simulation_development
+- Title: Build first complete simulation version for silver option liquidity radar
+- Request: Continue from the existing `src/codex_quant` framework. Do not restart from zero. Build the first complete simulation-only version that can run on sample data on Sunday without market connection. Required outputs: 1) a runnable command that scans sample silver option contracts, generates vertical spread candidates, estimates passive-first-leg fill opportunity, simulates second-leg hedging, applies risk checks, and writes a Markdown report; 2) a simple dashboard/report entry showing contracts scanned, candidates, rejected candidates, average simulated edge, worst simulated slippage, and risk flags; 3) update tests so the pipeline, low-liquidity scanner, spread calculator, backtester, and risk checker all run; 4) update README with the exact command to run the first complete simulation version. Keep all work in PHASE_1_SIMULATION_ONLY. Use sample/local data only. No broker connection. No live order logic. No credentials.
+- Expected output: updated Python modules under `src/codex_quant/`, updated tests, `REPORTS/first_complete_simulation_report.md`, updated `STATUS.md`, updated `RUN_LOG.md`, updated `WORKER_DASHBOARD.md` if present. Verification must include compileall and unit tests.
+- Safety: simulation_only
+- Created: 2026-06-28
+- Last update: created by ChatGPT
+- Result: pending
