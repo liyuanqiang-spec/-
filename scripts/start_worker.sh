@@ -11,7 +11,8 @@ mkdir -p "$ROOT/logs" "$HOME/Library/LaunchAgents"
 touch "$LOG"
 
 if launchctl print "gui/$UID/$LABEL" >/dev/null 2>&1; then
-  echo "worker already started: $LABEL"
+  launchctl kickstart -k "gui/$UID/$LABEL" >/dev/null 2>&1 || true
+  echo "worker already started and kicked: $LABEL"
   exit 0
 fi
 
@@ -31,7 +32,7 @@ cat > "$PLIST" <<PLIST
   <key>StartInterval</key>
   <integer>$INTERVAL</integer>
   <key>RunAtLoad</key>
-  <false/>
+  <true/>
   <key>StandardOutPath</key>
   <string>$LOG</string>
   <key>StandardErrorPath</key>
