@@ -73,6 +73,21 @@ raise SystemExit(1)
 PY
 }
 
+task_type() {
+  python3 - "$TASK_FILE" <<'PY'
+from pathlib import Path
+import sys
+
+path = Path(sys.argv[1])
+if not path.exists():
+    raise SystemExit(0)
+for line in path.read_text(encoding="utf-8").splitlines():
+    if line.lower().startswith("- type:"):
+        print(line.split(":", 1)[1].strip().lower())
+        raise SystemExit(0)
+PY
+}
+
 update_task_status() {
   local task_id="$1"
   local new_status="$2"
@@ -154,6 +169,24 @@ run_once() {
 
   if [ "${1:-}" = "--dry-run" ]; then
     log "dry run selected task $task_id"
+    return 0
+  fi
+
+  current_type="$(task_type || true)"
+  if [ "$current_type" = "status_check" ] || [ "$current_type" = "handshake" ]; then
+    update_task_status "$task_id" "completed" "GPT handshake completed by local worker"
+    append_status "GPT_HANDSHAKE_OK" "Task $task_id completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working"
+    append_run_log "gpt_handshake" "Task $task_id completed by local worker without codex exec; safety mode remained PHASE_1_SIMULATION_ONLY"
+    git add TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md
+    if ! git diff --cached --quiet; then
+      git commit -m "Worker completed GPT handshake $task_id" >> "$LOG" 2>&1 || true
+      git push origin main >> "$LOG" 2>&1 || {
+        append_decision "git push failed after GPT handshake task $task_id"
+        append_status "BLOCKED_PUSH" "git push failed after GPT handshake task $task_id"
+        append_run_log "blocked" "git push failed after GPT handshake task $task_id"
+        return 1
+      }
+    fi
     return 0
   fi
 

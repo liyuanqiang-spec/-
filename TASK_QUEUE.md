@@ -6,6 +6,17 @@ Worker rule: execute the first task whose status is `pending` and whose type is 
 
 ## Tasks
 
+### TASK-000-GPT-HANDSHAKE
+- Status: pending
+- Type: status_check
+- Title: GPT 到 Codex 握手测试
+- Request: 验证 ChatGPT/GitHub -> Mac mini Codex worker -> STATUS/RUN_LOG -> GitHub 的闭环。
+- Expected output: STATUS.md and RUN_LOG.md record GPT_HANDSHAKE_OK.
+- Safety: status_only
+- Created: 2026-06-27
+- Last update:
+- Result:
+
 ### TASK-001
 - Status: pending
 - Type: development
