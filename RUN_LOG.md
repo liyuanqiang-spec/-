@@ -234,3 +234,28 @@ This file records safe worker runs and Codex execution events.
 
 - Event: completed
 - Detail: Task TASK-004A completed
+
+## 2026-06-27 19:16:22 +0800
+
+- Event: started
+- Detail: Task TASK-006 started
+
+## 2026-06-27 19:16:22 +0800
+
+- Event: attempt
+- Detail: Task TASK-006 codex exec attempt 1/3
+
+## 2026-06-27 19:18:42 +0800
+
+- Event: POLL_INTERVAL_10MIN_UPDATE_STARTED
+- Detail: Task TASK-006 started in PHASE_1_SIMULATION_ONLY; updating idle polling defaults to 600 seconds and preserving active task cadence at 60 seconds. No real trading account connection, real order placement/cancellation, fund transfer, original-data deletion, secret exposure, danger-full-access, git add, git commit, or git push used inside codex exec.
+
+## 2026-06-27 19:21:38 +0800
+
+- Event: POLL_INTERVAL_10MIN_UPDATE_DONE
+- Detail: Task TASK-006 completed in PHASE_1_SIMULATION_ONLY. Repo worker config now uses idle_poll_interval_seconds=600 and active_poll_interval_seconds=60; idle no-pending scans no longer call Codex/model, refresh dashboard, write noisy heartbeat/status/run logs, commit, or push. `scripts/start_worker.sh` now writes launchd StartInterval=600 and executes the repo worker script directly. Dashboard regenerated. Verification passed: bash syntax, compileall, 6 unit tests, dashboard generation, and health check exit 0 with expected warnings that the currently loaded launchd plist/old heartbeat still show pre-update 60 seconds until startup config is reloaded. No real account connection, real order placement/cancellation, fund transfer, original-data deletion, secret exposure, danger-full-access, git add, git commit, or git push was run inside codex exec.
+
+## 2026-06-27 19:22:48 +0800
+
+- Event: completed
+- Detail: Task TASK-006 completed

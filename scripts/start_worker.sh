@@ -9,9 +9,9 @@ LAUNCH_LOG_DIR="$HOME/Library/Logs/CodexGithubWorker"
 WORKER_REPO="$SUPPORT_DIR/repo"
 LOG="$WORKER_REPO/logs/worker.log"
 ENTRY="$SUPPORT_DIR/worker_entry.sh"
-RUNTIME="$SUPPORT_DIR/codex_worker_runtime.sh"
 LAUNCH_LOG="$LAUNCH_LOG_DIR/worker.log"
-INTERVAL="${WORKER_INTERVAL_SECONDS:-60}"
+IDLE_INTERVAL="${WORKER_IDLE_POLL_INTERVAL_SECONDS:-600}"
+ACTIVE_INTERVAL="${WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-60}"
 REMOTE_URL="https://github.com/liyuanqiang-spec/-.git"
 
 mkdir -p "$HOME/Library/LaunchAgents" "$SUPPORT_DIR" "$LAUNCH_LOG_DIR"
@@ -26,16 +26,16 @@ fi
 
 mkdir -p "$WORKER_REPO/logs"
 touch "$LOG"
-cp "$WORKER_REPO/scripts/codex_worker.sh" "$RUNTIME"
-chmod +x "$RUNTIME"
 
 cat > "$ENTRY" <<ENTRY
 #!/usr/bin/env bash
 set -euo pipefail
 export PATH="\$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:\${PATH:-}"
 export CODEX_WORKER_ROOT="$WORKER_REPO"
+export WORKER_IDLE_POLL_INTERVAL_SECONDS="$IDLE_INTERVAL"
+export WORKER_ACTIVE_POLL_INTERVAL_SECONDS="$ACTIVE_INTERVAL"
 cd "$WORKER_REPO"
-exec /bin/bash "$RUNTIME" --once
+exec /bin/bash "$WORKER_REPO/scripts/codex_worker.sh" --once
 ENTRY
 chmod +x "$ENTRY"
 
@@ -52,7 +52,7 @@ cat > "$PLIST" <<PLIST
     <string>$ENTRY</string>
   </array>
   <key>StartInterval</key>
-  <integer>$INTERVAL</integer>
+  <integer>$IDLE_INTERVAL</integer>
   <key>RunAtLoad</key>
   <true/>
   <key>StandardOutPath</key>
@@ -69,4 +69,4 @@ fi
 
 launchctl bootstrap "gui/$UID" "$PLIST"
 launchctl kickstart -k "gui/$UID/$LABEL" >/dev/null 2>&1 || true
-echo "worker started: $LABEL interval=${INTERVAL}s log=$LOG launch_log=$LAUNCH_LOG"
+echo "worker started: $LABEL idle_interval=${IDLE_INTERVAL}s active_interval=${ACTIVE_INTERVAL}s log=$LOG launch_log=$LAUNCH_LOG"

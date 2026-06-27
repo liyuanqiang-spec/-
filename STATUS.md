@@ -360,3 +360,37 @@ Status: `WORKER_COMPLETED`
 
 - Detail: Task TASK-004A completed
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-27 19:16:22 +0800
+
+Status: `WORKER_RUNNING`
+
+- Detail: Task TASK-006 started
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-27 19:21:38 +0800
+
+Status: `TASK_006_COMPLETED`
+
+- Detail: Worker idle polling configuration changed from 60 seconds to 600 seconds while preserving active task cadence at 60 seconds.
+- Current repo intervals: `idle_poll_interval_seconds=600`; `active_poll_interval_seconds=60`.
+- Idle behavior: no pending safe task now returns quietly after repository/task-queue checks; it does not call Codex/model, does not refresh dashboard, does not write heartbeat/status/run-log noise, and does not commit or push.
+- Startup config: `scripts/start_worker.sh` writes launchd `StartInterval=600` and exports the 600/60 interval settings; it now executes the repo `scripts/codex_worker.sh` directly instead of a stale copied runtime.
+- Python fallback: `src/codex_quant/worker.py` now defaults to idle interval 600 seconds and active interval 60 seconds.
+- GPT orchestrator workflow: no `.github` workflow file exists in this repo, so no GitHub Actions/GPT cloud schedule needed throttling.
+- Last-hour estimate window: `2026-06-27 18:16:58 +0800` to `2026-06-27 19:16:58 +0800`.
+- Last-hour estimates from `RUN_LOG.md` and `logs/worker.log`: about 36 worker poll/execution starts, about 28 idle/no-pending polls, 4 durable queue tasks with events (`TASK-004`, `TASK-005`, `TASK-004A`, `TASK-006`), 7 selected-task entries including 3 `TASK-004A` self-test rounds, about 20 push attempts with about 19 successes and 1 rejected/fetch-first attempt, about 3 Codex sessions. Exact OpenAI API request count is unclear because per-request API calls are not logged; estimate is at least the 3 Codex sessions.
+- Dashboard: `WORKER_DASHBOARD.md` regenerated and now shows worker poll interval `idle 600s, active 60s`.
+- Verification: `bash -n` passed for worker scripts; `python3 -m compileall -q src tests scripts` passed; `python3 -m unittest discover -s tests` passed, 6 tests; `python3 scripts/update_worker_dashboard.py` regenerated dashboard; `scripts/check_worker_health.sh` exited 0 with repo interval 600/60.
+- Health-check warnings: currently loaded user LaunchAgent plist still reports 60 seconds and the pre-update heartbeat still reports 60 seconds because this codex exec did not modify project-external launchd state; reload through `scripts/start_worker.sh` applies the new 600-second startup config.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original data deletion, no secret exposure, no danger-full-access, no project-external launchctl modification.
+- Git commit: not created inside codex exec; outer worker remains responsible for git add/commit/push.
+- Confirmation required: no.
+
+## Worker Update 2026-06-27 19:22:48 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-006 completed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

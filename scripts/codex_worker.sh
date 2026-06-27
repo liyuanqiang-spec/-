@@ -16,7 +16,8 @@ LOG="$ROOT/logs/worker.log"
 TASK_FILE="$ROOT/logs/worker_task.txt"
 LOCK_DIR="$ROOT/logs/worker.lock"
 HEARTBEAT="$ROOT/logs/worker_heartbeat.json"
-INTERVAL_SECONDS="${WORKER_INTERVAL_SECONDS:-60}"
+IDLE_POLL_INTERVAL_SECONDS="${WORKER_IDLE_POLL_INTERVAL_SECONDS:-600}"
+ACTIVE_POLL_INTERVAL_SECONDS="${WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-60}"
 EXPECTED_REMOTE="https://github.com/liyuanqiang-spec/-.git"
 GIT_TIMEOUT_SECONDS="${GIT_TIMEOUT_SECONDS:-120}"
 CODEX_EXEC_TIMEOUT_SECONDS="${CODEX_EXEC_TIMEOUT_SECONDS:-1800}"
@@ -41,7 +42,7 @@ write_heartbeat() {
   local state="$1"
   local detail="${2:-}"
   local task="${3:-none}"
-  python3 - "$HEARTBEAT" "$state" "$detail" "$task" "$INTERVAL_SECONDS" <<'PY'
+  python3 - "$HEARTBEAT" "$state" "$detail" "$task" "$IDLE_POLL_INTERVAL_SECONDS" "$ACTIVE_POLL_INTERVAL_SECONDS" <<'PY'
 from __future__ import annotations
 
 import json
@@ -50,14 +51,16 @@ from datetime import datetime
 from pathlib import Path
 
 path = Path(sys.argv[1])
-state, detail, task, interval = sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]
+state, detail, task, idle_interval, active_interval = sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6]
 path.parent.mkdir(parents=True, exist_ok=True)
 payload = {
     "timestamp": datetime.now().astimezone().isoformat(timespec="seconds"),
     "state": state,
     "detail": detail,
     "task": task,
-    "interval_seconds": int(interval),
+    "interval_seconds": int(idle_interval),
+    "idle_poll_interval_seconds": int(idle_interval),
+    "active_poll_interval_seconds": int(active_interval),
     "safety_mode": "PHASE_1_SIMULATION_ONLY",
 }
 path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -174,7 +177,7 @@ git_pull_ff() {
     log "git pull skipped by worker verification mode"
     return 0
   fi
-  run_with_timeout "$GIT_TIMEOUT_SECONDS" git pull --ff-only origin main
+  run_with_timeout "$GIT_TIMEOUT_SECONDS" git pull --ff-only --quiet origin main
 }
 
 commit_and_push() {
@@ -310,9 +313,6 @@ run_codex_task_with_retries() {
 
 run_once_body() {
   cd "$ROOT"
-  log "worker run started"
-  write_heartbeat "started" "worker run started"
-
   if ! remote_ok; then
     append_decision "Git remote is not $EXPECTED_REMOTE"
     append_status "BLOCKED_REMOTE" "Git remote mismatch"
@@ -331,13 +331,10 @@ run_once_body() {
   }
 
   if ! task_id="$(extract_first_task)"; then
-    log "no pending task"
-    write_heartbeat "idle" "no pending task"
-    update_dashboard
-    commit_and_push "Update worker dashboard" "$DASHBOARD_FILE" logs/worker_heartbeat.json >> "$LOG" 2>&1 || true
     return 0
   fi
 
+  log "worker run started"
   log "selected task $task_id"
   write_heartbeat "selected" "selected task $task_id" "$task_id"
 
@@ -431,12 +428,16 @@ case "${1:---once}" in
   --dry-run)
     run_once --dry-run
     ;;
-  --loop)
-    while true; do
-      run_once || true
-      sleep "$INTERVAL_SECONDS"
-    done
-    ;;
+	  --loop)
+	    while true; do
+	      run_once || true
+	      if [ -s "$TASK_FILE" ]; then
+	        sleep "$ACTIVE_POLL_INTERVAL_SECONDS"
+	      else
+	        sleep "$IDLE_POLL_INTERVAL_SECONDS"
+	      fi
+	    done
+	    ;;
   *)
     echo "Usage: $0 [--once|--dry-run|--loop]" >&2
     exit 2

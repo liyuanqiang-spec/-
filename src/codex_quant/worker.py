@@ -231,14 +231,12 @@ def execute_task(task: QueueTask) -> TaskResult:
 
 def process_once() -> int:
     if not TASK_QUEUE.exists():
-        update_dashboard()
         return 0
 
     text = TASK_QUEUE.read_text(encoding="utf-8")
     tasks = parse_task_queue(text)
     ready = [task for task in tasks if task.status in READY_STATUSES]
     if not ready:
-        update_dashboard()
         return 0
 
     processed = 0
@@ -272,17 +270,25 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Safe Codex quant background worker.")
     parser.add_argument("--once", action="store_true", help="process the queue once and exit")
     parser.add_argument("--loop", action="store_true", help="keep checking the queue")
-    parser.add_argument("--interval", type=int, default=60, help="seconds between loop checks")
+    parser.add_argument("--interval", type=int, default=None, help="deprecated alias for idle loop seconds")
+    parser.add_argument("--idle-interval", type=int, default=600, help="seconds between idle loop checks")
+    parser.add_argument("--active-interval", type=int, default=60, help="seconds between active loop checks")
     args = parser.parse_args()
+    idle_interval = args.interval if args.interval is not None else args.idle_interval
 
     if args.once or not args.loop:
         process_once()
         return 0
 
-    append_run_log("worker_started", "loop", f"interval={args.interval}s")
+    append_run_log(
+        "worker_started",
+        "loop",
+        f"idle_poll_interval_seconds={idle_interval}; active_poll_interval_seconds={args.active_interval}",
+    )
     while True:
-        process_once()
-        time.sleep(max(args.interval, 30))
+        processed = process_once()
+        interval = args.active_interval if processed else idle_interval
+        time.sleep(max(interval, 30))
 
 
 if __name__ == "__main__":

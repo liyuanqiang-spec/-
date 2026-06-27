@@ -37,17 +37,18 @@ for path in AGENTS.md TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md sc
   fi
 done
 
-if grep -q 'WORKER_INTERVAL_SECONDS:-60' "$ROOT/scripts/codex_worker.sh" && grep -q 'WORKER_INTERVAL_SECONDS:-60' "$ROOT/scripts/start_worker.sh"; then
-  line "repo_interval_seconds=60"
+if grep -q 'WORKER_IDLE_POLL_INTERVAL_SECONDS:-600' "$ROOT/scripts/codex_worker.sh" && grep -q 'WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-60' "$ROOT/scripts/codex_worker.sh" && grep -q 'WORKER_IDLE_POLL_INTERVAL_SECONDS:-600' "$ROOT/scripts/start_worker.sh" && grep -q 'WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-60' "$ROOT/scripts/start_worker.sh"; then
+  line "repo_idle_poll_interval_seconds=600"
+  line "repo_active_poll_interval_seconds=60"
 else
-  fail "repo worker interval is not configured to 60 seconds"
+  fail "repo worker intervals are not configured to idle=600 seconds and active=60 seconds"
 fi
 
 if [ -f "$PLIST" ]; then
   plist_interval="$(awk '/<key>StartInterval<\/key>/ {getline; gsub(/.*<integer>|<\/integer>.*/, ""); print; exit}' "$PLIST" || true)"
   line "launchd_plist=$PLIST"
   line "launchd_plist_interval=${plist_interval:-unknown}"
-  if [ "${plist_interval:-}" != "60" ]; then
+  if [ "${plist_interval:-}" != "600" ]; then
     warn "active launchd plist may still need reload through scripts/start_worker.sh"
   fi
 else
@@ -80,6 +81,8 @@ payload = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
 print(f"heartbeat_timestamp={payload.get('timestamp', 'unknown')}")
 print(f"heartbeat_state={payload.get('state', 'unknown')}")
 print(f"heartbeat_interval_seconds={payload.get('interval_seconds', 'unknown')}")
+print(f"heartbeat_idle_poll_interval_seconds={payload.get('idle_poll_interval_seconds', payload.get('interval_seconds', 'unknown'))}")
+print(f"heartbeat_active_poll_interval_seconds={payload.get('active_poll_interval_seconds', 'unknown')}")
 print(f"heartbeat_safety_mode={payload.get('safety_mode', 'unknown')}")
 PY
 else

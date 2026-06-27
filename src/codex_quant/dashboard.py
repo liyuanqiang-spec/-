@@ -137,6 +137,30 @@ def _latest_report(root: Path) -> str:
     return f"[`{rel}`]({rel})"
 
 
+def _worker_poll_intervals(root: Path) -> str:
+    worker_script = _read_text(root / "scripts" / "codex_worker.sh")
+    idle_match = re.search(r"WORKER_IDLE_POLL_INTERVAL_SECONDS:-(\d+)", worker_script)
+    active_match = re.search(r"WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-(\d+)", worker_script)
+    idle = idle_match.group(1) if idle_match else ""
+    active = active_match.group(1) if active_match else ""
+
+    if not (idle and active):
+        heartbeat = root / "logs" / "worker_heartbeat.json"
+        if heartbeat.exists():
+            try:
+                payload = json.loads(heartbeat.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                payload = {}
+            idle = idle or str(payload.get("idle_poll_interval_seconds", payload.get("interval_seconds", ""))).strip()
+            active = active or str(payload.get("active_poll_interval_seconds", "")).strip()
+
+    if idle and active:
+        return f"idle `{idle}s`, active `{active}s`"
+    if idle:
+        return f"idle `{idle}s`"
+    return "Unknown"
+
+
 def _latest_completed_task_id(root: Path) -> str:
     text = _read_text(root / RUN_LOG.name)
     matches = re.findall(r"\bTask\s+([A-Za-z0-9_.-]+)\s+completed\b", text)
@@ -213,6 +237,7 @@ def build_dashboard(root: Path = PROJECT_ROOT) -> str:
         ("Recently completed task", _task_summary(completed)),
         ("Recent failed or blocked task", _task_summary(failed)),
         ("Latest report link", _latest_report(root)),
+        ("Worker poll interval", _worker_poll_intervals(root)),
         ("Latest push/commit", _latest_commit(root)),
         ("DECISION_REQUIRED blocking", decision),
         ("Current safety mode", "`PHASE_1_SIMULATION_ONLY`"),
