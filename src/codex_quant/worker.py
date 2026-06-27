@@ -11,6 +11,7 @@ from pathlib import Path
 
 from . import run_pipeline
 from .config import DECISION_REQUIRED, PROJECT_ROOT, RUN_LOG, STATUS_FILE, TASK_QUEUE
+from .dashboard import update_dashboard
 
 
 SAFE_TASK_TYPES = {"pipeline", "report", "test", "status_check"}
@@ -230,12 +231,14 @@ def execute_task(task: QueueTask) -> TaskResult:
 
 def process_once() -> int:
     if not TASK_QUEUE.exists():
+        update_dashboard()
         return 0
 
     text = TASK_QUEUE.read_text(encoding="utf-8")
     tasks = parse_task_queue(text)
     ready = [task for task in tasks if task.status in READY_STATUSES]
     if not ready:
+        update_dashboard()
         return 0
 
     processed = 0
@@ -261,6 +264,7 @@ def process_once() -> int:
         if result.status == "completed":
             append_status_update(task.task_id, result.summary)
         processed += 1
+    update_dashboard()
     return processed
 
 

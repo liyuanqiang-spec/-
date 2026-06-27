@@ -1,5 +1,7 @@
 # Silver Options Quant Worker
 
+查看工作状态: [WORKER_DASHBOARD.md](WORKER_DASHBOARD.md)
+
 This repository is the GitHub-supervised workspace for a silver options/futures quantitative research system.
 
 Current mode: `PHASE_1_SIMULATION_ONLY`

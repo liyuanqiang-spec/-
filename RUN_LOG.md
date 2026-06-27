@@ -204,3 +204,18 @@ This file records safe worker runs and Codex execution events.
 
 - Event: blocked
 - Detail: Task TASK-004 blocked by risk control
+
+## 2026-06-27 18:34:35 +0800
+
+- Event: started
+- Detail: Task TASK-005 started
+
+## 2026-06-27 18:38:33 +0800
+
+- Event: completed
+- Detail: Task TASK-005 completed in PHASE_1_SIMULATION_ONLY. Created `WORKER_DASHBOARD.md`, added README top link, added `src/codex_quant/dashboard.py` and `scripts/update_worker_dashboard.py`, wired dashboard refresh into shell and Python worker paths, and verified with unit tests, compileall, shell syntax check, and dashboard generation. No real account connection, real order placement/cancellation, fund transfer, original-data deletion, secret exposure, or danger-full-access used.
+
+## 2026-06-27 18:39:44 +0800
+
+- Event: completed
+- Detail: Task TASK-005 completed

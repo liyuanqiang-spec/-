@@ -10,6 +10,8 @@ QUEUE="$ROOT/TASK_QUEUE.md"
 STATUS="$ROOT/STATUS.md"
 RUN_LOG="$ROOT/RUN_LOG.md"
 DECISION="$ROOT/DECISION_REQUIRED.md"
+DASHBOARD_FILE="WORKER_DASHBOARD.md"
+DASHBOARD="$ROOT/$DASHBOARD_FILE"
 LOG="$ROOT/logs/worker.log"
 TASK_FILE="$ROOT/logs/worker_task.txt"
 INTERVAL_SECONDS="${WORKER_INTERVAL_SECONDS:-300}"
@@ -73,6 +75,12 @@ append_run_log() {
     printf -- '- Event: %s\n' "$1"
     printf -- '- Detail: %s\n' "$2"
   } >> "$RUN_LOG"
+}
+
+update_dashboard() {
+  if [ -f "$ROOT/scripts/update_worker_dashboard.py" ]; then
+    python3 "$ROOT/scripts/update_worker_dashboard.py" >> "$LOG" 2>&1 || log "dashboard update failed"
+  fi
 }
 
 remote_ok() {
@@ -168,6 +176,7 @@ run_once() {
     append_decision "Git remote is not $EXPECTED_REMOTE"
     append_status "BLOCKED_REMOTE" "Git remote mismatch"
     append_run_log "blocked" "Git remote mismatch"
+    update_dashboard
     return 1
   fi
 
@@ -175,11 +184,18 @@ run_once() {
     append_decision "git pull failed; manual conflict/auth check required"
     append_status "BLOCKED_PULL" "git pull failed"
     append_run_log "blocked" "git pull failed"
+    update_dashboard
     return 1
   }
 
   if ! task_id="$(extract_first_task)"; then
     log "no pending task"
+    update_dashboard
+    git add "$DASHBOARD_FILE"
+    if ! git diff --cached --quiet; then
+      git commit -m "Update worker dashboard" >> "$LOG" 2>&1 || true
+      run_with_timeout "$GIT_TIMEOUT_SECONDS" git push origin main >> "$LOG" 2>&1 || true
+    fi
     return 0
   fi
 
@@ -190,7 +206,8 @@ run_once() {
     update_task_status "$task_id" "decision_required" "blocked by risk control"
     append_status "DECISION_REQUIRED" "Task $task_id blocked by risk control"
     append_run_log "blocked" "Task $task_id blocked by risk control"
-    git add TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md
+    update_dashboard
+    git add TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md "$DASHBOARD_FILE"
     git commit -m "Block unsafe worker task $task_id" >> "$LOG" 2>&1 || true
     run_with_timeout "$GIT_TIMEOUT_SECONDS" git push origin main >> "$LOG" 2>&1 || true
     return 1
@@ -206,7 +223,8 @@ run_once() {
     update_task_status "$task_id" "completed" "GPT handshake completed by local worker"
     append_status "GPT_HANDSHAKE_OK" "Task $task_id completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working"
     append_run_log "gpt_handshake" "Task $task_id completed by local worker without codex exec; safety mode remained PHASE_1_SIMULATION_ONLY"
-    git add TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md
+    update_dashboard
+    git add TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md "$DASHBOARD_FILE"
     if ! git diff --cached --quiet; then
       git commit -m "Worker completed GPT handshake $task_id" >> "$LOG" 2>&1 || true
       run_with_timeout "$GIT_TIMEOUT_SECONDS" git push origin main >> "$LOG" 2>&1 || {
@@ -239,7 +257,8 @@ run_once() {
     append_run_log "failed" "Task $task_id failed; see logs/worker.log"
   fi
 
-  git add AGENTS.md TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md RISK_CONTROL.md README.md PROJECT_PLAN.md DATA_SCHEMA.md DATA REPORTS scripts logs src tests data reports .gitignore
+  update_dashboard
+  git add AGENTS.md TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md RISK_CONTROL.md README.md WORKER_DASHBOARD.md PROJECT_PLAN.md DATA_SCHEMA.md DATA REPORTS scripts logs src tests data reports .gitignore
   if ! git diff --cached --quiet; then
     git commit -m "Worker processed $task_id" >> "$LOG" 2>&1 || true
     run_with_timeout "$GIT_TIMEOUT_SECONDS" git push origin main >> "$LOG" 2>&1 || {

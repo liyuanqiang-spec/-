@@ -302,3 +302,29 @@ Status: `DECISION_REQUIRED`
 
 - Detail: Task TASK-004 blocked by risk control
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-27 18:34:35 +0800
+
+Status: `WORKER_RUNNING`
+
+- Detail: Task TASK-005 started
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-27 18:38:33 +0800
+
+Status: `TASK_005_COMPLETED`
+
+- Detail: Created `WORKER_DASHBOARD.md`, added the README "查看工作状态" entry, and wired worker scans to refresh the dashboard automatically.
+- Dashboard fields: last heartbeat time, worker status, current task, recently completed task, recent failed/blocked task, latest report link, latest push/commit, DECISION_REQUIRED blocker, current safety mode, and next recommendation.
+- Verification: `python3 -m unittest discover -s tests` passed, 6 tests; `python3 -m compileall -q src tests scripts` passed; `bash -n scripts/codex_worker.sh` passed; `python3 scripts/update_worker_dashboard.py` generated `WORKER_DASHBOARD.md`.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original data deletion, no secret exposure, no danger-full-access.
+- Git commit: not created inside codex exec; outer worker remains responsible for git add/commit/push.
+- Confirmation required: no.
+
+## Worker Update 2026-06-27 18:39:44 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-005 completed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

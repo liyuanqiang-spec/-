@@ -73,12 +73,12 @@ Worker rule: execute the first task whose status is `pending` and whose type is 
 - Result: pending worker execution
 
 ### TASK-005
-- Status: pending
+- Status: completed
 - Type: dashboard
 - Title: 创建可视化查看入口
 - Request: 在 TASK-004A 完成后，创建一个简单、可直接在 GitHub 页面查看的 `WORKER_DASHBOARD.md`，用于用户打开仓库页面即可看见 Codex 是否在工作。Dashboard 至少包含：最后心跳时间、worker 状态、当前任务、最近完成任务、最近失败任务、最近报告链接、最近一次 push/commit、是否有 DECISION_REQUIRED 阻塞、当前安全模式、下一步建议。每次 worker 扫描结束后自动更新该文件。同步在 README.md 顶部增加“查看工作状态”的入口链接，指向 `WORKER_DASHBOARD.md`。
 - Expected output: `WORKER_DASHBOARD.md` and README entry; future worker runs update dashboard automatically.
 - Safety: status_and_report_only
 - Created: 2026-06-27
-- Last update: updated by ChatGPT
-- Result: pending worker execution
+- Last update: updated by worker
+- Result: codex exec completed
