@@ -284,3 +284,14 @@ Status: `WORKER_LAUNCHD_REPAIR_READY`
 - Detail: LaunchAgent was changed to run from an ASCII worker clone under `~/Library/Application Support/CodexGithubWorker/repo` because macOS denied background access to the project under `Documents`.
 - GitHub target: `https://github.com/liyuanqiang-spec/-.git`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-27 18:13:40 +0800
+
+Status: `WORKER_LAUNCHD_VERIFIED`
+
+- Detail: LaunchAgent successfully ran from the ASCII worker clone and exited with code 0.
+- Worker repo: `~/Library/Application Support/CodexGithubWorker/repo`
+- Result: no pending task after completing TASK-001, TASK-002, and TASK-003.
+- GitHub target: `https://github.com/liyuanqiang-spec/-.git`
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Confirmation required: no.
