@@ -42,6 +42,7 @@ Blocked:
 scripts/start_worker.sh
 scripts/stop_worker.sh
 scripts/codex_worker.sh --dry-run
+scripts/check_worker_health.sh
 ```
 
 Worker logs:

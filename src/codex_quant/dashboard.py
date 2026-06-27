@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import re
 import subprocess
 from dataclasses import dataclass
@@ -78,6 +79,16 @@ def _task_summary(task: DashboardTask | None) -> str:
 
 
 def _last_worker_time(root: Path) -> str:
+    heartbeat = root / "logs" / "worker_heartbeat.json"
+    if heartbeat.exists():
+        try:
+            payload = json.loads(heartbeat.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            payload = {}
+        timestamp = str(payload.get("timestamp", "")).strip()
+        if timestamp:
+            return timestamp
+
     candidates: list[str] = []
     worker_log = root / "logs" / "worker.log"
     for match in re.finditer(r"\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} [+-]\d{4})\]", _read_text(worker_log)):
@@ -126,6 +137,12 @@ def _latest_report(root: Path) -> str:
     return f"[`{rel}`]({rel})"
 
 
+def _latest_completed_task_id(root: Path) -> str:
+    text = _read_text(root / RUN_LOG.name)
+    matches = re.findall(r"\bTask\s+([A-Za-z0-9_.-]+)\s+completed\b", text)
+    return matches[-1] if matches else ""
+
+
 def _decision_blocker(root: Path) -> str:
     text = _read_text(root / DECISION_REQUIRED.name)
     sections = re.split(r"(?m)^##\s+", text)
@@ -154,7 +171,15 @@ def build_dashboard(root: Path = PROJECT_ROOT) -> str:
     tasks = parse_queue_tasks(queue_text)
     running = next((task for task in tasks if task.status == "running"), None)
     pending = next((task for task in tasks if task.status in READY_STATUSES), None)
-    completed = next((task for task in reversed(tasks) if task.status == "completed"), None)
+    latest_completed_id = _latest_completed_task_id(root)
+    completed = next(
+        (
+            task
+            for task in tasks
+            if task.status == "completed" and task.task_id == latest_completed_id
+        ),
+        None,
+    ) or next((task for task in reversed(tasks) if task.status == "completed"), None)
     failed = next(
         (task for task in reversed(tasks) if task.status in {"failed", "decision_required"}),
         None,

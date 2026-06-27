@@ -10,6 +10,7 @@ __pycache__/
 .codex_worker.err
 logs/*.log
 logs/worker_task.txt
+logs/worker.lock/
 reports/*.html
 reports/*.pdf
 data/raw/*

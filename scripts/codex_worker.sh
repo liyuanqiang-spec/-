@@ -14,10 +14,15 @@ DASHBOARD_FILE="WORKER_DASHBOARD.md"
 DASHBOARD="$ROOT/$DASHBOARD_FILE"
 LOG="$ROOT/logs/worker.log"
 TASK_FILE="$ROOT/logs/worker_task.txt"
-INTERVAL_SECONDS="${WORKER_INTERVAL_SECONDS:-300}"
+LOCK_DIR="$ROOT/logs/worker.lock"
+HEARTBEAT="$ROOT/logs/worker_heartbeat.json"
+INTERVAL_SECONDS="${WORKER_INTERVAL_SECONDS:-60}"
 EXPECTED_REMOTE="https://github.com/liyuanqiang-spec/-.git"
 GIT_TIMEOUT_SECONDS="${GIT_TIMEOUT_SECONDS:-120}"
 CODEX_EXEC_TIMEOUT_SECONDS="${CODEX_EXEC_TIMEOUT_SECONDS:-1800}"
+ROUND_TIMEOUT_SECONDS="${WORKER_ROUND_TIMEOUT_SECONDS:-2400}"
+LOCK_STALE_SECONDS="${WORKER_LOCK_STALE_SECONDS:-3600}"
+MAX_TASK_ATTEMPTS="${WORKER_MAX_TASK_ATTEMPTS:-3}"
 
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PATH:-}"
 export GIT_TERMINAL_PROMPT=0
@@ -27,6 +32,72 @@ touch "$LOG"
 
 log() {
   printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S %z')" "$*" | tee -a "$LOG"
+}
+
+write_heartbeat() {
+  local state="$1"
+  local detail="${2:-}"
+  local task="${3:-none}"
+  python3 - "$HEARTBEAT" "$state" "$detail" "$task" "$INTERVAL_SECONDS" <<'PY'
+from __future__ import annotations
+
+import json
+import sys
+from datetime import datetime
+from pathlib import Path
+
+path = Path(sys.argv[1])
+state, detail, task, interval = sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]
+path.parent.mkdir(parents=True, exist_ok=True)
+payload = {
+    "timestamp": datetime.now().astimezone().isoformat(timespec="seconds"),
+    "state": state,
+    "detail": detail,
+    "task": task,
+    "interval_seconds": int(interval),
+    "safety_mode": "PHASE_1_SIMULATION_ONLY",
+}
+path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+PY
+}
+
+acquire_lock() {
+  if mkdir "$LOCK_DIR" 2>/dev/null; then
+    printf '%s\n' "$$" > "$LOCK_DIR/pid"
+    date '+%Y-%m-%d %H:%M:%S %z' > "$LOCK_DIR/created_at"
+    return 0
+  fi
+
+  local lock_pid=""
+  if [ -f "$LOCK_DIR/pid" ]; then
+    lock_pid="$(cat "$LOCK_DIR/pid" 2>/dev/null || true)"
+  fi
+  if [ -n "$lock_pid" ] && kill -0 "$lock_pid" 2>/dev/null; then
+    log "another worker run is active pid=$lock_pid"
+    write_heartbeat "locked" "another worker run is active pid=$lock_pid"
+    return 1
+  fi
+
+  local now created age
+  now="$(date +%s)"
+  created="$(stat -f %m "$LOCK_DIR" 2>/dev/null || printf '0')"
+  age=$((now - created))
+  if [ "$age" -ge "$LOCK_STALE_SECONDS" ]; then
+    log "removing stale worker lock age=${age}s"
+    rm -rf "$LOCK_DIR"
+    mkdir "$LOCK_DIR"
+    printf '%s\n' "$$" > "$LOCK_DIR/pid"
+    date '+%Y-%m-%d %H:%M:%S %z' > "$LOCK_DIR/created_at"
+    return 0
+  fi
+
+  log "worker lock exists and is not stale age=${age}s"
+  write_heartbeat "locked" "worker lock exists and is not stale age=${age}s"
+  return 1
+}
+
+release_lock() {
+  rm -rf "$LOCK_DIR"
 }
 
 run_with_timeout() {
@@ -83,7 +154,44 @@ update_dashboard() {
   fi
 }
 
+git_pull_ff() {
+  if [ "${WORKER_NO_GIT_MUTATION:-0}" = "1" ] || [ "${WORKER_SKIP_PULL:-0}" = "1" ]; then
+    log "git pull skipped by worker verification mode"
+    return 0
+  fi
+  run_with_timeout "$GIT_TIMEOUT_SECONDS" git pull --ff-only origin main
+}
+
+commit_and_push() {
+  local message="$1"
+  shift
+  local existing_paths=()
+  local path
+  for path in "$@"; do
+    if [ -e "$ROOT/$path" ]; then
+      existing_paths+=("$path")
+    fi
+  done
+  if [ "${#existing_paths[@]}" -eq 0 ]; then
+    log "no existing paths to commit for: $message"
+    return 0
+  fi
+  if [ "${WORKER_NO_GIT_MUTATION:-0}" = "1" ]; then
+    log "git add/commit/push skipped by worker verification mode: $message paths=${existing_paths[*]}"
+    return 0
+  fi
+  git add "${existing_paths[@]}"
+  if ! git diff --cached --quiet; then
+    git commit -m "$message" >> "$LOG" 2>&1 || true
+    run_with_timeout "$GIT_TIMEOUT_SECONDS" git push origin main
+  fi
+}
+
 remote_ok() {
+  if [ "${WORKER_SKIP_REMOTE_CHECK:-0}" = "1" ]; then
+    log "remote check skipped by worker verification mode"
+    return 0
+  fi
   local url
   url="$(git -C "$ROOT" remote get-url origin 2>/dev/null || true)"
   [ "$url" = "$EXPECTED_REMOTE" ] || [ "$url" = "git@github.com:liyuanqiang-spec/-.git" ]
@@ -168,9 +276,27 @@ has_hard_stop_risk() {
   grep -Eiq '真实交易|真实下单|实盘|撤单|资金划转|保证金划转|删除原始数据|删除raw|API Key|api key|password|密码|token|密钥|secret|danger-full-access|dangerously-bypass|real trading|real order|cancel order|fund transfer|delete raw data' <<< "$text"
 }
 
-run_once() {
+run_codex_task_with_retries() {
+  local task_id="$1"
+  local prompt="$2"
+  local attempt=1
+  while [ "$attempt" -le "$MAX_TASK_ATTEMPTS" ]; do
+    append_run_log "attempt" "Task $task_id codex exec attempt $attempt/$MAX_TASK_ATTEMPTS"
+    log "codex exec attempt $attempt/$MAX_TASK_ATTEMPTS for $task_id"
+    if run_with_timeout "$CODEX_EXEC_TIMEOUT_SECONDS" codex exec --sandbox workspace-write -C "$ROOT" "$prompt" >> "$LOG" 2>&1; then
+      return 0
+    fi
+    append_run_log "retry" "Task $task_id codex exec attempt $attempt failed"
+    log "codex exec attempt $attempt failed for $task_id"
+    attempt=$((attempt + 1))
+  done
+  return 1
+}
+
+run_once_body() {
   cd "$ROOT"
   log "worker run started"
+  write_heartbeat "started" "worker run started"
 
   if ! remote_ok; then
     append_decision "Git remote is not $EXPECTED_REMOTE"
@@ -180,36 +306,34 @@ run_once() {
     return 1
   fi
 
-  run_with_timeout "$GIT_TIMEOUT_SECONDS" git pull --ff-only origin main >> "$LOG" 2>&1 || {
+  git_pull_ff >> "$LOG" 2>&1 || {
     append_decision "git pull failed; manual conflict/auth check required"
     append_status "BLOCKED_PULL" "git pull failed"
     append_run_log "blocked" "git pull failed"
+    write_heartbeat "blocked" "git pull failed"
     update_dashboard
     return 1
   }
 
   if ! task_id="$(extract_first_task)"; then
     log "no pending task"
+    write_heartbeat "idle" "no pending task"
     update_dashboard
-    git add "$DASHBOARD_FILE"
-    if ! git diff --cached --quiet; then
-      git commit -m "Update worker dashboard" >> "$LOG" 2>&1 || true
-      run_with_timeout "$GIT_TIMEOUT_SECONDS" git push origin main >> "$LOG" 2>&1 || true
-    fi
+    commit_and_push "Update worker dashboard" "$DASHBOARD_FILE" >> "$LOG" 2>&1 || true
     return 0
   fi
 
   log "selected task $task_id"
+  write_heartbeat "selected" "selected task $task_id" "$task_id"
 
   if has_hard_stop_risk; then
     append_decision "Task $task_id contains a blocked trading/fund/secret/deletion/danger risk"
     update_task_status "$task_id" "decision_required" "blocked by risk control"
     append_status "DECISION_REQUIRED" "Task $task_id blocked by risk control"
     append_run_log "blocked" "Task $task_id blocked by risk control"
+    write_heartbeat "blocked" "Task $task_id blocked by risk control" "$task_id"
     update_dashboard
-    git add TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md "$DASHBOARD_FILE"
-    git commit -m "Block unsafe worker task $task_id" >> "$LOG" 2>&1 || true
-    run_with_timeout "$GIT_TIMEOUT_SECONDS" git push origin main >> "$LOG" 2>&1 || true
+    commit_and_push "Block unsafe worker task $task_id" TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md "$DASHBOARD_FILE" >> "$LOG" 2>&1 || true
     return 1
   fi
 
@@ -223,23 +347,22 @@ run_once() {
     update_task_status "$task_id" "completed" "GPT handshake completed by local worker"
     append_status "GPT_HANDSHAKE_OK" "Task $task_id completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working"
     append_run_log "gpt_handshake" "Task $task_id completed by local worker without codex exec; safety mode remained PHASE_1_SIMULATION_ONLY"
+    write_heartbeat "completed" "Task $task_id completed by local worker" "$task_id"
     update_dashboard
-    git add TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md "$DASHBOARD_FILE"
-    if ! git diff --cached --quiet; then
-      git commit -m "Worker completed GPT handshake $task_id" >> "$LOG" 2>&1 || true
-      run_with_timeout "$GIT_TIMEOUT_SECONDS" git push origin main >> "$LOG" 2>&1 || {
-        append_decision "git push failed after GPT handshake task $task_id"
-        append_status "BLOCKED_PUSH" "git push failed after GPT handshake task $task_id"
-        append_run_log "blocked" "git push failed after GPT handshake task $task_id"
-        return 1
-      }
-    fi
+    commit_and_push "Worker completed GPT handshake $task_id" TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md "$DASHBOARD_FILE" logs/worker_heartbeat.json >> "$LOG" 2>&1 || {
+      append_decision "git push failed after GPT handshake task $task_id"
+      append_status "BLOCKED_PUSH" "git push failed after GPT handshake task $task_id"
+      append_run_log "blocked" "git push failed after GPT handshake task $task_id"
+      write_heartbeat "blocked" "git push failed after GPT handshake task $task_id" "$task_id"
+      return 1
+    }
     return 0
   fi
 
   update_task_status "$task_id" "running" "worker started"
   append_status "WORKER_RUNNING" "Task $task_id started"
   append_run_log "started" "Task $task_id started"
+  write_heartbeat "running" "Task $task_id started" "$task_id"
 
   prompt="Read AGENTS.md and TASK_QUEUE.md. Execute only task $task_id from TASK_QUEUE.md. Stay in PHASE_1_SIMULATION_ONLY. Do not connect real trading accounts. Do not place or cancel real orders. Do not transfer funds. Do not delete original data. Do not expose secrets. Do not use danger-full-access. Update STATUS.md and RUN_LOG.md with the result. Do not run git add, git commit, or git push inside codex exec; the outer worker will commit and push after you exit."
 
@@ -247,27 +370,43 @@ run_once() {
     update_task_status "$task_id" "failed" "codex command not found in worker environment"
     append_status "WORKER_FAILED" "Task $task_id failed; codex command not found in worker environment"
     append_run_log "failed" "Task $task_id failed; codex command not found in worker environment"
-  elif run_with_timeout "$CODEX_EXEC_TIMEOUT_SECONDS" codex exec --sandbox workspace-write -C "$ROOT" "$prompt" >> "$LOG" 2>&1; then
+  elif run_codex_task_with_retries "$task_id" "$prompt"; then
     update_task_status "$task_id" "completed" "codex exec completed"
     append_status "WORKER_COMPLETED" "Task $task_id completed"
     append_run_log "completed" "Task $task_id completed"
+    write_heartbeat "completed" "Task $task_id completed" "$task_id"
   else
     update_task_status "$task_id" "failed" "codex exec failed"
     append_status "WORKER_FAILED" "Task $task_id failed; see logs/worker.log"
     append_run_log "failed" "Task $task_id failed; see logs/worker.log"
+    write_heartbeat "failed" "Task $task_id failed after $MAX_TASK_ATTEMPTS attempts" "$task_id"
   fi
 
   update_dashboard
-  git add AGENTS.md TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md RISK_CONTROL.md README.md WORKER_DASHBOARD.md PROJECT_PLAN.md DATA_SCHEMA.md DATA REPORTS scripts logs src tests data reports .gitignore
-  if ! git diff --cached --quiet; then
-    git commit -m "Worker processed $task_id" >> "$LOG" 2>&1 || true
-    run_with_timeout "$GIT_TIMEOUT_SECONDS" git push origin main >> "$LOG" 2>&1 || {
-      append_decision "git push failed after worker processed $task_id"
-      append_status "BLOCKED_PUSH" "git push failed after worker processed $task_id"
-      append_run_log "blocked" "git push failed after worker processed $task_id"
-      return 1
-    }
+  commit_and_push "Worker processed $task_id" AGENTS.md TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md RISK_CONTROL.md README.md WORKER_DASHBOARD.md PROJECT_PLAN.md DATA_SCHEMA.md DATA REPORTS scripts logs/worker_heartbeat.json src tests data reports .gitignore >> "$LOG" 2>&1 || {
+    append_decision "git push failed after worker processed $task_id"
+    append_status "BLOCKED_PUSH" "git push failed after worker processed $task_id"
+    append_run_log "blocked" "git push failed after worker processed $task_id"
+    write_heartbeat "blocked" "git push failed after worker processed $task_id" "$task_id"
+    return 1
+  }
+}
+
+run_once() {
+  if ! acquire_lock; then
+    return 0
   fi
+
+  local rc=0
+  run_with_timeout "$ROUND_TIMEOUT_SECONDS" run_once_body "$@" || rc="$?"
+  if [ "$rc" -eq 124 ]; then
+    append_status "WORKER_TIMEOUT" "Worker round exceeded ${ROUND_TIMEOUT_SECONDS}s"
+    append_run_log "timeout" "Worker round exceeded ${ROUND_TIMEOUT_SECONDS}s"
+    write_heartbeat "timeout" "Worker round exceeded ${ROUND_TIMEOUT_SECONDS}s"
+    update_dashboard
+  fi
+  release_lock
+  return "$rc"
 }
 
 case "${1:---once}" in

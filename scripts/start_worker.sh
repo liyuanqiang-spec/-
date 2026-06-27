@@ -11,7 +11,7 @@ LOG="$WORKER_REPO/logs/worker.log"
 ENTRY="$SUPPORT_DIR/worker_entry.sh"
 RUNTIME="$SUPPORT_DIR/codex_worker_runtime.sh"
 LAUNCH_LOG="$LAUNCH_LOG_DIR/worker.log"
-INTERVAL="${WORKER_INTERVAL_SECONDS:-300}"
+INTERVAL="${WORKER_INTERVAL_SECONDS:-60}"
 REMOTE_URL="https://github.com/liyuanqiang-spec/-.git"
 
 mkdir -p "$HOME/Library/LaunchAgents" "$SUPPORT_DIR" "$LAUNCH_LOG_DIR"
@@ -39,12 +39,6 @@ exec /bin/bash "$RUNTIME" --once
 ENTRY
 chmod +x "$ENTRY"
 
-if launchctl print "gui/$UID/$LABEL" >/dev/null 2>&1; then
-  launchctl kickstart -k "gui/$UID/$LABEL" >/dev/null 2>&1 || true
-  echo "worker already started and kicked: $LABEL log=$LOG launch_log=$LAUNCH_LOG"
-  exit 0
-fi
-
 cat > "$PLIST" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -68,6 +62,10 @@ cat > "$PLIST" <<PLIST
 </dict>
 </plist>
 PLIST
+
+if launchctl print "gui/$UID/$LABEL" >/dev/null 2>&1; then
+  launchctl bootout "gui/$UID" "$PLIST" >/dev/null 2>&1 || launchctl bootout "gui/$UID/$LABEL" >/dev/null 2>&1 || true
+fi
 
 launchctl bootstrap "gui/$UID" "$PLIST"
 launchctl kickstart -k "gui/$UID/$LABEL" >/dev/null 2>&1 || true

@@ -62,15 +62,15 @@ Worker rule: execute the first task whose status is `pending` and whose type is 
 - Result: superseded by safer scoped task
 
 ### TASK-004A
-- Status: pending
+- Status: completed
 - Type: worker_stability_status_only
 - Title: 稳定本地 worker 的状态扫描与回写
 - Request: 只在当前 GitHub 仓库内做状态类维护。请检查并改进 Mac mini 本地 worker 的定时扫描闭环：把扫描间隔从 300 秒改为 60 秒；每 60 秒拉取仓库、读取 TASK_QUEUE.md、执行第一个安全任务、更新 STATUS.md/RUN_LOG.md/REPORTS/DECISION_REQUIRED.md，并把状态文件推送回 liyuanqiang-spec/-。增加防重复运行锁、单轮超时、普通失败重试三轮、logs/worker.log 记录、scripts/check_worker_health.sh 健康检查、heartbeat 心跳记录、dry-run 验证。完成后连续验证至少 3 轮“读取—执行—回写—推送”闭环，并在 STATUS.md 写入稳定性报告。
 - Expected output: updated worker scripts, launchd interval set to 60 seconds, scripts/check_worker_health.sh, heartbeat evidence, STATUS.md stability report, RUN_LOG.md logs.
 - Safety: status_only_repo_maintenance
 - Created: 2026-06-27
-- Last update: interval changed to 60 seconds by ChatGPT
-- Result: pending worker execution
+- Last update: updated by worker
+- Result: codex exec completed
 
 ### TASK-005
 - Status: completed

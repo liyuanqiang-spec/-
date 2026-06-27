@@ -272,7 +272,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Safe Codex quant background worker.")
     parser.add_argument("--once", action="store_true", help="process the queue once and exit")
     parser.add_argument("--loop", action="store_true", help="keep checking the queue")
-    parser.add_argument("--interval", type=int, default=300, help="seconds between loop checks")
+    parser.add_argument("--interval", type=int, default=60, help="seconds between loop checks")
     args = parser.parse_args()
 
     if args.once or not args.loop:

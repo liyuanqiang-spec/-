@@ -219,3 +219,18 @@ This file records safe worker runs and Codex execution events.
 
 - Event: completed
 - Detail: Task TASK-005 completed
+
+## 2026-06-27 18:48:09 +0800
+
+- Event: started
+- Detail: Task TASK-004A started
+
+## 2026-06-27 18:52:58 +0800
+
+- Event: completed
+- Detail: Task TASK-004A completed in PHASE_1_SIMULATION_ONLY. Updated worker scripts for 60-second repo interval, duplicate-run lock, stale-lock cleanup, round timeout, Codex/Git timeouts, three retry attempts for ordinary Codex exec failures, heartbeat file, health check script, and dashboard heartbeat reading. Verification passed: bash syntax checks, compileall, 6 unit tests, health check dry-run, and three local self-test rounds. No real account connection, real order placement/cancellation, fund transfer, original-data deletion, secret exposure, danger-full-access, git add, git commit, or git push was run inside codex exec.
+
+## 2026-06-27 18:54:46 +0800
+
+- Event: completed
+- Detail: Task TASK-004A completed

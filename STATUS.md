@@ -328,3 +328,35 @@ Status: `WORKER_COMPLETED`
 
 - Detail: Task TASK-005 completed
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-27 18:48:09 +0800
+
+Status: `WORKER_RUNNING`
+
+- Detail: Task TASK-004A started
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-27 18:52:58 +0800
+
+Status: `TASK_004A_COMPLETED`
+
+- Detail: Worker stability maintenance completed for `TASK-004A`.
+- Worker interval: repo worker defaults changed from 300 seconds to 60 seconds in `scripts/codex_worker.sh`, `scripts/start_worker.sh`, and the Python fallback worker.
+- Stability controls: added duplicate-run lock `logs/worker.lock/`, stale-lock cleanup, round timeout `WORKER_ROUND_TIMEOUT_SECONDS` default 2400 seconds, Codex exec timeout, Git timeout, and three Codex exec retry attempts for ordinary task failures.
+- Heartbeat: added `logs/worker_heartbeat.json`; latest evidence shows interval 60 seconds and safety mode `PHASE_1_SIMULATION_ONLY`.
+- Health check: added `scripts/check_worker_health.sh`; it checks required files, repo interval, launchd state, lock state, heartbeat, shell syntax, and dry-run worker selection without git mutation.
+- Dashboard: `WORKER_DASHBOARD.md` now reads the heartbeat file for last heartbeat time.
+- Launchd repo behavior: `scripts/start_worker.sh` now rewrites and reloads the user LaunchAgent with `StartInterval=60` when run. Current external plist still reports 300 seconds and the job was not loaded during this codex exec; no outside-project launchctl modification was performed in this run.
+- Verification: `bash -n` passed for worker scripts; `python3 -m compileall -q src tests` passed; `python3 -m unittest discover -s tests` passed, 6 tests; `scripts/check_worker_health.sh` exited 0 with repo interval 60 and dry-run ok.
+- Three-round loop verification: passed in `/tmp/codex-worker-selftest.8xNZg7`; `SELFTEST-ROUND-1`, `SELFTEST-ROUND-2`, and `SELFTEST-ROUND-3` each moved from pending to completed and wrote TASK_QUEUE/STATUS/RUN_LOG/heartbeat. Git add/commit/push was intentionally disabled by verification mode to honor the codex exec boundary.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original data deletion, no secret exposure, no danger-full-access.
+- Git commit: not created inside codex exec; outer worker remains responsible for git add/commit/push.
+- Confirmation required: no.
+
+## Worker Update 2026-06-27 18:54:46 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-004A completed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

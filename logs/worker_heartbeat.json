@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-06-27T18:54:18+08:00",
+  "state": "idle",
+  "detail": "no pending task",
+  "task": "none",
+  "interval_seconds": 60,
+  "safety_mode": "PHASE_1_SIMULATION_ONLY"
+}
