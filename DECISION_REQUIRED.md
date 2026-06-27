@@ -19,6 +19,10 @@ The worker and Codex must stop before any blocked action below and write the exa
 
 ## Open Decisions
 
+No current user action required for normal safe GitHub status-file supervision.
+
+## Resolved Decisions
+
 ### DR-20260627-GITHUB-PUSH-AUTH
 - Status: resolved
 - Created: 2026-06-27
@@ -38,10 +42,9 @@ The worker and Codex must stop before any blocked action below and write the exa
 - Item: Local Git now has `origin` set to `https://github.com/liyuanqiang-spec/-.git`. GitHub CLI is still not logged in, but this workflow uses normal `git pull`/`git push` for main-branch supervision.
 - Required confirmation: none for normal Git status-file supervision; PR creation would still require GitHub CLI/app authorization.
 
-## Decision Required 2026-06-27 18:29:25 +0800
-
-- Item: Task TASK-004 contains a blocked trading/fund/secret/deletion/danger risk
-- Current action: worker stopped before execution
-- A 推荐: keep simulation-only and rewrite the task as safe research work
-- B: explicitly authorize the blocked setup/action
-- C: cancel this task
+### DR-20260627-TASK-004-SAFETY-SCAN
+- Status: resolved
+- Created: 2026-06-27 18:29:25 +0800
+- Item: Task TASK-004 was blocked by the safety scanner because its wording included broad hard-stop categories.
+- Resolution: ChatGPT selected the safe path: TASK-004 was superseded and replaced with TASK-004A, limited to status-only repository maintenance and worker health checks.
+- Required confirmation: none for TASK-004A.
