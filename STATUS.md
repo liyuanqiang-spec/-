@@ -151,7 +151,10 @@ Status: `READY_FOR_GITHUB_SUPERVISION`
 - Compile check: passed for `src` and `tests`
 - Mail test: `/usr/bin/mail` accepted test email to `liyuanqiang@gmail.com` with subject `Codex 已启动` and body `可以了`
 - GitHub auth: completed via `gh auth login`; logged in as `liyuanqiang-spec`
-- Current GitHub supervision state: ready to push to `main`
+- GitHub push: completed to `liyuanqiang-spec/-` `main`
+- Current GitHub supervision state: active
+- Worker launchd status: scheduled every 300 seconds under `com.codex.github-supervised-worker`
+- Worker plist check: passed
 - Next recommendation: start worker and let ChatGPT update `TASK_QUEUE.md` on GitHub
 - Confirmation required now: no for normal safe worker tasks
 

@@ -109,3 +109,13 @@ This file records safe worker runs and Codex execution events.
 
 - Event: github_auth_completed
 - Detail: GitHub device login completed; `gh` logged in as `liyuanqiang-spec`
+
+## 2026-06-27 17:05:00 +0800
+
+- Event: git_push_completed
+- Detail: Pushed unattended worker setup to `liyuanqiang-spec/-` main
+
+## 2026-06-27 17:06:00 +0800
+
+- Event: worker_scheduled
+- Detail: launchd label `com.codex.github-supervised-worker`, interval 300 seconds
