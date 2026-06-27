@@ -1,17 +1,17 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-06-27 19:25:01 +0800`
+Last dashboard update: `2026-06-27 19:26:09 +0800`
 
 | Item | Result |
 |---|---|
-| Last heartbeat time | 2026-06-27T19:25:01+08:00 |
+| Last heartbeat time | 2026-06-27T19:26:09+08:00 |
 | Worker status | IDLE - latest status `WORKER_COMPLETED` |
 | Current task | None |
 | Recently completed task | `TASK-006` (completed) - Change idle poll interval to 10 minutes - codex exec completed |
 | Recent failed or blocked task | None |
 | Latest report link | [`reports/low_liquidity_candidates.md`](reports/low_liquidity_candidates.md) |
 | Worker poll interval | idle `600s`, active `60s` |
-| Latest push/commit | 64fb2b6 2026-06-27 Update worker dashboard |
+| Latest push/commit | d24b1f6 2026-06-27 Update worker dashboard |
 | DECISION_REQUIRED blocking | No |
 | Current safety mode | `PHASE_1_SIMULATION_ONLY` |
 | Next recommendation | Add the next safe data, backtest, simulation, or report task to `TASK_QUEUE.md`. |
