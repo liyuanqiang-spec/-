@@ -105,7 +105,7 @@ for script in scripts/codex_worker.sh scripts/start_worker.sh scripts/stop_worke
   fi
 done
 
-if WORKER_NO_GIT_MUTATION=1 WORKER_SKIP_PULL=1 WORKER_SKIP_REMOTE_CHECK=1 "$ROOT/scripts/codex_worker.sh" --dry-run >/tmp/codex_worker_health_dry_run.out 2>/tmp/codex_worker_health_dry_run.err; then
+if WORKER_NO_GIT_MUTATION=1 WORKER_SKIP_PULL=1 WORKER_SKIP_REMOTE_CHECK=1 WORKER_SKIP_STATE_WRITES=1 "$ROOT/scripts/codex_worker.sh" --dry-run >/tmp/codex_worker_health_dry_run.out 2>/tmp/codex_worker_health_dry_run.err; then
   line "dry_run=ok"
 else
   fail "worker dry-run failed"

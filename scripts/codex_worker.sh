@@ -35,6 +35,9 @@ log() {
 }
 
 write_heartbeat() {
+  if [ "${WORKER_SKIP_STATE_WRITES:-0}" = "1" ]; then
+    return 0
+  fi
   local state="$1"
   local detail="${2:-}"
   local task="${3:-none}"
@@ -121,6 +124,9 @@ run_with_timeout() {
 }
 
 append_decision() {
+  if [ "${WORKER_SKIP_STATE_WRITES:-0}" = "1" ]; then
+    return 0
+  fi
   {
     printf '\n## Decision Required %s\n\n' "$(date '+%Y-%m-%d %H:%M:%S %z')"
     printf -- '- Item: %s\n' "$1"
@@ -132,6 +138,9 @@ append_decision() {
 }
 
 append_status() {
+  if [ "${WORKER_SKIP_STATE_WRITES:-0}" = "1" ]; then
+    return 0
+  fi
   {
     printf '\n## Worker Update %s\n\n' "$(date '+%Y-%m-%d %H:%M:%S %z')"
     printf 'Status: `%s`\n\n' "$1"
@@ -141,6 +150,9 @@ append_status() {
 }
 
 append_run_log() {
+  if [ "${WORKER_SKIP_STATE_WRITES:-0}" = "1" ]; then
+    return 0
+  fi
   {
     printf '\n## %s\n\n' "$(date '+%Y-%m-%d %H:%M:%S %z')"
     printf -- '- Event: %s\n' "$1"
@@ -149,6 +161,9 @@ append_run_log() {
 }
 
 update_dashboard() {
+  if [ "${WORKER_SKIP_STATE_WRITES:-0}" = "1" ]; then
+    return 0
+  fi
   if [ -f "$ROOT/scripts/update_worker_dashboard.py" ]; then
     python3 "$ROOT/scripts/update_worker_dashboard.py" >> "$LOG" 2>&1 || log "dashboard update failed"
   fi
