@@ -7,15 +7,15 @@ Worker rule: execute the first task whose status is `pending` and whose type is 
 ## Tasks
 
 ### TASK-001
-- Status: decision_required
+- Status: pending
 - Type: development
 - Title: 白银期权价差策略 MVP 初始化
 - Request: 建立项目结构；建立期权合约扫描模块框架；建立价差计算模块框架；建立简单回测模块框架；建立报告输出模块框架；建立风险控制检查模块；不接实盘，不真实下单。
 - Expected output: runnable MVP scaffold and updated status/report files.
 - Safety: simulation_only
 - Created: 2026-06-27
-- Last update: updated by worker
-- Result: blocked by risk control
+- Last update:
+- Result:
 
 ### TASK-002
 - Status: pending

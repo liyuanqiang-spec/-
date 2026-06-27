@@ -2,44 +2,45 @@
 
 ## Goal
 
-Build a small, safe, extensible Codex-driven quant workflow for options research.
+Build an unattended GitHub-supervised silver options/futures quantitative research system.
 
-## Phase 1: Initialization
+## Phase 1: Safe Research MVP
 
-- Check plugins and developer tools
-- Create project rules
-- Create project-specific skills
-- Create safe data directories
-- Create minimal runnable modules
-- Generate an initialization report
+- Maintain GitHub status files
+- Run local Codex worker on Mac mini
+- Define data schema
+- Build option contract scanner
+- Build spread calculator
+- Build simple backtest
+- Build report writer
+- Enforce risk controls
 
 ## Phase 2: Data Foundation
 
-- Define contract schema
-- Add data source inventory
-- Add cleaning checks
-- Add sample data validation
+- Add read-only market data sources
+- Validate option daily, tick, quote, trade, position, margin, and fee fields
+- Keep original data append-only
+- Produce data quality reports
 
-## Phase 3: Options Research
+## Phase 3: Research Automation
 
-- Expand contract scanning
-- Add liquidity and spread scoring
-- Add option spread candidates
-- Add sample-size warnings
+- Scan inactive but open-interest contracts
+- Rank low-liquidity candidates
+- Estimate spread width and passive-fill opportunity
+- Generate Chinese summary reports
 
-## Phase 4: Backtest and Report
+## Phase 4: Simulation
 
-- Add realistic fees and slippage assumptions
-- Add backtest metrics
-- Generate Chinese reports
-- Update status after each run
-
-## Phase 5: Simulation Only
-
-- Add simulated order logs
-- Add missing-leg and timeout checks
+- Add simulated order records
+- Add missing-leg and timeout gates
+- Add kill switches
 - Keep real trading blocked
 
-## Current Principle
+## Non-Goals
 
-Small first. Safe first. Reproducible first.
+- No real broker connection
+- No real order placement
+- No real order cancellation
+- No fund transfer
+- No deletion of original data
+- No secret exposure

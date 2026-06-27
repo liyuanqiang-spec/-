@@ -80,7 +80,22 @@ This file records safe worker runs and Codex execution events.
 - Task: TQ-0003
 - Summary: status files readable; worker is alive
 
-## 2026-06-27 16:45:38 +0800
+## 2026-06-27 16:46:20 +0800
 
-- Event: blocked
-- Detail: Task TASK-001 blocked by risk control
+- Event: dry_run
+- Detail: `scripts/codex_worker.sh --dry-run` selected `TASK-001` successfully without execution
+
+## 2026-06-27 16:47:00 +0800
+
+- Event: local_check
+- Detail: Python 3.13.13, unit tests passed, compile check passed
+
+## 2026-06-27 16:47:30 +0800
+
+- Event: mail_test
+- Detail: `/usr/bin/mail` accepted test email to `liyuanqiang@gmail.com`
+
+## 2026-06-27 16:48:00 +0800
+
+- Event: worker_started
+- Detail: launchd label `com.codex.github-supervised-worker`, interval 300 seconds, log `logs/worker.log`

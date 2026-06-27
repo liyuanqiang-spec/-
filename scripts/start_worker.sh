@@ -2,33 +2,18 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-LABEL="com.codex.quant.worker"
+LABEL="com.codex.github-supervised-worker"
 PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
+LOG="$ROOT/logs/worker.log"
 INTERVAL="${WORKER_INTERVAL_SECONDS:-300}"
-SUPPORT_DIR="$HOME/Library/Application Support/CodexQuantWorker"
-LOG_DIR="$HOME/Library/Logs/CodexQuantWorker"
-ENTRY_SCRIPT="$SUPPORT_DIR/worker_entry.sh"
-OUT_FILE="$LOG_DIR/worker.out"
-ERR_FILE="$LOG_DIR/worker.err"
 
-mkdir -p "$HOME/Library/LaunchAgents"
-mkdir -p "$SUPPORT_DIR" "$LOG_DIR"
+mkdir -p "$ROOT/logs" "$HOME/Library/LaunchAgents"
+touch "$LOG"
 
 if launchctl print "gui/$UID/$LABEL" >/dev/null 2>&1; then
-  launchctl kickstart -k "gui/$UID/$LABEL" >/dev/null 2>&1 || true
-  echo "Codex worker already registered: $LABEL"
+  echo "worker already started: $LABEL"
   exit 0
 fi
-
-cat > "$ENTRY_SCRIPT" <<ENTRY
-#!/usr/bin/env bash
-set -euo pipefail
-
-export PATH="/Users/zhoujiali/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-cd "$ROOT"
-exec python3 -m src.codex_quant.worker --once
-ENTRY
-chmod +x "$ENTRY_SCRIPT"
 
 cat > "$PLIST" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
@@ -40,20 +25,21 @@ cat > "$PLIST" <<PLIST
   <key>ProgramArguments</key>
   <array>
     <string>/bin/bash</string>
-    <string>$ENTRY_SCRIPT</string>
+    <string>$ROOT/scripts/codex_worker.sh</string>
+    <string>--once</string>
   </array>
-  <key>RunAtLoad</key>
-  <true/>
   <key>StartInterval</key>
   <integer>$INTERVAL</integer>
+  <key>RunAtLoad</key>
+  <false/>
   <key>StandardOutPath</key>
-  <string>$OUT_FILE</string>
+  <string>$LOG</string>
   <key>StandardErrorPath</key>
-  <string>$ERR_FILE</string>
+  <string>$LOG</string>
 </dict>
 </plist>
 PLIST
 
 launchctl bootstrap "gui/$UID" "$PLIST"
 launchctl kickstart -k "gui/$UID/$LABEL" >/dev/null 2>&1 || true
-echo "Codex worker launch agent scheduled: $LABEL interval=${INTERVAL}s"
+echo "worker started: $LABEL interval=${INTERVAL}s log=$LOG"

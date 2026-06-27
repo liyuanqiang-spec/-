@@ -8,6 +8,8 @@ __pycache__/
 .codex_worker.pid
 .codex_worker.out
 .codex_worker.err
+logs/*.log
+logs/worker_task.txt
 reports/*.html
 reports/*.pdf
 data/raw/*

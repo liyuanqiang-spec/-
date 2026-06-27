@@ -26,17 +26,7 @@ The worker and Codex must stop before any blocked action below and write the exa
 - Required confirmation: none for this item.
 
 ### DR-0001
-- Status: waiting_user
+- Status: resolved
 - Created: 2026-06-27
-- Item: Local Git has been initialized, but GitHub remote and PR automation are not active because no remote/authenticated GitHub target is configured.
-- A 推荐: keep local commits now, connect a GitHub remote later when you want PRs.
-- B: authorize GitHub CLI/browser login and provide or create the target remote.
-- C: skip Git/PR automation and use status files only.
-
-## Decision Required 2026-06-27 16:45:37 +0800
-
-- Item: Task TASK-001 contains a blocked trading/fund/secret/deletion/danger risk
-- Current action: worker stopped before execution
-- A 推荐: keep simulation-only and rewrite the task as safe research work
-- B: explicitly authorize the blocked setup/action
-- C: cancel this task
+- Item: Local Git now has `origin` set to `https://github.com/liyuanqiang-spec/-.git`. GitHub CLI is still not logged in, but this workflow uses normal `git pull`/`git push` for main-branch supervision.
+- Required confirmation: none for normal Git status-file supervision; PR creation would still require GitHub CLI/app authorization.

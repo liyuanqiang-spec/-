@@ -131,6 +131,29 @@ Status: `LOCAL_COMMIT_CREATED`
 - Compile check: passed for `src` and `tests`.
 - Confirmation required for real trading or PR remote setup: yes.
 
+## 2026-06-27 GitHub Supervised Unattended Init
+
+Status: `READY_FOR_GITHUB_SUPERVISION`
+
+- 初始化是否完成: yes
+- GitHub remote: `https://github.com/liyuanqiang-spec/-.git`
+- Pull status: completed from `origin/main`
+- Created/updated files: `AGENTS.md`, `TASK_QUEUE.md`, `STATUS.md`, `RUN_LOG.md`, `DECISION_REQUIRED.md`, `RISK_CONTROL.md`, `README.md`, `PROJECT_PLAN.md`, `DATA_SCHEMA.md`, `DATA/`, `REPORTS/`, `scripts/`, `logs/`
+- Worker script: `scripts/codex_worker.sh`
+- Worker start command: `scripts/start_worker.sh`
+- Worker stop command: `scripts/stop_worker.sh`
+- Worker launchd label: `com.codex.github-supervised-worker`
+- Worker status: scheduled every 300 seconds; log path `logs/worker.log`
+- Worker sandbox: `workspace-write`
+- Worker danger-full-access: disabled/not used
+- Local Python check: passed, Python 3.13.13
+- Unit tests: passed, 3 tests
+- Compile check: passed for `src` and `tests`
+- Mail test: `/usr/bin/mail` accepted test email to `liyuanqiang@gmail.com` with subject `Codex 已启动` and body `可以了`
+- Current GitHub supervision state: ready after push to `main`
+- Next recommendation: let ChatGPT edit `TASK_QUEUE.md` on GitHub; the Mac mini worker will pull, execute the first pending safe task, update status files, commit, and push back
+- Confirmation required now: no, unless a future task touches real trading, funds, raw-data deletion, secrets, `danger-full-access`, or system-level changes
+
 ## Worker Update 2026-06-27T13:04:16+08:00
 
 Status: `WORKER_RAN_SAFE_TASK`
@@ -138,10 +161,3 @@ Status: `WORKER_RAN_SAFE_TASK`
 - Task: TQ-0003
 - Result: status files readable; worker is alive
 - Safety mode: `SIMULATION_ONLY`
-
-## Worker Update 2026-06-27 16:45:38 +0800
-
-Status: `DECISION_REQUIRED`
-
-- Detail: Task TASK-001 blocked by risk control
-- Safety mode: `PHASE_1_SIMULATION_ONLY`

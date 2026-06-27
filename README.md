@@ -1,67 +1,62 @@
-# Codex Quant Workflow
+# Silver Options Quant Worker
 
-This project is a safe, minimal Codex workspace for options and futures quant research.
+This repository is the GitHub-supervised workspace for a silver options/futures quantitative research system.
 
-## Current Scope
+Current mode: `PHASE_1_SIMULATION_ONLY`
+
+## Safety Boundary
 
 Allowed:
 
 - Data download
 - Data cleaning
-- Option contract scanning
-- Spread calculation
-- Simple backtesting
-- Simulated trading preparation
+- Strategy scanning
+- Backtesting
+- Simulated trading
 - Report generation
 
-Blocked by default:
+Blocked:
 
+- Real trading account connection
 - Real order placement
-- Real broker execution
+- Real order cancellation
 - Fund transfer
-- Destructive deletion of important data
-- Publishing sensitive trading data
+- Original/raw-data deletion
+- API key, password, token, or secret exposure
+- `danger-full-access`
 
-## Quick Start
+## GitHub Supervision Flow
 
-```bash
-python3 -m src.codex_quant.run_pipeline
-```
+1. ChatGPT updates `TASK_QUEUE.md` on GitHub.
+2. The Mac mini worker pulls `main`.
+3. The worker reads the first pending safe task.
+4. The worker calls `codex exec --sandbox workspace-write`.
+5. Codex updates files, tests, reports, `STATUS.md`, and `RUN_LOG.md`.
+6. The worker commits and pushes the result to GitHub.
 
-Generated report:
-
-```text
-REPORTS/latest_report.md
-```
-
-On case-folding filesystems Git may display these as `data/` and `reports/`; the code prefers `DATA/` and `REPORTS/` locally and falls back to lowercase if needed.
-
-Run the safe worker once:
-
-```bash
-scripts/run_worker_once.sh
-```
-
-Start/stop the background worker:
+## Worker Commands
 
 ```bash
 scripts/start_worker.sh
-scripts/worker_status.sh
 scripts/stop_worker.sh
+scripts/codex_worker.sh --dry-run
 ```
 
-The background worker is a user-level launchd scheduled job. It wakes every 300 seconds, reads `TASK_QUEUE.md`, processes safe tasks, writes `RUN_LOG.md`, then exits.
+Worker logs:
+
+```text
+logs/worker.log
+```
 
 ## Main Files
 
-- `AGENTS.md`: agent rules
-- `PROJECT_PLAN.md`: project plan
-- `TASKS.md`: task list
-- `TASK_QUEUE.md`: unattended worker queue
-- `STATUS.md`: current status
-- `RUN_LOG.md`: worker execution log
-- `DECISION_REQUIRED.md`: human-confirmation queue
-- `RISK_CONTROL.md`: trading safety controls
-- `.codex/skills/`: project-specific skills
-- `src/codex_quant/`: minimal runnable quant scaffold
-- `scripts/`: safe worker controls
+- `AGENTS.md`: unattended agent rules
+- `TASK_QUEUE.md`: GitHub task queue
+- `STATUS.md`: current state
+- `RUN_LOG.md`: execution log
+- `DECISION_REQUIRED.md`: human confirmation queue
+- `RISK_CONTROL.md`: safety and kill switches
+- `DATA_SCHEMA.md`: data field standard
+- `DATA/`: market data workspace
+- `REPORTS/`: generated reports
+- `scripts/`: worker controls

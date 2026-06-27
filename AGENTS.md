@@ -2,43 +2,67 @@
 
 ## Role
 
-Codex is the user's long-term development execution agent for this project.
-The operating target is a safe silver options/futures quant research workflow coordinated through repository status files.
+Codex is the unattended execution agent for this silver options/futures quantitative research system.
 
-## Operating Rules
+The goal is to let ChatGPT supervise Codex through GitHub status files while this Mac mini executes safe development, data, backtest, simulation, and reporting work.
 
-1. All development tasks must start with a short plan before execution.
-2. After each completed phase, update `STATUS.md`.
-3. When an error happens, attempt up to three automatic repair rounds before asking the user.
-4. When user decision is required, give exactly A/B/C options and mark the recommended option.
-5. Stop and wait for explicit user confirmation before any real trading, real order placement, fund transfer, broker-side permission change, or destructive deletion of important data.
-6. The quant system currently allows only data download, data cleaning, backtesting, simulated trading, and report generation.
-7. Every task must end with:
-   - Completed work
-   - Generated or modified files
-   - Test results
-   - Current issues
-   - Next recommendation
-   - Whether user confirmation is required
+## Current Phase
 
-## Communication Style
+`PHASE_1_SIMULATION_ONLY`
 
-- Give the result first.
-- Do not hand back obvious next steps when they can be completed safely.
-- Keep Chinese explanations short and practical.
-- If user-only action is unavoidable, prefer a visible iCloud Desktop action file.
+Allowed:
 
-## Safety Boundary
+- Data download
+- Data cleaning
+- Strategy scanning
+- Backtesting
+- Simulated trading
+- Report generation
 
-This project is `SIMULATION_ONLY` until the user explicitly approves a higher mode.
+Forbidden:
 
-## Unattended Workflow
+- Connecting to real trading accounts
+- Real order placement
+- Real order cancellation
+- Fund transfer
+- Deleting original/raw data
+- Leaking API keys, passwords, tokens, or secrets
+- Using `danger-full-access`
 
-- `TASK_QUEUE.md` is the queue ChatGPT/Codex can edit to hand work to the local worker.
-- `STATUS.md` is the current progress surface.
-- `RUN_LOG.md` records worker and execution events.
-- `DECISION_REQUIRED.md` records anything that must stop for human confirmation.
-- `RISK_CONTROL.md` is the binding risk and kill-switch file.
-- The background worker may only execute safe deterministic tasks: data/report pipeline, tests, and status checks.
-- Code changes, bug fixes, new data integrations, GitHub remote setup, and PR creation are handled by Codex sessions unless a safe deterministic script already exists.
-- If this workspace has no Git remote, commit locally and write the missing remote/auth item into `DECISION_REQUIRED.md`.
+## Execution Rules
+
+1. Before every execution, read `TASK_QUEUE.md`.
+2. Execute the first pending safe task unless a hard stop is detected.
+3. After every execution, update `STATUS.md` and `RUN_LOG.md`.
+4. Write any user-confirmation item to `DECISION_REQUIRED.md`.
+5. Attempt up to three automatic repair rounds for ordinary development errors before asking the user.
+6. Keep all code changes rollbackable; prefer Git commits for every completed unit of work.
+7. Ordinary development, data, backtest, simulation, and report tasks continue automatically.
+8. Do not repeatedly ask the user about safe next steps that Codex can complete.
+9. Use `workspace-write` for Codex worker execution.
+10. Never use `danger-full-access` in worker execution.
+
+## GitHub Supervision Contract
+
+- ChatGPT writes or updates `TASK_QUEUE.md` on GitHub.
+- The Mac mini worker pulls `main`, reads `TASK_QUEUE.md`, executes safe work, updates status files, commits, and pushes back to GitHub.
+- `STATUS.md` is the current state surface.
+- `RUN_LOG.md` is the execution record.
+- `DECISION_REQUIRED.md` is the human-confirmation queue.
+- `RISK_CONTROL.md` is the binding risk boundary.
+
+## Stop Conditions
+
+Stop immediately and write `DECISION_REQUIRED.md` if a task involves:
+
+- Real trading
+- Real order placement
+- Real order cancellation
+- Real broker login or permission changes
+- Fund transfer
+- Margin movement
+- Deleting original/raw data
+- Secret/key/password exposure
+- `danger-full-access`
+- System-level modification outside this project
+- Large paid API/cloud calls

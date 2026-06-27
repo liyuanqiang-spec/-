@@ -2,66 +2,58 @@
 
 ## Current Permission Level
 
-`SIMULATION_ONLY`
+`PHASE_1_SIMULATION_ONLY`
 
-## Allowed
+## Allowed Work
 
 - Data download
 - Data cleaning
-- Option contract scanning
+- Contract scanning
 - Spread calculation
 - Backtesting
-- Simulated trading preparation
+- Simulated trading
 - Report generation
 
 ## Hard Stops
 
-The agent must stop and wait for explicit user confirmation before:
+Codex and the worker must stop before:
 
-1. Real order placement
-2. Real broker execution
+1. Connecting to a real trading account
+2. Real order placement
 3. Real order cancellation
-4. Broker login automation that can trade
-5. Broker-side permission changes
-6. Fund transfer
-7. Margin movement
-8. Deleting original/raw market data
-9. Publishing sensitive trading data
-10. Secret exposure or unsafe key handling
-11. `danger-full-access` escalation for a task
-12. System-level modification
-13. Large paid API or cloud calls
-14. Switching simulation to production
+4. Broker-side permission changes
+5. Fund transfer
+6. Margin movement
+7. Deleting original/raw data
+8. Secret, password, token, API key exposure
+9. `danger-full-access`
+10. System-level modification outside this project
+11. Large paid API/cloud calls
 
-## Default Kill Switches
+## Default Risk Gates
 
-| Risk | Default Control |
+| Risk | Control |
 |---|---|
-| Missing market data | Stop scan/backtest |
-| Stale quote | Exclude candidate |
-| Bid-ask too wide | Exclude or mark high risk |
-| Incomplete spread legs | Stop simulated submission |
-| Leg fill timeout | Stop after 3 seconds in simulation design |
-| Excessive drawdown | Stop strategy and report |
+| Missing data | Stop scan/backtest and report missing fields |
+| Stale quotes | Exclude candidate |
+| Wide bid-ask spread | Exclude or mark high risk |
+| Missing spread leg | Stop simulated submission |
 | Unknown account mode | Treat as no-trade |
-| Unknown task safety | Write `DECISION_REQUIRED.md` and stop |
-| Unsupported worker task | Write `DECISION_REQUIRED.md` and stop |
+| Real trading keyword | Write `DECISION_REQUIRED.md` and stop |
+| Secret keyword | Write `DECISION_REQUIRED.md` and stop |
+| Raw-data deletion | Write `DECISION_REQUIRED.md` and stop |
 
-## Decision Rule
+## Worker Sandbox
 
-If a decision is required, provide exactly A/B/C options and recommend one.
+The worker may call Codex only with:
 
-## Current Trading State
+```bash
+codex exec --sandbox workspace-write
+```
 
-No real trading is authorized in this project.
+It must never use:
 
-## Worker Permission Level
-
-The background worker can only run:
-
-- `pipeline`
-- `report`
-- `test`
-- `status_check`
-
-All other task types require Codex review or user confirmation before execution.
+```bash
+--sandbox danger-full-access
+--dangerously-bypass-approvals-and-sandbox
+```
