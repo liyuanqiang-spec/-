@@ -199,3 +199,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: worker_launchd_verified
 - Detail: LaunchAgent ran from `~/Library/Application Support/CodexGithubWorker/repo`, exited with code 0, and found no pending task.
+
+## 2026-06-27 18:29:25 +0800
+
+- Event: blocked
+- Detail: Task TASK-004 blocked by risk control

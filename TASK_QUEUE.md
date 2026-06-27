@@ -51,7 +51,7 @@ Worker rule: execute the first task whose status is `pending` and whose type is 
 - Result: codex exec completed
 
 ### TASK-004
-- Status: pending
+- Status: decision_required
 - Type: worker_stability
 - Title: 稳定 Codex worker 定时扫描闭环
 - Request: 暂停 GitHub Actions + OpenAI API 的 GPT 主管自动化，不要新增复杂云端主管；当前第一目标是把 Mac mini 本地 Codex worker 做稳定。请检查并强化 worker 的定时扫描能力，确保它每 300 秒自动 pull GitHub、读取 TASK_QUEUE.md、执行第一个安全任务、更新 STATUS.md/RUN_LOG.md/REPORTS/DECISION_REQUIRED.md，并能 git add/commit/push 回 liyuanqiang-spec/-。同时增加防重复运行锁、超时控制、失败自动重试三轮、日志写入 logs/worker.log、健康检查脚本 scripts/check_worker_health.sh、heartbeat 心跳任务和 dry-run 验证。完成后连续验证至少 3 轮定时扫描，确认“任务读取—执行—回写—推送”闭环稳定，再把结果写入 STATUS.md；若权限、git、launchd、邮件或网络有问题就写入 DECISION_REQUIRED.md。
@@ -59,8 +59,8 @@ Worker rule: execute the first task whose status is `pending` and whose type is 
 - Safety: PHASE_1_SIMULATION_ONLY
 - Hard stops: real trading, real order placement, real order cancellation, fund transfer, original-data deletion, secret exposure, danger-full-access, system-level destructive change, large paid API/cloud calls.
 - Created: 2026-06-27
-- Last update: created by ChatGPT
-- Result: pending worker execution
+- Last update: updated by worker
+- Result: blocked by risk control
 
 ### TASK-005
 - Status: pending

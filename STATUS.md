@@ -295,3 +295,10 @@ Status: `WORKER_LAUNCHD_VERIFIED`
 - GitHub target: `https://github.com/liyuanqiang-spec/-.git`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Confirmation required: no.
+
+## Worker Update 2026-06-27 18:29:25 +0800
+
+Status: `DECISION_REQUIRED`
+
+- Detail: Task TASK-004 blocked by risk control
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

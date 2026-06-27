@@ -37,3 +37,11 @@ The worker and Codex must stop before any blocked action below and write the exa
 - Created: 2026-06-27
 - Item: Local Git now has `origin` set to `https://github.com/liyuanqiang-spec/-.git`. GitHub CLI is still not logged in, but this workflow uses normal `git pull`/`git push` for main-branch supervision.
 - Required confirmation: none for normal Git status-file supervision; PR creation would still require GitHub CLI/app authorization.
+
+## Decision Required 2026-06-27 18:29:25 +0800
+
+- Item: Task TASK-004 contains a blocked trading/fund/secret/deletion/danger risk
+- Current action: worker stopped before execution
+- A 推荐: keep simulation-only and rewrite the task as safe research work
+- B: explicitly authorize the blocked setup/action
+- C: cancel this task
