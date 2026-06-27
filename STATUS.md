@@ -165,3 +165,10 @@ Status: `WORKER_RAN_SAFE_TASK`
 - Task: TQ-0003
 - Result: status files readable; worker is alive
 - Safety mode: `SIMULATION_ONLY`
+
+## Worker Update 2026-06-27 17:13:37 +0800
+
+Status: `GPT_HANDSHAKE_OK`
+
+- Detail: Task TASK-000-GPT-HANDSHAKE completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

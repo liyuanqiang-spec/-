@@ -119,3 +119,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: worker_scheduled
 - Detail: launchd label `com.codex.github-supervised-worker`, interval 300 seconds
+
+## 2026-06-27 17:13:37 +0800
+
+- Event: gpt_handshake
+- Detail: Task TASK-000-GPT-HANDSHAKE completed by local worker without codex exec; safety mode remained PHASE_1_SIMULATION_ONLY
