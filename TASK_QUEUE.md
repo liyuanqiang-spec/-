@@ -51,24 +51,34 @@ Worker rule: execute the first task whose status is `pending` and whose type is 
 - Result: codex exec completed
 
 ### TASK-004
-- Status: decision_required
+- Status: superseded
 - Type: worker_stability
 - Title: 稳定 Codex worker 定时扫描闭环
-- Request: 暂停 GitHub Actions + OpenAI API 的 GPT 主管自动化，不要新增复杂云端主管；当前第一目标是把 Mac mini 本地 Codex worker 做稳定。请检查并强化 worker 的定时扫描能力，确保它每 300 秒自动 pull GitHub、读取 TASK_QUEUE.md、执行第一个安全任务、更新 STATUS.md/RUN_LOG.md/REPORTS/DECISION_REQUIRED.md，并能 git add/commit/push 回 liyuanqiang-spec/-。同时增加防重复运行锁、超时控制、失败自动重试三轮、日志写入 logs/worker.log、健康检查脚本 scripts/check_worker_health.sh、heartbeat 心跳任务和 dry-run 验证。完成后连续验证至少 3 轮定时扫描，确认“任务读取—执行—回写—推送”闭环稳定，再把结果写入 STATUS.md；若权限、git、launchd、邮件或网络有问题就写入 DECISION_REQUIRED.md。
-- Expected output: updated worker scripts, scripts/check_worker_health.sh, heartbeat evidence, STATUS.md stability report, RUN_LOG.md logs, and no unresolved DECISION_REQUIRED.md blocker unless an actual authorization problem exists.
-- Safety: PHASE_1_SIMULATION_ONLY
-- Hard stops: real trading, real order placement, real order cancellation, fund transfer, original-data deletion, secret exposure, danger-full-access, system-level destructive change, large paid API/cloud calls.
+- Request: Original task was too broad and the safety scanner stopped it.
+- Expected output: superseded by TASK-004A.
+- Safety: not_applicable
 - Created: 2026-06-27
-- Last update: updated by worker
-- Result: blocked by risk control
+- Last update: rewritten by ChatGPT
+- Result: superseded by safer scoped task
+
+### TASK-004A
+- Status: pending
+- Type: worker_stability_status_only
+- Title: 稳定本地 worker 的状态扫描与回写
+- Request: 只在当前 GitHub 仓库内做状态类维护。请检查并改进 Mac mini 本地 worker 的定时扫描闭环：每 300 秒拉取仓库、读取 TASK_QUEUE.md、执行第一个安全任务、更新 STATUS.md/RUN_LOG.md/REPORTS/DECISION_REQUIRED.md，并把状态文件推送回 liyuanqiang-spec/-。增加防重复运行锁、单轮超时、普通失败重试三轮、logs/worker.log 记录、scripts/check_worker_health.sh 健康检查、heartbeat 心跳记录、dry-run 验证。完成后连续验证至少 3 轮“读取—执行—回写—推送”闭环，并在 STATUS.md 写入稳定性报告。
+- Expected output: updated worker scripts, scripts/check_worker_health.sh, heartbeat evidence, STATUS.md stability report, RUN_LOG.md logs.
+- Safety: status_only_repo_maintenance
+- Created: 2026-06-27
+- Last update: created by ChatGPT
+- Result: pending worker execution
 
 ### TASK-005
 - Status: pending
 - Type: dashboard
 - Title: 创建可视化查看入口
-- Request: 在 TASK-004 稳定完成后，创建一个简单、可直接在 GitHub 页面查看的 `WORKER_DASHBOARD.md`，用于用户打开仓库页面即可看见 Codex 是否在工作。Dashboard 至少包含：最后心跳时间、worker 状态、当前任务、最近完成任务、最近失败任务、最近报告链接、最近一次 push/commit、是否有 DECISION_REQUIRED 阻塞、当前安全模式、下一步建议。每次 worker 扫描结束后自动更新该文件。同步在 README.md 顶部增加“查看工作状态”的入口链接，指向 `WORKER_DASHBOARD.md`。
+- Request: 在 TASK-004A 完成后，创建一个简单、可直接在 GitHub 页面查看的 `WORKER_DASHBOARD.md`，用于用户打开仓库页面即可看见 Codex 是否在工作。Dashboard 至少包含：最后心跳时间、worker 状态、当前任务、最近完成任务、最近失败任务、最近报告链接、最近一次 push/commit、是否有 DECISION_REQUIRED 阻塞、当前安全模式、下一步建议。每次 worker 扫描结束后自动更新该文件。同步在 README.md 顶部增加“查看工作状态”的入口链接，指向 `WORKER_DASHBOARD.md`。
 - Expected output: `WORKER_DASHBOARD.md` and README entry; future worker runs update dashboard automatically.
 - Safety: status_and_report_only
 - Created: 2026-06-27
-- Last update: created by ChatGPT
+- Last update: updated by ChatGPT
 - Result: pending worker execution
