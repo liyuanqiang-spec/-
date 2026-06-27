@@ -196,7 +196,7 @@ run_once() {
 
   prompt="Read AGENTS.md and TASK_QUEUE.md. Execute only task $task_id from TASK_QUEUE.md. Stay in PHASE_1_SIMULATION_ONLY. Do not connect real trading accounts. Do not place or cancel real orders. Do not transfer funds. Do not delete original data. Do not expose secrets. Do not use danger-full-access. Update STATUS.md and RUN_LOG.md with the result."
 
-  if codex exec --sandbox workspace-write --ask-for-approval never -C "$ROOT" "$prompt" >> "$LOG" 2>&1; then
+  if codex exec --sandbox workspace-write -C "$ROOT" "$prompt" >> "$LOG" 2>&1; then
     update_task_status "$task_id" "completed" "codex exec completed"
     append_status "WORKER_COMPLETED" "Task $task_id completed"
     append_run_log "completed" "Task $task_id completed"
