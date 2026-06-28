@@ -45,6 +45,12 @@ scripts/codex_worker.sh --dry-run
 scripts/check_worker_health.sh
 ```
 
+Manual on-demand health check:
+
+```bash
+scripts/check_worker_health.sh
+```
+
 Worker logs:
 
 ```text

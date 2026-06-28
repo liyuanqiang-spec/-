@@ -16,8 +16,8 @@ LOG="$ROOT/logs/worker.log"
 TASK_FILE="$ROOT/logs/worker_task.txt"
 LOCK_DIR="$ROOT/logs/worker.lock"
 HEARTBEAT="$ROOT/logs/worker_heartbeat.json"
-IDLE_POLL_INTERVAL_SECONDS="${WORKER_IDLE_POLL_INTERVAL_SECONDS:-120}"
-ACTIVE_POLL_INTERVAL_SECONDS="${WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-30}"
+IDLE_POLL_INTERVAL_SECONDS="${WORKER_IDLE_POLL_INTERVAL_SECONDS:-600}"
+ACTIVE_POLL_INTERVAL_SECONDS="${WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-60}"
 EXPECTED_REMOTE="https://github.com/liyuanqiang-spec/-.git"
 GIT_TIMEOUT_SECONDS="${GIT_TIMEOUT_SECONDS:-120}"
 CODEX_EXEC_TIMEOUT_SECONDS="${CODEX_EXEC_TIMEOUT_SECONDS:-1800}"
@@ -29,7 +29,6 @@ export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/us
 export GIT_TERMINAL_PROMPT=0
 
 mkdir -p "$ROOT/logs"
-touch "$LOG"
 
 log() {
   printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S %z')" "$*" | tee -a "$LOG"
@@ -227,7 +226,6 @@ PY
 
 git_pull_ff() {
   if [ "${WORKER_NO_GIT_MUTATION:-0}" = "1" ] || [ "${WORKER_SKIP_PULL:-0}" = "1" ]; then
-    log "git pull skipped by worker verification mode"
     return 0
   fi
   run_with_timeout "$GIT_TIMEOUT_SECONDS" git pull --ff-only --quiet origin main
@@ -272,7 +270,6 @@ commit_and_push() {
 
 remote_ok() {
   if [ "${WORKER_SKIP_REMOTE_CHECK:-0}" = "1" ]; then
-    log "remote check skipped by worker verification mode"
     return 0
   fi
   local url
@@ -296,7 +293,19 @@ for block in blocks[1:]:
         out.write_text(block, encoding="utf-8")
         print(block.splitlines()[0].replace("###", "").strip())
         raise SystemExit(0)
-out.write_text("", encoding="utf-8")
+raise SystemExit(1)
+PY
+}
+
+queue_has_pending() {
+  python3 - "$QUEUE" <<'PY'
+from pathlib import Path
+import re
+import sys
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+if re.search(r"(?mi)^-\s*Status:\s*(pending|queued|todo)\s*$", text):
+    raise SystemExit(0)
 raise SystemExit(1)
 PY
 }
@@ -386,7 +395,7 @@ run_once_body() {
     return 1
   fi
 
-  git_pull_ff >> "$LOG" 2>&1 || {
+  git_pull_ff >/dev/null 2>&1 || {
     append_decision "worker sync failed at pull stage: git pull failed"
     append_status "BLOCKED_PULL" "git pull failed"
     append_run_log "blocked" "worker sync failed at pull stage"
@@ -396,12 +405,6 @@ run_once_body() {
   }
 
   if ! task_id="$(extract_first_task)"; then
-    log "no pending safe task"
-    if ! visible_status_consistent || ! idle_heartbeat_current; then
-      write_heartbeat "idle" "no pending safe task"
-      update_dashboard
-      commit_and_push "Refresh visible worker status" WORKER_DASHBOARD.md GPT_VISIBLE_STATUS.md .gpt_state.json GPT_REVIEW.md logs/worker_heartbeat.json >> "$LOG" 2>&1 || true
-    fi
     return 0
   fi
 
@@ -466,6 +469,11 @@ run_once_body() {
 }
 
 run_once() {
+  cd "$ROOT"
+  if remote_ok && git_pull_ff >/dev/null 2>&1 && ! extract_first_task >/dev/null 2>&1; then
+    return 0
+  fi
+
   if ! acquire_lock; then
     return 0
   fi
@@ -489,16 +497,16 @@ case "${1:---once}" in
   --dry-run)
     run_once --dry-run
     ;;
-	  --loop)
-	    while true; do
-	      run_once || true
-	      if [ -s "$TASK_FILE" ]; then
-	        sleep "$ACTIVE_POLL_INTERVAL_SECONDS"
-	      else
-	        sleep "$IDLE_POLL_INTERVAL_SECONDS"
-	      fi
-	    done
-	    ;;
+  --loop)
+    while true; do
+      run_once || true
+      if queue_has_pending; then
+        sleep "$ACTIVE_POLL_INTERVAL_SECONDS"
+      else
+        sleep "$IDLE_POLL_INTERVAL_SECONDS"
+      fi
+    done
+    ;;
   *)
     echo "Usage: $0 [--once|--dry-run|--loop]" >&2
     exit 2

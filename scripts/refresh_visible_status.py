@@ -151,6 +151,35 @@ def latest_commit(root: Path) -> str:
     return value if completed.returncode == 0 and value else "Unavailable"
 
 
+def last_worker_check(root: Path) -> str:
+    heartbeat = root / "logs" / "worker_heartbeat.json"
+    if heartbeat.exists():
+        try:
+            payload = json.loads(heartbeat.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            payload = {}
+        timestamp = str(payload.get("timestamp", "")).strip()
+        state = str(payload.get("state", "")).strip()
+        task = str(payload.get("task", "")).strip()
+        if timestamp:
+            suffix = ""
+            if state:
+                suffix += f" / {state}"
+            if task and task != "none":
+                suffix += f" / {task}"
+            return timestamp + suffix
+
+    candidates: list[str] = []
+    for rel in ("RUN_LOG.md", "STATUS.md"):
+        text = read_text(root / rel)
+        for match in re.finditer(
+            r"(?m)^##(?: Worker Update)?\s+(\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}(?: [+-]\d{4}|[+-]\d{2}:\d{2})?)",
+            text,
+        ):
+            candidates.append(match.group(1))
+    return candidates[-1] if candidates else "unknown"
+
+
 def latest_report(root: Path) -> str:
     candidates: list[Path] = []
     for dirname in ("REPORTS", "reports"):
@@ -234,6 +263,7 @@ def build_state(root: Path) -> dict[str, Any]:
         "safety_mode": "PHASE_1_SIMULATION_ONLY",
         "latest_status": latest_status(root),
         "latest_commit": latest_commit(root),
+        "last_worker_check": last_worker_check(root),
         "latest_report": latest_report(root),
         "worker_poll_intervals": worker_poll_intervals(root),
         "current_task": current.to_state() if current else None,
@@ -266,6 +296,7 @@ def build_dashboard(state: dict[str, Any]) -> str:
         ("Latest completed task", task_summary_from_state(completed)),
         ("Latest failed or blocked task", task_summary_from_state(failed)),
         ("Latest status", state["latest_status"]),
+        ("Last worker check", state["last_worker_check"]),
         ("Latest report", state["latest_report"]),
         ("Latest push/commit", state["latest_commit"]),
         (
@@ -326,6 +357,7 @@ def build_gpt_visible_status(state: dict[str, Any]) -> str:
         f"- Latest completed task: {task_summary_from_state(state['latest_completed_task'])}\n"
         f"- Decision required: {decision_text}\n"
         f"- Latest status marker: `{state['latest_status']}`\n"
+        f"- Last worker check: {state['last_worker_check']}\n"
         f"- Latest commit: {state['latest_commit']}\n"
         f"- Worker poll interval: idle {state['worker_poll_intervals']['idle_seconds']}s, active {state['worker_poll_intervals']['active_seconds']}s\n"
         f"- Next action: {state['next_action']}\n\n"

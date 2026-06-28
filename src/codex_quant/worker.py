@@ -271,8 +271,8 @@ def main() -> int:
     parser.add_argument("--once", action="store_true", help="process the queue once and exit")
     parser.add_argument("--loop", action="store_true", help="keep checking the queue")
     parser.add_argument("--interval", type=int, default=None, help="deprecated alias for idle loop seconds")
-    parser.add_argument("--idle-interval", type=int, default=120, help="seconds between idle loop checks")
-    parser.add_argument("--active-interval", type=int, default=30, help="seconds between active loop checks")
+    parser.add_argument("--idle-interval", type=int, default=600, help="seconds between idle loop checks")
+    parser.add_argument("--active-interval", type=int, default=60, help="seconds between active loop checks")
     args = parser.parse_args()
     idle_interval = args.interval if args.interval is not None else args.idle_interval
 
@@ -288,7 +288,7 @@ def main() -> int:
     while True:
         processed = process_once()
         interval = args.active_interval if processed else idle_interval
-        time.sleep(max(interval, 30))
+        time.sleep(max(interval, 60))
 
 
 if __name__ == "__main__":

@@ -107,15 +107,21 @@ else
   line "worker_dangerous_sandbox=absent"
 fi
 
-if grep -q 'WORKER_IDLE_POLL_INTERVAL_SECONDS:-120' "$ROOT/scripts/codex_worker.sh" \
-  && grep -q 'WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-30' "$ROOT/scripts/codex_worker.sh" \
-  && grep -q 'WORKER_IDLE_POLL_INTERVAL_SECONDS:-120' "$ROOT/scripts/start_worker.sh" \
-  && grep -q 'WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-30' "$ROOT/scripts/start_worker.sh" \
-  && grep -q 'default=120' "$ROOT/src/codex_quant/worker.py" \
-  && grep -q 'default=30' "$ROOT/src/codex_quant/worker.py"; then
-  line "worker_poll_intervals=idle_120s_active_30s"
+if grep -q 'WORKER_IDLE_POLL_INTERVAL_SECONDS:-600' "$ROOT/scripts/codex_worker.sh" \
+  && grep -q 'WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-60' "$ROOT/scripts/codex_worker.sh" \
+  && grep -q 'WORKER_IDLE_POLL_INTERVAL_SECONDS:-600' "$ROOT/scripts/start_worker.sh" \
+  && grep -q 'WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-60' "$ROOT/scripts/start_worker.sh" \
+  && grep -q 'default=600' "$ROOT/src/codex_quant/worker.py" \
+  && grep -q 'default=60' "$ROOT/src/codex_quant/worker.py"; then
+  line "worker_poll_intervals=idle_600s_active_60s"
 else
-  fail "worker polling defaults are not idle=120 seconds and active=30 seconds"
+  fail "worker polling defaults are not idle=600 seconds and active=60 seconds"
+fi
+
+if grep -q 'Refresh visible worker status' "$ROOT/scripts/codex_worker.sh"; then
+  fail "idle no-pending path still refreshes visible status"
+else
+  line "idle_visible_status_refresh=disabled"
 fi
 
 if [ "$STATUS" = "PASS" ]; then

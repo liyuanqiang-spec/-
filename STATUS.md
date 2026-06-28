@@ -589,3 +589,24 @@ Status: `WORKER_RUNNING`
 
 - Detail: Task TASK-012 started
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-28 21:08:26 +0800
+
+Status: `TASK_012_COMPLETED`
+
+- Detail: Reduced idle worker calls and repository writes for `TASK-012`.
+- Worker interval: old default idle `120s` / active `30s`; new default idle `600s` / active `60s` in `scripts/codex_worker.sh`, `scripts/start_worker.sh`, and the Python fallback worker.
+- Idle behavior: when no pending task exists, `scripts/codex_worker.sh --once` now returns before lock/heartbeat/dashboard/status refresh/commit/push/model execution. No Codex call is made on idle no-pending rounds.
+- Manual health check: `scripts/check_worker_health.sh` remains the on-demand command and now validates the 600/60 interval plus disabled idle visible-status refresh.
+- Visible status: `WORKER_DASHBOARD.md`, `GPT_VISIBLE_STATUS.md`, and `.gpt_state.json` include the new intervals and last worker check field.
+- Verification: `bash -n` passed for worker scripts; `python3 -m compileall -q src tests scripts` passed; `python3 -m unittest discover -s tests` passed with 21 tests; no-pending `scripts/codex_worker.sh --dry-run` read-only check passed.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no dangerous sandbox, no git add, no git commit, no git push inside codex exec.
+- Confirmation required: no.
+
+## Worker Update 2026-06-28 21:10:26 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-012 completed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

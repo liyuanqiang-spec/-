@@ -408,3 +408,20 @@ This file records safe worker runs and Codex execution events.
 
 - Event: started
 - Detail: Task TASK-012 started
+
+## 2026-06-28 21:04:06 +0800
+
+- Event: attempt
+- Detail: Task TASK-012 codex exec attempt 1/3
+
+## 2026-06-28 21:08:26 +0800
+
+- Event: TASK-012 completed
+- Detail: Worker cost control completed. Defaults changed from idle `120s` / active `30s` to idle `600s` / active `60s`; idle no-pending rounds now return before lock/heartbeat/dashboard/status refresh/commit/push/Codex execution; manual health check remains `scripts/check_worker_health.sh`.
+- Verification: `bash -n scripts/codex_worker.sh`; `bash -n scripts/start_worker.sh`; `bash -n scripts/check_worker_health.sh`; `python3 -m compileall -q src tests scripts`; `python3 -m unittest discover -s tests` with 21 tests; no-pending dry-run read-only check passed.
+- Safety: `PHASE_1_SIMULATION_ONLY`; no account connection, no real orders, no cancellations, no fund movement, no original-data deletion, no secret exposure, no dangerous sandbox, and no git add/commit/push inside codex exec.
+
+## 2026-06-28 21:10:26 +0800
+
+- Event: completed
+- Detail: Task TASK-012 completed

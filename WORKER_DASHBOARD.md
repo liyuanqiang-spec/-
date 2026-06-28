@@ -1,21 +1,22 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-06-28 21:04:03 +0800`
+Last dashboard update: `2026-06-28 21:10:26 +0800`
 
 | Item | Result |
 |---|---|
-| Worker state | WORKING |
-| Current task | TASK-012 (running) - Reduce idle worker calls and writes / worker started |
+| Worker state | IDLE |
+| Current task | None |
 | First pending task | None |
-| Latest completed task | TASK-011A (completed) - Validate local historical tick files with offline replay adapter / completed; added offline tick adapter, validation script, sanitized non-performance tick fixture, tick smoke report, refreshed quant reports, and passed 21 tests. |
+| Latest completed task | TASK-012 (completed) - Reduce idle worker calls and writes / codex exec completed |
 | Latest failed or blocked task | None |
-| Latest status | WORKER_RUNNING |
+| Latest status | WORKER_COMPLETED |
+| Last worker check | 2026-06-28T21:10:26+08:00 / completed / TASK-012 |
 | Latest report | REPORTS/first_complete_simulation_report.md |
-| Latest push/commit | fea19d3 2026-06-28 Add worker call reduction task |
-| Worker poll interval | idle 120s, active 30s |
+| Latest push/commit | 4964e14 2026-06-28 Worker started TASK-012 |
+| Worker poll interval | idle 600s, active 60s |
 | Decision required | No unresolved item |
 | Safety mode | PHASE_1_SIMULATION_ONLY |
-| Next action | 等待当前任务完成；worker 会在完成、失败或阻塞后推送状态。 |
+| Next action | ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。 |
 
 ## Links
 
