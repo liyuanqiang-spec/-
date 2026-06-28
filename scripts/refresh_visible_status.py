@@ -149,6 +149,30 @@ def latest_report(root: Path) -> str:
     return latest.relative_to(root).as_posix()
 
 
+def worker_poll_intervals(root: Path) -> dict[str, int | str]:
+    worker_script = read_text(root / "scripts" / "codex_worker.sh")
+    idle_match = re.search(r"WORKER_IDLE_POLL_INTERVAL_SECONDS:-(\d+)", worker_script)
+    active_match = re.search(r"WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-(\d+)", worker_script)
+    idle: int | None = int(idle_match.group(1)) if idle_match else None
+    active: int | None = int(active_match.group(1)) if active_match else None
+
+    heartbeat = root / "logs" / "worker_heartbeat.json"
+    if heartbeat.exists():
+        try:
+            payload = json.loads(heartbeat.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            payload = {}
+        if idle is None and payload.get("idle_poll_interval_seconds") is not None:
+            idle = int(payload["idle_poll_interval_seconds"])
+        if active is None and payload.get("active_poll_interval_seconds") is not None:
+            active = int(payload["active_poll_interval_seconds"])
+
+    return {
+        "idle_seconds": idle if idle is not None else "unknown",
+        "active_seconds": active if active is not None else "unknown",
+    }
+
+
 def task_summary(task: QueueTask | None) -> str:
     if task is None:
         return "None"
@@ -197,6 +221,7 @@ def build_state(root: Path) -> dict[str, Any]:
         "latest_status": latest_status(root),
         "latest_commit": latest_commit(root),
         "latest_report": latest_report(root),
+        "worker_poll_intervals": worker_poll_intervals(root),
         "current_task": current.to_state() if current else None,
         "first_running_task": running.to_state() if running else None,
         "first_pending_task": pending.to_state() if pending else None,
@@ -229,6 +254,11 @@ def build_dashboard(state: dict[str, Any]) -> str:
         ("Latest status", state["latest_status"]),
         ("Latest report", state["latest_report"]),
         ("Latest push/commit", state["latest_commit"]),
+        (
+            "Worker poll interval",
+            f"idle {state['worker_poll_intervals']['idle_seconds']}s, "
+            f"active {state['worker_poll_intervals']['active_seconds']}s",
+        ),
         ("Decision required", decision_text),
         ("Safety mode", state["safety_mode"]),
         ("Next action", state["next_action"]),
@@ -283,6 +313,7 @@ def build_gpt_visible_status(state: dict[str, Any]) -> str:
         f"- Decision required: {decision_text}\n"
         f"- Latest status marker: `{state['latest_status']}`\n"
         f"- Latest commit: {state['latest_commit']}\n"
+        f"- Worker poll interval: idle {state['worker_poll_intervals']['idle_seconds']}s, active {state['worker_poll_intervals']['active_seconds']}s\n"
         f"- Next action: {state['next_action']}\n\n"
         "## ChatGPT Supervision Contract\n\n"
         "- ChatGPT writes safe work into `TASK_QUEUE.md`.\n"

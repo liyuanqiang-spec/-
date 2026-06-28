@@ -327,3 +327,9 @@ This file records safe worker runs and Codex execution events.
 - Reports: `REPORTS/quant_system_gap_report.md`, `REPORTS/backtest_baseline_report.md`, `REPORTS/quant_baseline_replay.csv`.
 - Verification: refresh visible status passed; worker health passed; compileall passed; unittest passed with 14 tests; worker bash syntax passed.
 - Safety: `PHASE_1_SIMULATION_ONLY`; no account connection, no real orders, no cancellations, no fund movement, no original data deletion, no secret exposure, no dangerous sandbox.
+
+## 2026-06-28 16:29:14 +0800
+
+- Event: worker_polling_frequency_updated
+- Detail: `git pull --ff-only origin main` completed and `TASK_QUEUE.md` was read. `TASK-009` was already completed, so it was not executed again. Worker defaults changed to idle 120 seconds and active 30 seconds, with idle scans kept lightweight.
+- Safety: `PHASE_1_SIMULATION_ONLY`; no account connection, no real orders, no cancellations, no fund movement, no original data deletion, no secret exposure, no dangerous sandbox.

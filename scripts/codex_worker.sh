@@ -16,8 +16,8 @@ LOG="$ROOT/logs/worker.log"
 TASK_FILE="$ROOT/logs/worker_task.txt"
 LOCK_DIR="$ROOT/logs/worker.lock"
 HEARTBEAT="$ROOT/logs/worker_heartbeat.json"
-IDLE_POLL_INTERVAL_SECONDS="${WORKER_IDLE_POLL_INTERVAL_SECONDS:-600}"
-ACTIVE_POLL_INTERVAL_SECONDS="${WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-60}"
+IDLE_POLL_INTERVAL_SECONDS="${WORKER_IDLE_POLL_INTERVAL_SECONDS:-120}"
+ACTIVE_POLL_INTERVAL_SECONDS="${WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-30}"
 EXPECTED_REMOTE="https://github.com/liyuanqiang-spec/-.git"
 GIT_TIMEOUT_SECONDS="${GIT_TIMEOUT_SECONDS:-120}"
 CODEX_EXEC_TIMEOUT_SECONDS="${CODEX_EXEC_TIMEOUT_SECONDS:-1800}"
@@ -188,6 +188,43 @@ update_dashboard() {
   return 0
 }
 
+visible_status_consistent() {
+  if [ -f "$ROOT/scripts/refresh_visible_status.py" ]; then
+    python3 "$ROOT/scripts/refresh_visible_status.py" --root "$ROOT" --check >/dev/null 2>&1
+    return "$?"
+  fi
+  return 1
+}
+
+idle_heartbeat_current() {
+  python3 - "$HEARTBEAT" "$IDLE_POLL_INTERVAL_SECONDS" "$ACTIVE_POLL_INTERVAL_SECONDS" <<'PY'
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+idle_interval = int(sys.argv[2])
+active_interval = int(sys.argv[3])
+if not path.exists():
+    raise SystemExit(1)
+try:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+except (OSError, json.JSONDecodeError):
+    raise SystemExit(1)
+if payload.get("state") != "idle":
+    raise SystemExit(1)
+if payload.get("task") not in {"none", None}:
+    raise SystemExit(1)
+if int(payload.get("idle_poll_interval_seconds", payload.get("interval_seconds", -1))) != idle_interval:
+    raise SystemExit(1)
+if int(payload.get("active_poll_interval_seconds", -1)) != active_interval:
+    raise SystemExit(1)
+raise SystemExit(0)
+PY
+}
+
 git_pull_ff() {
   if [ "${WORKER_NO_GIT_MUTATION:-0}" = "1" ] || [ "${WORKER_SKIP_PULL:-0}" = "1" ]; then
     log "git pull skipped by worker verification mode"
@@ -341,7 +378,6 @@ run_codex_task_with_retries() {
 
 run_once_body() {
   cd "$ROOT"
-  update_dashboard
   if ! remote_ok; then
     append_decision "Git remote is not $EXPECTED_REMOTE"
     append_status "BLOCKED_REMOTE" "Git remote mismatch"
@@ -358,13 +394,14 @@ run_once_body() {
     update_dashboard
     return 1
   }
-  update_dashboard
 
   if ! task_id="$(extract_first_task)"; then
     log "no pending safe task"
-    write_heartbeat "idle" "no pending safe task"
-    update_dashboard
-    commit_and_push "Refresh visible worker status" WORKER_DASHBOARD.md GPT_VISIBLE_STATUS.md .gpt_state.json GPT_REVIEW.md logs/worker_heartbeat.json >> "$LOG" 2>&1 || true
+    if ! visible_status_consistent || ! idle_heartbeat_current; then
+      write_heartbeat "idle" "no pending safe task"
+      update_dashboard
+      commit_and_push "Refresh visible worker status" WORKER_DASHBOARD.md GPT_VISIBLE_STATUS.md .gpt_state.json GPT_REVIEW.md logs/worker_heartbeat.json >> "$LOG" 2>&1 || true
+    fi
     return 0
   fi
 

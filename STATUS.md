@@ -490,3 +490,11 @@ Status: `TASK_009_COMPLETED`
 - Verification: `python3 scripts/refresh_visible_status.py` passed; `bash scripts/check_worker_health.sh` passed; `python3 -m compileall -q src tests scripts` passed; `python3 -m unittest discover -s tests` passed, 14 tests; `bash -n scripts/codex_worker.sh` passed.
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no dangerous sandbox.
+
+## Worker Update 2026-06-28 16:29:14 +0800
+
+Status: `WORKER_POLLING_UPDATED`
+
+- Detail: Pulled GitHub main and confirmed `TASK-009` is already completed. Updated worker polling defaults to idle `120s` and active `30s`; idle scans remain lightweight and only commit/push when task state or visible status is inconsistent.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no dangerous sandbox.

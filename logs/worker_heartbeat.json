@@ -1,8 +1,10 @@
 {
-  "timestamp": "2026-06-28T07:49:46+08:00",
+  "timestamp": "2026-06-28T16:29:57+08:00",
   "state": "idle",
-  "detail": "no pending task",
+  "detail": "no pending safe task",
   "task": "none",
-  "interval_seconds": 60,
+  "interval_seconds": 120,
+  "idle_poll_interval_seconds": 120,
+  "active_poll_interval_seconds": 30,
   "safety_mode": "PHASE_1_SIMULATION_ONLY"
 }

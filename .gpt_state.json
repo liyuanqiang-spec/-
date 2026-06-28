@@ -1,10 +1,14 @@
 {
-  "generated_at": "2026-06-28T15:05:06+08:00",
+  "generated_at": "2026-06-28T16:31:15+08:00",
   "state": "IDLE",
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "TASK_009_COMPLETED",
-  "latest_commit": "d9ad491 2026-06-28 Mark TASK-009 running",
+  "latest_status": "WORKER_POLLING_UPDATED",
+  "latest_commit": "4354136 2026-06-28 Complete TASK-009 quant baseline enhancement",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
+  "worker_poll_intervals": {
+    "idle_seconds": 120,
+    "active_seconds": 30
+  },
   "current_task": null,
   "first_running_task": null,
   "first_pending_task": null,

@@ -107,6 +107,17 @@ else
   line "worker_dangerous_sandbox=absent"
 fi
 
+if grep -q 'WORKER_IDLE_POLL_INTERVAL_SECONDS:-120' "$ROOT/scripts/codex_worker.sh" \
+  && grep -q 'WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-30' "$ROOT/scripts/codex_worker.sh" \
+  && grep -q 'WORKER_IDLE_POLL_INTERVAL_SECONDS:-120' "$ROOT/scripts/start_worker.sh" \
+  && grep -q 'WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-30' "$ROOT/scripts/start_worker.sh" \
+  && grep -q 'default=120' "$ROOT/src/codex_quant/worker.py" \
+  && grep -q 'default=30' "$ROOT/src/codex_quant/worker.py"; then
+  line "worker_poll_intervals=idle_120s_active_30s"
+else
+  fail "worker polling defaults are not idle=120 seconds and active=30 seconds"
+fi
+
 if [ "$STATUS" = "PASS" ]; then
   line "PASS"
   exit 0
