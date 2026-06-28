@@ -1,15 +1,16 @@
 # GPT Visible Status
 
-- Generated at: `2026-06-28T16:55:13+08:00`
-- Status: `IDLE`
+- Generated at: `2026-06-28T17:40:41+08:00`
+- Status: `WAITING_FOR_WORKER`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
-- Current task: none
+- Current task: TASK-010 (pending) - Add multi-snapshot option quote replay fixture and loader
+- First pending task: TASK-010 (pending) - Add multi-snapshot option quote replay fixture and loader
 - Latest completed task: TASK-009 (completed) - Build quant system enhancement baseline | completed; generated quant gap report, backtest baseline report, replay CSV, time-value radar, scoring/state-machine replay baseline, and tests.
 - Decision required: none
-- Latest status marker: `WORKER_RELOAD_COMPLETED`
-- Latest commit: 0004bfd 2026-06-28 Record worker reload decision required
+- Latest status marker: `TASK-010 queued by ChatGPT`
+- Latest commit: b4b8565 2026-06-28 Add TASK-010 multi-snapshot replay task
 - Worker poll interval: idle 120s, active 30s
-- Next action: ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。
+- Next action: Mac mini worker should pull `main`, execute TASK-010, refresh reports/status files, run checks, commit, and push.
 
 ## ChatGPT Supervision Contract
 
