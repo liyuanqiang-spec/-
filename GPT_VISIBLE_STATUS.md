@@ -8,7 +8,8 @@
 - Decision required: none
 - Latest status marker: `TASK_008_COMPLETED`
 - Quant target file: `QUANT_SYSTEM_TARGETS.md`
-- Next action: Mac mini worker should process TASK-009 on the next scan.
+- Expected outputs: `REPORTS/quant_system_gap_report.md`; `REPORTS/backtest_baseline_report.md`
+- Next action: Mac mini worker should process TASK-009 on the next scan using existing backtest or sample data where available.
 
 ## ChatGPT Supervision Contract
 
