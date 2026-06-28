@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-28T20:55:14+08:00",
+  "generated_at": "2026-06-28T20:55:38+08:00",
   "state": "IDLE",
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
   "latest_status": "WORKER_COMPLETED",
-  "latest_commit": "8efbf65 2026-06-28 Worker processed TASK-011A",
-  "latest_report": "REPORTS/tick_file_smoke_report.md",
+  "latest_commit": "ff28200 2026-06-28 Sync TASK-011A completion result",
+  "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {
     "idle_seconds": 120,
     "active_seconds": 30

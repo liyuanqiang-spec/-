@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-06-28T20:47:12+08:00",
-  "state": "completed",
-  "detail": "Task TASK-011A completed",
-  "task": "TASK-011A",
+  "timestamp": "2026-06-28T20:55:38+08:00",
+  "state": "idle",
+  "detail": "no pending safe task",
+  "task": "none",
   "interval_seconds": 120,
   "idle_poll_interval_seconds": 120,
   "active_poll_interval_seconds": 30,
