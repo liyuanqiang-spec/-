@@ -102,3 +102,11 @@ No current user action required for normal safe GitHub status-file supervision.
 - Current action: stale entry; no current user action required
 - Resolution: TASK-011 was superseded by TASK-011A, which stayed inside repository-local offline file validation and `PHASE_1_SIMULATION_ONLY`.
 - Required confirmation: none.
+
+## Decision Required 2026-06-28 21:21:24 +0800
+
+- Item: Task TASK-013 contains a blocked trading/fund/secret/deletion/danger risk
+- Current action: worker stopped before execution
+- A 推荐: keep simulation-only and rewrite the task as safe research work
+- B: explicitly authorize the blocked setup/action
+- C: cancel this task

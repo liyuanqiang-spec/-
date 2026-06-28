@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-28T21:10:26+08:00",
-  "state": "IDLE",
+  "generated_at": "2026-06-28T21:21:24+08:00",
+  "state": "BLOCKED",
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "WORKER_COMPLETED",
-  "latest_commit": "4964e14 2026-06-28 Worker started TASK-012",
-  "last_worker_check": "2026-06-28T21:10:26+08:00 / completed / TASK-012",
+  "latest_status": "DECISION_REQUIRED",
+  "latest_commit": "71ab834 2026-06-28 Add GPT auto review workflow task",
+  "last_worker_check": "2026-06-28T21:21:24+08:00 / blocked / TASK-013",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {
     "idle_seconds": 600,
@@ -18,14 +18,24 @@
     "status": "completed",
     "type": "worker_cost_control",
     "title": "Reduce idle worker calls and writes",
-    "request": "Reduce background worker activity now that the queue is idle. Set idle polling to 600 seconds or slower, active-task polling to 60 seconds or slower, and make idle rounds read-only. When there is no pending task, do not call any model, do not run Codex, do not refresh status files, do not commit, and do not push. Keep a manual health-check command for on-demand checks. Update visible status to show the new intervals and the last worker check. Keep all work inside repository files and PHASE_1_SIMULATION_ONLY.",
-    "result": "codex exec completed",
-    "safety": "repository_status_only"
+    "request": "",
+    "result": "codex exec completed.",
+    "safety": ""
   },
-  "latest_failed_or_blocked_task": null,
+  "latest_failed_or_blocked_task": {
+    "id": "TASK-013",
+    "status": "decision_required",
+    "type": "auto_review_workflow",
+    "title": "Build visible GPT auto-review trigger",
+    "request": "Create the missing automatic review layer. Add `.github/workflows/gpt_orchestrator.yml` and `scripts/gpt_orchestrator.py`. The workflow must support manual run, schedule, and push-triggered review after status/report/code updates. The script must read PROJECT_MEMORY.md, TASK_QUEUE.md, STATUS.md, RUN_LOG.md, WORKER_DASHBOARD.md, GPT_VISIBLE_STATUS.md, DECISION_REQUIRED.md, REPORTS, src, and tests summaries; then write GPT_REVIEW.md and GPT_VISIBLE_STATUS.md. If a task is running or pending, only update visible status and do not request a model review. If idle, request a project-management review through the configured model key stored in repository Actions settings, append one safe next task if needed, and avoid duplicate reviews with `.gpt_state.json`. Do not expose any secret value. Keep all work repository-only and PHASE_1_SIMULATION_ONLY.",
+    "result": "blocked by risk control",
+    "safety": "repository_automation_only"
+  },
   "decision_required": {
-    "has_unresolved": false,
-    "items": []
+    "has_unresolved": true,
+    "items": [
+      "Task TASK-013 contains a blocked trading/fund/secret/deletion/danger risk"
+    ]
   },
-  "next_action": "ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。"
+  "next_action": "人工处理 DECISION_REQUIRED.md 中未解决事项，然后重新刷新状态。"
 }
