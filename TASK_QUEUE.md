@@ -62,11 +62,11 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 
 ### TASK-008
 - Status: pending
-- Type: repo_automation_setup
-- Title: Add GPT review automation layer
-- Request: Add the repository automation layer that lets GPT review completed worker output and append the next safe task. Create or update: `.github/workflows/gpt_orchestrator.yml`, `scripts/gpt_orchestrator.py`, `GPT_REVIEW.md`, `GPT_VISIBLE_STATUS.md`, and `.gpt_state.json`. The workflow should support manual run and a 10-minute schedule. The script should read PROJECT_MEMORY.md, TASK_QUEUE.md, STATUS.md, RUN_LOG.md, WORKER_DASHBOARD.md, DECISION_REQUIRED.md, and REPORTS. If there is already a pending or running task, update GPT_VISIBLE_STATUS.md only and do not run the model. If no task is pending, run the model review, append GPT_REVIEW.md, optionally append one next safe task to TASK_QUEUE.md, update GPT_VISIBLE_STATUS.md, and store state to avoid repeated reviews. Use the repository Actions setting named OPENAI_API_KEY and optional OPENAI_MODEL. If the setting is absent, write NEEDS_OPENAI_API_KEY to GPT_VISIBLE_STATUS.md and exit cleanly. Keep this layer limited to review, planning, and queue updates.
-- Expected output: workflow file, orchestration script, GPT review log, visible GPT status page, state file, README or dashboard link if practical, STATUS.md and RUN_LOG.md setup notes.
-- Safety: repo_automation_only
+- Type: repo_status_setup
+- Title: Finish GPT visible status layer
+- Request: Complete the repository status layer using the files already created by ChatGPT. Refresh GPT_VISIBLE_STATUS.md, GPT_REVIEW.md, .gpt_state.json, and WORKER_DASHBOARD.md. Keep work limited to repository status, planning, tests, and simulation-only reporting.
+- Expected output: refreshed visible status, review log note, state file, dashboard, tests.
+- Safety: repository_status_only
 - Created: 2026-06-28
-- Last update: created by ChatGPT
+- Last update: simplified by ChatGPT
 - Result: pending
