@@ -110,3 +110,11 @@ No current user action required for normal safe GitHub status-file supervision.
 - A 推荐: keep simulation-only and rewrite the task as safe research work
 - B: explicitly authorize the blocked setup/action
 - C: cancel this task
+
+## Decision Required 2026-06-28 21:25:48 +0800
+
+- Item: worker sync failed at pull stage: git pull failed
+- Current action: worker stopped before execution
+- A 推荐: keep simulation-only and rewrite the task as safe research work
+- B: explicitly authorize the blocked setup/action
+- C: cancel this task
