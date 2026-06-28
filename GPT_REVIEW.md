@@ -31,3 +31,12 @@ Status: `PROCESS_ADDED`
 - Visible state: `IDLE`
 - Current task: None
 - Decision required: none
+
+## 2026-06-28 Quant target review
+
+Status: `TARGET_ADDED`
+
+- Added `QUANT_SYSTEM_TARGETS.md` as the standing target for the quant system.
+- Retargeted `TASK-009` from generic software update to quant system enhancement baseline.
+- Current task: `TASK-009`.
+- Expected output: `REPORTS/quant_system_gap_report.md` plus safe repository improvements and refreshed visible status.
