@@ -1,11 +1,10 @@
 {
-  "timestamp": "2026-06-28T22:16:42+08:00",
-  "state": "completed",
-  "detail": "Task TASK-015 completed by interactive Codex repair",
-  "task": "TASK-015",
+  "timestamp": "2026-06-28T23:31:17+08:00",
+  "state": "running",
+  "detail": "Task TASK-016 started",
+  "task": "TASK-016",
   "interval_seconds": 600,
   "idle_poll_interval_seconds": 600,
-  "warm_poll_interval_seconds": 60,
   "active_poll_interval_seconds": 30,
   "safety_mode": "PHASE_1_SIMULATION_ONLY"
 }

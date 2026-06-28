@@ -235,7 +235,7 @@ The task is complete only when:
 6. The repo is committed and pushed successfully.
 
 ### TASK-016
-- Status: pending
+- Status: running
 - Type: model_review_packet_bridge
 - Title: Prepare repository-local model review packet
 - Request: Repository-only simulation-status task. Build a local review packet that connects the existing visible scaffold to human model review, without calling any outside service. Use existing files only: `GPT_REVIEW.md`, `GPT_VISIBLE_STATUS.md`, `WORKER_DASHBOARD.md`, `STATUS.md`, `RUN_LOG.md`, `DECISION_REQUIRED.md`, `QUANT_SYSTEM_TARGETS.md`, and markdown files under `REPORTS/`. Add or update a small script such as `scripts/prepare_model_review_packet.py` that writes `GPT_REVIEW_PACKET.md` and optionally `REPORTS/model_review_packet.md`. The packet should contain: current scaffold state, worker state, latest completed task, unresolved blocker if any, latest report summary, quant-system gap summary, and the next three safe repository tasks. Keep output concise; do not include large raw data, logs, environment variables, local absolute private paths, or credential-like file contents. Do not edit strategy code or data. Refresh `GPT_REVIEW.md`, `GPT_VISIBLE_STATUS.md`, `WORKER_DASHBOARD.md`, `STATUS.md`, and `RUN_LOG.md` after the packet is generated.

@@ -1,31 +1,47 @@
 {
-  "generated_at": "2026-06-28T22:34:01+08:00",
-  "state": "IDLE",
+  "generated_at": "2026-06-28T23:31:17+08:00",
+  "state": "WORKING",
   "visible_scaffold": {
-    "state": "SCAFFOLD_READY",
-    "reason": "visible scaffold artifacts are present"
+    "state": "WORKER_BUSY",
+    "reason": "current worker task is running"
   },
   "adaptive_polling": {
-    "mode": "WARM",
-    "interval_seconds": 60,
-    "consecutive_idle_checks": 0,
+    "mode": "ACTIVE",
+    "interval_seconds": 600,
+    "consecutive_idle_checks": 9,
     "idle_backoff_after_checks": 5,
-    "warm_remaining_checks": 3,
-    "reason": "TASK-015 completed; warm mode after activity",
-    "timestamp": "2026-06-28T22:16:42+08:00"
+    "warm_remaining_checks": 0,
+    "reason": "idle backoff after 9 checks",
+    "timestamp": "2026-06-28T23:21:03+08:00"
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "TASK_015_COMPLETED",
-  "latest_commit": "738fb73 2026-06-28 Complete TASK-015 adaptive polling and visible monitor",
-  "last_worker_check": "2026-06-28T22:16:42+08:00 / completed / TASK-015",
+  "latest_status": "WORKER_RUNNING",
+  "latest_commit": "b7fa2b6 2026-06-28 Append TASK-016 safe model review packet bridge",
+  "last_worker_check": "2026-06-28T23:31:17+08:00 / running / TASK-016",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {
     "idle_seconds": 600,
     "active_seconds": 30,
     "warm_seconds": 60
   },
-  "current_task": null,
-  "first_running_task": null,
+  "current_task": {
+    "id": "TASK-016",
+    "status": "running",
+    "type": "model_review_packet_bridge",
+    "title": "Prepare repository-local model review packet",
+    "request": "Repository-only simulation-status task. Build a local review packet that connects the existing visible scaffold to human model review, without calling any outside service. Use existing files only: `GPT_REVIEW.md`, `GPT_VISIBLE_STATUS.md`, `WORKER_DASHBOARD.md`, `STATUS.md`, `RUN_LOG.md`, `DECISION_REQUIRED.md`, `QUANT_SYSTEM_TARGETS.md`, and markdown files under `REPORTS/`. Add or update a small script such as `scripts/prepare_model_review_packet.py` that writes `GPT_REVIEW_PACKET.md` and optionally `REPORTS/model_review_packet.md`. The packet should contain: current scaffold state, worker state, latest completed task, unresolved blocker if any, latest report summary, quant-system gap summary, and the next three safe repository tasks. Keep output concise; do not include large raw data, logs, environment variables, local absolute private paths, or credential-like file contents. Do not edit strategy code or data. Refresh `GPT_REVIEW.md`, `GPT_VISIBLE_STATUS.md`, `WORKER_DASHBOARD.md`, `STATUS.md`, and `RUN_LOG.md` after the packet is generated.",
+    "result": "",
+    "safety": "repository_status_only"
+  },
+  "first_running_task": {
+    "id": "TASK-016",
+    "status": "running",
+    "type": "model_review_packet_bridge",
+    "title": "Prepare repository-local model review packet",
+    "request": "Repository-only simulation-status task. Build a local review packet that connects the existing visible scaffold to human model review, without calling any outside service. Use existing files only: `GPT_REVIEW.md`, `GPT_VISIBLE_STATUS.md`, `WORKER_DASHBOARD.md`, `STATUS.md`, `RUN_LOG.md`, `DECISION_REQUIRED.md`, `QUANT_SYSTEM_TARGETS.md`, and markdown files under `REPORTS/`. Add or update a small script such as `scripts/prepare_model_review_packet.py` that writes `GPT_REVIEW_PACKET.md` and optionally `REPORTS/model_review_packet.md`. The packet should contain: current scaffold state, worker state, latest completed task, unresolved blocker if any, latest report summary, quant-system gap summary, and the next three safe repository tasks. Keep output concise; do not include large raw data, logs, environment variables, local absolute private paths, or credential-like file contents. Do not edit strategy code or data. Refresh `GPT_REVIEW.md`, `GPT_VISIBLE_STATUS.md`, `WORKER_DASHBOARD.md`, `STATUS.md`, and `RUN_LOG.md` after the packet is generated.",
+    "result": "",
+    "safety": "repository_status_only"
+  },
   "first_pending_task": null,
   "latest_completed_task": {
     "id": "TASK-015",
@@ -49,5 +65,5 @@
     "has_unresolved": false,
     "items": []
   },
-  "next_action": "ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。"
+  "next_action": "等待当前任务完成；worker 会在完成、失败或阻塞后推送状态。"
 }
