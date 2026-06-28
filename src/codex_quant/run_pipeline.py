@@ -11,6 +11,7 @@ from .config import (
     TRADING_MODE,
 )
 from .contract_scanner import load_contracts, scan_contracts
+from .quant_baseline import run_quant_baseline
 from .report_writer import (
     write_first_complete_simulation_report,
     write_report,
@@ -58,6 +59,28 @@ if __name__ == "__main__":
         action="store_true",
         help="run the TASK-007 complete sample-data simulation report",
     )
-    parser.parse_args()
-    result = run()
+    parser.add_argument(
+        "--quant-baseline",
+        action="store_true",
+        help="run the TASK-009 quant system enhancement baseline report",
+    )
+    parser.add_argument(
+        "--verification",
+        default="- Verification not yet run for this report generation.",
+        help="verification note to include in TASK-009 reports",
+    )
+    args = parser.parse_args()
+    if args.quant_baseline:
+        baseline = run_quant_baseline(args.verification)
+        result = {
+            "raw_contracts": len(baseline.raw_contracts),
+            "contracts": len(baseline.scanned_contracts),
+            "candidates": len(baseline.candidates),
+            "accepted_candidates": baseline.summary.accepted_candidates,
+            "average_simulated_edge": baseline.summary.average_simulated_edge,
+            "gap_report": "REPORTS/quant_system_gap_report.md",
+            "baseline_report": "REPORTS/backtest_baseline_report.md",
+        }
+    else:
+        result = run()
     print(result)

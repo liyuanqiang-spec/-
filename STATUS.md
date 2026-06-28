@@ -480,3 +480,13 @@ Status: `WORKER_RUNNING`
 - Detail: Task TASK-009 started immediately from GitHub main. Scope is repository-only quant-system baseline using existing local data or documented fixtures.
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no dangerous sandbox.
+
+## Worker Update 2026-06-28 15:02:53 +0800
+
+Status: `TASK_009_COMPLETED`
+
+- Detail: Quant-system enhancement baseline completed using repository-local sample data. Generated `REPORTS/quant_system_gap_report.md`, `REPORTS/backtest_baseline_report.md`, and `REPORTS/quant_baseline_replay.csv`; added time-value radar, spread scoring, state-machine replay, and second-leg protection baseline.
+- Result: raw contracts=8; scanned contracts=7; vertical spread candidates=4; accepted simulated spreads=3; average simulated improvement=2.398; reliability=`LOW_SAMPLE`.
+- Verification: `python3 scripts/refresh_visible_status.py` passed; `bash scripts/check_worker_health.sh` passed; `python3 -m compileall -q src tests scripts` passed; `python3 -m unittest discover -s tests` passed, 14 tests; `bash -n scripts/codex_worker.sh` passed.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no dangerous sandbox.

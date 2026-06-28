@@ -1,14 +1,14 @@
 # GPT Visible Status
 
-- Generated at: `2026-06-28T14:56:47+08:00`
-- Status: `WORKING`
+- Generated at: `2026-06-28T15:05:06+08:00`
+- Status: `IDLE`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
-- Current task: TASK-009 / running / Build quant system enhancement baseline
-- Latest completed task: TASK-008 (completed) - Finish GPT visible status layer | TASK-008 completed; GPT visible status layer, worker dashboard refresh, structured state file, health check, and worker reporting hooks stabilized.
+- Current task: none
+- Latest completed task: TASK-009 (completed) - Build quant system enhancement baseline | completed; generated quant gap report, backtest baseline report, replay CSV, time-value radar, scoring/state-machine replay baseline, and tests.
 - Decision required: none
-- Latest status marker: `WORKER_RUNNING`
-- Latest commit: 198c2b6 2026-06-28 Refresh GPT visible status for backtest baseline
-- Next action: 等待当前任务完成；worker 会在完成、失败或阻塞后推送状态。
+- Latest status marker: `TASK_009_COMPLETED`
+- Latest commit: d9ad491 2026-06-28 Mark TASK-009 running
+- Next action: ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。
 
 ## ChatGPT Supervision Contract
 

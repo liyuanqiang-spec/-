@@ -319,3 +319,11 @@ This file records safe worker runs and Codex execution events.
 
 - Event: started
 - Detail: Task TASK-009 started immediately from GitHub main. Execution is limited to repository-local data, fixtures, simulation, tests, and reports.
+
+## 2026-06-28 15:02:53 +0800
+
+- Event: TASK-009 completed
+- Detail: Built repository-local quant-system baseline: gap report, backtest baseline report, replay CSV, time-value radar, scored vertical spreads, deterministic state-machine replay, first-leg passive fill simulation, and second-leg active hedge simulation.
+- Reports: `REPORTS/quant_system_gap_report.md`, `REPORTS/backtest_baseline_report.md`, `REPORTS/quant_baseline_replay.csv`.
+- Verification: refresh visible status passed; worker health passed; compileall passed; unittest passed with 14 tests; worker bash syntax passed.
+- Safety: `PHASE_1_SIMULATION_ONLY`; no account connection, no real orders, no cancellations, no fund movement, no original data deletion, no secret exposure, no dangerous sandbox.
