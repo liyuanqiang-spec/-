@@ -73,11 +73,11 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 
 ### TASK-009
 - Status: pending
-- Type: project_software_update
-- Title: Safe repository software update baseline
-- Request: Perform a repository-only software update pass. Read RELIABILITY_RUNBOOK.md first. Inventory Python modules, tests, scripts, reports, and dependency files. Update only project code, tests, documentation, and repository-local configuration where needed. Preserve the visible status flow. Run health checks and test commands. Write a concise upgrade report in REPORTS/software_update_baseline.md.
-- Expected output: updated repository code or documentation as needed, software update baseline report, refreshed dashboard, refreshed GPT visible status, passing health checks and tests.
-- Safety: repository_only
+- Type: quant_system_enhancement
+- Title: Build quant system enhancement baseline
+- Request: Read QUANT_SYSTEM_TARGETS.md and RELIABILITY_RUNBOOK.md. Audit the current repository against the quant-system target. Implement the safest missing repository-local pieces that can be completed with sample data and simulation. Focus on data schema, option-chain scanner, time-value radar, combination generator, scoring engine, state-machine simulator, second-leg protection simulator, replay report, and dashboard/report refresh. Preserve the visible status flow. Write REPORTS/quant_system_gap_report.md with current coverage, missing modules, tests, and next three safe Codex tasks.
+- Expected output: quant system gap report, implemented safe missing pieces where practical, refreshed dashboard, refreshed GPT visible status, passing health checks and tests or exact failure reasons.
+- Safety: repository_only_simulation
 - Created: 2026-06-28
-- Last update: created by ChatGPT after TASK-008 completion
+- Last update: rewritten by ChatGPT from prior quant-system discussions
 - Result: pending
