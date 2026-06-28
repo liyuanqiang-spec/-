@@ -1,0 +1,6 @@
+{
+  "created_by": "ChatGPT GitHub connector",
+  "created_at": "2026-06-28",
+  "last_status": "BOOTSTRAP_STARTED",
+  "note": "Status page and workflow template were created. Full active workflow/script creation is delegated to local Codex worker because direct connector writes for that layer were blocked."
+}
