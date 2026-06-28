@@ -370,6 +370,12 @@ This file records safe worker runs and Codex execution events.
 - Event: completed
 - Detail: Task TASK-010 completed
 
+## 2026-06-28 20:26:43 +0800
+
+- Event: task_010_git_sync_repaired
+- Detail: Support clone had `TASK-010` completed locally but could not push because `origin/main` advanced with `TASK-011`. Created backup branch `backup/task010-sync-20260628-202526`, stashed pull-failure status noise, rebased the TASK-010 result commit over `origin/main`, and added explicit TASK-010 queue result fields.
+- Safety: `PHASE_1_SIMULATION_ONLY`; no account connection, no real orders, no cancellations, no fund movement, no original data deletion, no secret exposure, no dangerous sandbox.
+
 ## 2026-06-28 20:27:28 +0800
 
 - Event: blocked

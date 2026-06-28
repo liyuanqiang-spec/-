@@ -545,7 +545,7 @@ Status: `WORKER_COMPLETED`
 Status: `TASK_010_GIT_SYNC_REPAIRED`
 
 - Detail: TASK-010 had completed locally in support clone commit `17abcae`, later rebased to `d9cac94`, but the result did not reach GitHub because `origin/main` advanced with `TASK-011`. Codex backed up/stashed the support clone, rebased TASK-010 over `origin/main`, and added missing `Last update` / `Result` fields to `TASK_QUEUE.md`.
-- Current queue state: `TASK-010` completed; `TASK-011` is the first pending task.
+- Current queue state: `TASK-010` completed; `TASK-011` has since been marked `decision_required` by the safety scanner.
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Confirmation required: no further git authorization currently required.
 

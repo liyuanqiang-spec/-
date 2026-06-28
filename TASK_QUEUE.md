@@ -92,7 +92,7 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Safety: repository_only_simulation
 - Created: 2026-06-28
 - Last update: synced by Codex 2026-06-28 20:26:43 +0800
-- Result: completed; added repository-local multi-snapshot quote replay fixture, replay loader, deterministic stale quote/timeout/incomplete-leg tests, and refreshed baseline replay reports. Git result sync was rebased over TASK-011 and is ready to push.
+- Result: completed; added repository-local multi-snapshot quote replay fixture, replay loader, deterministic stale quote/timeout/incomplete-leg tests, and refreshed baseline replay reports. Git result sync was rebased over TASK-011 and recorded in the queue.
 
 ### TASK-011
 - Status: decision_required
