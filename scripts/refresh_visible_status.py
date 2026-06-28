@@ -102,17 +102,31 @@ def parse_queue_tasks(text: str) -> list[QueueTask]:
 def unresolved_decisions(text: str) -> list[str]:
     sections = re.split(r"(?m)^##\s+", text)
     unresolved: list[str] = []
+
+    def add_detail(section: str, default: str) -> None:
+        item = re.search(r"(?mi)^-\s*Item:\s*(.+)$", section)
+        task = re.search(r"(?mi)^-\s*Task:\s*(.+)$", section)
+        reason = re.search(r"(?mi)^-\s*Block reason:\s*(.+)$", section)
+        detail = item or task or reason
+        value = (detail.group(1).strip() if detail else default)[:240]
+        if value not in unresolved:
+            unresolved.append(value)
+
     for section in sections:
         title = section.splitlines()[0].strip() if section.splitlines() else ""
         if not title.startswith("Decision Required"):
             continue
         if re.search(r"(?mi)^-\s*Status:\s*resolved\s*$", section):
             continue
-        item = re.search(r"(?mi)^-\s*Item:\s*(.+)$", section)
-        task = re.search(r"(?mi)^-\s*Task:\s*(.+)$", section)
-        reason = re.search(r"(?mi)^-\s*Block reason:\s*(.+)$", section)
-        detail = item or task or reason
-        unresolved.append((detail.group(1).strip() if detail else title)[:240])
+        add_detail(section, title)
+
+    for match in re.finditer(r"(?ms)^###\s+([^\n]+)\n(.*?)(?=^###\s+|^##\s+|\Z)", text):
+        title = match.group(1).strip()
+        section = match.group(2)
+        if re.search(r"(?mi)^-\s*Status:\s*resolved\s*$", section):
+            continue
+        if re.search(r"(?mi)^-\s*Status:\s*(open|pending|decision_required)\s*$", section):
+            add_detail(section, title)
     return unresolved
 
 

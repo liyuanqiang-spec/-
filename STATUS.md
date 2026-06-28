@@ -498,3 +498,11 @@ Status: `WORKER_POLLING_UPDATED`
 - Detail: Pulled GitHub main and confirmed `TASK-009` is already completed. Updated worker polling defaults to idle `120s` and active `30s`; idle scans remain lightweight and only commit/push when task state or visible status is inconsistent.
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no dangerous sandbox.
+
+## Worker Update 2026-06-28 16:33:26 +0800
+
+Status: `DECISION_REQUIRED`
+
+- Detail: Main repository polling defaults were pushed, but `scripts/start_worker.sh` could not reload the existing launchd worker because the support clone is divergent and has local modified status files. See `DECISION_REQUIRED.md` item `DR-20260628-WORKER-RELOAD-SUPPORT-CLONE-DIVERGED`.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Current worker config target: idle `120s`, active `30s`.

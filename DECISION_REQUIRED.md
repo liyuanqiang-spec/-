@@ -6,7 +6,16 @@ For binding safety limits, see `RISK_CONTROL.md`.
 
 ## Open Decisions
 
-No current user action required for normal safe GitHub status-file supervision.
+### DR-20260628-WORKER-RELOAD-SUPPORT-CLONE-DIVERGED
+- Status: open
+- Created: 2026-06-28 16:33:26 +0800
+- Item: Worker reload blocked by divergent support clone.
+- Detail: Existing `scripts/start_worker.sh` could not reload launchd worker because the support clone at `~/Library/Application Support/CodexGithubWorker/repo` is `ahead 1, behind 30` with local modified status files. `git pull --ff-only origin main` refused to continue.
+- Current action: main repository has been updated and pushed with idle `120s` / active `30s`; existing launchd worker was not safely reloaded.
+- A 推荐: authorize a safe support-clone resync using backup branch/stash first, then align the support clone to `origin/main` and rerun `scripts/start_worker.sh`.
+- B: manually resolve the support clone divergence and rerun `scripts/start_worker.sh`.
+- C: leave the existing worker launchd configuration unchanged until the next maintenance pass.
+- Required confirmation: yes, because resolving the background support clone requires modifying project-external local worker state.
 
 ## Resolved Decisions
 

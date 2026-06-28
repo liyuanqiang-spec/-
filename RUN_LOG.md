@@ -333,3 +333,9 @@ This file records safe worker runs and Codex execution events.
 - Event: worker_polling_frequency_updated
 - Detail: `git pull --ff-only origin main` completed and `TASK_QUEUE.md` was read. `TASK-009` was already completed, so it was not executed again. Worker defaults changed to idle 120 seconds and active 30 seconds, with idle scans kept lightweight.
 - Safety: `PHASE_1_SIMULATION_ONLY`; no account connection, no real orders, no cancellations, no fund movement, no original data deletion, no secret exposure, no dangerous sandbox.
+
+## 2026-06-28 16:33:26 +0800
+
+- Event: worker_reload_blocked
+- Detail: `scripts/start_worker.sh` failed before launchd reload because the support clone at `~/Library/Application Support/CodexGithubWorker/repo` is not fast-forwardable from `origin/main` and has local modified status files. Decision item `DR-20260628-WORKER-RELOAD-SUPPORT-CLONE-DIVERGED` was written.
+- Safety: no destructive support-clone reset was performed; main repository remains `PHASE_1_SIMULATION_ONLY`.
