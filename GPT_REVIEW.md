@@ -53,25 +53,25 @@ Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
 <!-- visible-review-scaffold:start -->
 ## Visible Review Scaffold
 
-- Generated at: `2026-06-28T22:33:43+08:00`
+- Generated at: `2026-06-28T23:36:00+08:00`
 - State: `SCAFFOLD_READY`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
-- Worker mode: `WARM`
-- Current poll interval: `60s`
-- Consecutive idle checks: `0`
+- Worker mode: `IDLE`
+- Current poll interval: `600s`
+- Consecutive idle checks: `9`
 - Current task: None
 - First pending task: None
-- Latest completed task: TASK-015 (completed) - Add adaptive polling frequency for local GitHub worker | completed; added adaptive ACTIVE/WARM/IDLE polling, visible polling state, health checks, and a local Terminal monitor window入口.
+- Latest completed task: TASK-016 (completed) - Prepare repository-local model review packet | completed; prepared `GPT_REVIEW_PACKET.md` and `REPORTS/model_review_packet.md`, added the repository-local packet script and tests, refreshed review/visible/dashboard/status/lo...
 - Decision required: none
 - Failure reason: none
-- Latest status marker: `TASK_015_COMPLETED`
-- Latest run event: 2026-06-28 22:29:16 +0800 / github-network-proxy-repair / Direct HTTPS GitHub access from the interactive shell timed out; the local proxy path succeeded.
+- Latest status marker: `TASK_016_COMPLETED`
+- Latest run event: 2026-06-28 23:35:16 +0800 / TASK-016 completed / Prepared a concise repository-local model review packet bridge from existing status/review/report Markdown only.
 - Previous dashboard state: `IDLE`
 - Previous visible status: `UNKNOWN`
 - Project memory headings reviewed: PROJECT_MEMORY.md, Project, Core strategy, Current architecture, Software roles, Must build, Core KPI, Safety boundaries
-- Reports summary: 9 files; latest markdown `REPORTS/first_complete_simulation_report.md`; headings: TASK-007 First Complete Simulation Report, Run Command, Dashboard Entry, Reproducible Backtest Configuration, Candidate Simulation Table, Accepted Candidates
+- Reports summary: 10 files; latest markdown `REPORTS/model_review_packet.md`; headings: GPT Review Packet, Current State, Latest Report Summary, Quant-System Gap Summary, Next Three Safe Repository Tasks, Review Focus
 - Source summary: 16 Python files; sample: src/__init__.py, src/codex_quant/__init__.py, src/codex_quant/backtester.py, src/codex_quant/config.py, src/codex_quant/contract_scanner.py, src/codex_quant/dashboard.py, src/codex_quant/low_liquidity_scanner.py, src/codex_quant/quant_baseline.py, src/codex_quant/quote_replay.py, src/codex_quant/report_writer.py, src/codex_quant/risk_control.py, src/codex_quant/run_pipeline.py
-- Test summary: 11 Python files; sample: tests/test_backtester.py, tests/test_dashboard.py, tests/test_low_liquidity_scanner.py, tests/test_pipeline.py, tests/test_quant_baseline.py, tests/test_quote_replay.py, tests/test_risk_control.py, tests/test_spread_calculator.py, tests/test_tick_replay_adapter.py, tests/test_visible_review_scaffold.py, tests/test_worker.py
+- Test summary: 12 Python files; sample: tests/test_backtester.py, tests/test_dashboard.py, tests/test_low_liquidity_scanner.py, tests/test_model_review_packet.py, tests/test_pipeline.py, tests/test_quant_baseline.py, tests/test_quote_replay.py, tests/test_risk_control.py, tests/test_spread_calculator.py, tests/test_tick_replay_adapter.py, tests/test_visible_review_scaffold.py, tests/test_worker.py
 - Next safe human-supervision action: ChatGPT can review GPT_REVIEW.md and add the next safe simulation-only task to TASK_QUEUE.md.
 
 ## Scaffold Guarantees
@@ -114,6 +114,26 @@ Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
 ## 2026-06-28 22:34:01 +0800
 
 - Visible status refreshed after scaffold output.
+- Visible state: `IDLE`
+- Current task: None
+- Decision required: none
+
+<!-- model-review-packet:start -->
+## Model Review Packet Bridge
+
+- Generated at: `2026-06-28T23:35:53+08:00`
+- Packet: `GPT_REVIEW_PACKET.md`
+- Report copy: `REPORTS/model_review_packet.md`
+- Scaffold state: `SCAFFOLD_READY`
+- Worker state: `IDLE`
+- Latest completed task: TASK-016 (completed) - Prepare repository-local model review packet | completed; prepared `GPT_REVIEW_PACKET.md` and `REPORTS/model_review_packet.md`, added the repository-local packet script and tests, refreshed revi...
+- Unresolved blocker: none
+- Next safe repository tasks: Add parameter sensitivity report for passive fill threshold, timeout, second-leg max adverse move, fee and slippage assumptions.; Extend visible dashboard/report layer with time-value anomaly table, spread ranking table, and replay summary link.; Add safe repository-local fill-event fixture to validate passive-fill and incomplete-leg assumptions without c...
+<!-- model-review-packet:end -->
+
+## 2026-06-28 23:36:08 +0800
+
+- TASK-016 completed: repository-local model review packet generated at GPT_REVIEW_PACKET.md and REPORTS/model_review_packet.md.
 - Visible state: `IDLE`
 - Current task: None
 - Decision required: none

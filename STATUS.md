@@ -722,3 +722,22 @@ Status: `WORKER_RUNNING`
 
 - Detail: Task TASK-016 started
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-28 23:35:16 +0800
+
+Status: `TASK_016_COMPLETED`
+
+- Detail: Completed the repository-local model review packet bridge.
+- Result: Added `scripts/prepare_model_review_packet.py`, generated `GPT_REVIEW_PACKET.md` and `REPORTS/model_review_packet.md`, and refreshed the GPT review/status/dashboard surfaces so a human model review can see scaffold state, worker state, latest completed task, blocker state, latest report summary, quant-system gaps, and next three safe repository tasks.
+- Updated files: `scripts/prepare_model_review_packet.py`, `tests/test_model_review_packet.py`, `GPT_REVIEW_PACKET.md`, `REPORTS/model_review_packet.md`, `GPT_REVIEW.md`, `GPT_VISIBLE_STATUS.md`, `WORKER_DASHBOARD.md`, `TASK_QUEUE.md`, `STATUS.md`, and `RUN_LOG.md`.
+- Verification: `python3 scripts/prepare_model_review_packet.py --check`; `python3 scripts/visible_review_scaffold.py --check`; `python3 scripts/refresh_visible_status.py --check`; `python3 -m compileall -q src tests scripts`; `python3 -m unittest discover -s tests` with 28 tests.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no external service call, no dangerous sandbox, and no git add/commit/push inside codex exec.
+- Confirmation required: no.
+
+## Worker Update 2026-06-28 23:37:13 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-016 completed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

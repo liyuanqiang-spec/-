@@ -1,21 +1,21 @@
 # GPT Visible Status
 
-- Generated at: `2026-06-28T23:31:17+08:00`
-- Status: `WORKING`
-- Visible scaffold: `WORKER_BUSY`
-- Worker mode: `ACTIVE`
+- Generated at: `2026-06-28T23:37:13+08:00`
+- Status: `IDLE`
+- Visible scaffold: `SCAFFOLD_READY`
+- Worker mode: `IDLE`
 - Current poll interval: `600s`
 - Consecutive idle checks: `9`
 - Polling reason: idle backoff after 9 checks
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
-- Current task: TASK-016 / running / Prepare repository-local model review packet
-- Latest completed task: TASK-015 (completed) - Add adaptive polling frequency for local GitHub worker | completed; added adaptive ACTIVE/WARM/IDLE polling, visible polling state, health checks, and a local Terminal monitor window入口.
+- Current task: none
+- Latest completed task: TASK-016 (completed) - Prepare repository-local model review packet | codex exec completed
 - Decision required: none
-- Latest status marker: `WORKER_RUNNING`
-- Last worker check: 2026-06-28T23:31:17+08:00 / running / TASK-016
-- Latest commit: b7fa2b6 2026-06-28 Append TASK-016 safe model review packet bridge
+- Latest status marker: `WORKER_COMPLETED`
+- Last worker check: 2026-06-28T23:37:13+08:00 / completed / TASK-016
+- Latest commit: b97257b 2026-06-28 Worker started TASK-016
 - Worker poll interval: active 30s, warm 60s, idle 600s
-- Next action: 等待当前任务完成；worker 会在完成、失败或阻塞后推送状态。
+- Next action: ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。
 
 ## ChatGPT Supervision Contract
 

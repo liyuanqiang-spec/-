@@ -527,3 +527,21 @@ This file records safe worker runs and Codex execution events.
 
 - Event: started
 - Detail: Task TASK-016 started
+
+## 2026-06-28 23:31:27 +0800
+
+- Event: attempt
+- Detail: Task TASK-016 codex exec attempt 1/3
+
+## 2026-06-28 23:35:16 +0800
+
+- Event: TASK-016 completed
+- Detail: Prepared a concise repository-local model review packet bridge from existing status/review/report Markdown only.
+- Result: Added `scripts/prepare_model_review_packet.py`; generated `GPT_REVIEW_PACKET.md` and `REPORTS/model_review_packet.md`; refreshed `GPT_REVIEW.md`, `GPT_VISIBLE_STATUS.md`, `WORKER_DASHBOARD.md`, `STATUS.md`, and `RUN_LOG.md`; marked `TASK-016` completed in `TASK_QUEUE.md`.
+- Verification: `python3 scripts/prepare_model_review_packet.py --check`; `python3 scripts/visible_review_scaffold.py --check`; `python3 scripts/refresh_visible_status.py --check`; `python3 -m compileall -q src tests scripts`; `python3 -m unittest discover -s tests` with 28 tests.
+- Safety: `PHASE_1_SIMULATION_ONLY`; no account connection, no real orders, no cancellations, no fund movement, no original-data deletion, no secret exposure, no external service calls, no dangerous sandbox, and no git add/commit/push inside codex exec.
+
+## 2026-06-28 23:37:13 +0800
+
+- Event: completed
+- Detail: Task TASK-016 completed
