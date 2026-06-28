@@ -75,9 +75,9 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Status: pending
 - Type: quant_system_enhancement
 - Title: Build quant system enhancement baseline
-- Request: Read QUANT_SYSTEM_TARGETS.md and RELIABILITY_RUNBOOK.md. Audit the current repository against the quant-system target. Implement the safest missing repository-local pieces that can be completed with sample data and simulation. Focus on data schema, option-chain scanner, time-value radar, combination generator, scoring engine, state-machine simulator, second-leg protection simulator, replay report, and dashboard/report refresh. Preserve the visible status flow. Write REPORTS/quant_system_gap_report.md with current coverage, missing modules, tests, and next three safe Codex tasks.
-- Expected output: quant system gap report, implemented safe missing pieces where practical, refreshed dashboard, refreshed GPT visible status, passing health checks and tests or exact failure reasons.
+- Request: Read QUANT_SYSTEM_TARGETS.md and RELIABILITY_RUNBOOK.md. Audit the current repository against the quant-system target. Use existing backtest or sample data in the repository where available. If a needed dataset is absent, create a small documented fixture only for schema and pipeline validation, and clearly mark it as non-performance data. Implement the safest missing repository-local pieces that can be completed with data replay and simulation. Focus on data schema, option-chain scanner, time-value radar, combination generator, scoring engine, state-machine simulator, second-leg protection simulator, replay report, and dashboard/report refresh. Preserve the visible status flow. Write REPORTS/quant_system_gap_report.md and REPORTS/backtest_baseline_report.md with current coverage, data coverage, tests, and next three safe Codex tasks.
+- Expected output: quant system gap report, backtest baseline report, implemented safe missing pieces where practical, refreshed dashboard, refreshed GPT visible status, passing health checks and tests or exact failure reasons.
 - Safety: repository_only_simulation
 - Created: 2026-06-28
-- Last update: rewritten by ChatGPT from prior quant-system discussions
+- Last update: updated by ChatGPT to use backtest data where available
 - Result: pending
