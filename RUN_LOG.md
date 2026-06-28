@@ -515,3 +515,10 @@ This file records safe worker runs and Codex execution events.
 - Detail: GitHub rejected the generated `.github/workflows` file because the current OAuth token lacks `workflow` scope.
 - Result: Removed the workflow file from the commit path and kept the repository-local visible monitor/status scaffold. The local GPT -> GitHub status-file -> Codex worker channel does not require GitHub Actions workflow scope.
 - Safety: no external authorization change was performed.
+
+## 2026-06-28 22:29:16 +0800
+
+- Event: github-network-proxy-repair
+- Detail: Direct HTTPS GitHub access from the interactive shell timed out; the local proxy path succeeded.
+- Result: `scripts/start_worker.sh` now exports the local `127.0.0.1:10090` proxy variables for worker Git pull/push operations.
+- Safety: no system service was added and no secret was changed.

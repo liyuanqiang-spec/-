@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-28T22:29:56+08:00",
+  "generated_at": "2026-06-28T22:34:01+08:00",
   "state": "IDLE",
   "visible_scaffold": {
     "state": "SCAFFOLD_READY",
@@ -16,7 +16,7 @@
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
   "latest_status": "TASK_015_COMPLETED",
-  "latest_commit": "1312e0f 2026-06-28 Complete TASK-015 adaptive polling and visible monitor",
+  "latest_commit": "738fb73 2026-06-28 Complete TASK-015 adaptive polling and visible monitor",
   "last_worker_check": "2026-06-28T22:16:42+08:00 / completed / TASK-015",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {

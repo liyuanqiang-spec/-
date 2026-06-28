@@ -1,6 +1,6 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-06-28 22:29:56 +0800`
+Last dashboard update: `2026-06-28 22:34:01 +0800`
 
 | Item | Result |
 |---|---|
@@ -17,7 +17,7 @@ Last dashboard update: `2026-06-28 22:29:56 +0800`
 | Latest status | TASK_015_COMPLETED |
 | Last worker check | 2026-06-28T22:16:42+08:00 / completed / TASK-015 |
 | Latest report | REPORTS/first_complete_simulation_report.md |
-| Latest push/commit | 1312e0f 2026-06-28 Complete TASK-015 adaptive polling and visible monitor |
+| Latest push/commit | 738fb73 2026-06-28 Complete TASK-015 adaptive polling and visible monitor |
 | Worker poll interval | active 30s, warm 60s, idle 600s |
 | Decision required | No unresolved item |
 | Safety mode | PHASE_1_SIMULATION_ONLY |

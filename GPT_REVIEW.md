@@ -53,7 +53,7 @@ Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
 <!-- visible-review-scaffold:start -->
 ## Visible Review Scaffold
 
-- Generated at: `2026-06-28T22:29:56+08:00`
+- Generated at: `2026-06-28T22:33:43+08:00`
 - State: `SCAFFOLD_READY`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Worker mode: `WARM`
@@ -65,7 +65,7 @@ Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
 - Decision required: none
 - Failure reason: none
 - Latest status marker: `TASK_015_COMPLETED`
-- Latest run event: 2026-06-28 22:25:42 +0800 / workflow-scope-push-repair / GitHub rejected the generated `.github/workflows` file because the current OAuth token lacks `workflow` scope.
+- Latest run event: 2026-06-28 22:29:16 +0800 / github-network-proxy-repair / Direct HTTPS GitHub access from the interactive shell timed out; the local proxy path succeeded.
 - Previous dashboard state: `IDLE`
 - Previous visible status: `UNKNOWN`
 - Project memory headings reviewed: PROJECT_MEMORY.md, Project, Core strategy, Current architecture, Software roles, Must build, Core KPI, Safety boundaries
@@ -100,6 +100,20 @@ Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
 ## 2026-06-28 22:29:56 +0800
 
 - Workflow-scope push repair applied; local monitor remains active.
+- Visible state: `IDLE`
+- Current task: None
+- Decision required: none
+
+## 2026-06-28 22:33:43 +0800
+
+- Worker Git proxy exported for reliable GitHub pull/push.
+- Visible state: `IDLE`
+- Current task: None
+- Decision required: none
+
+## 2026-06-28 22:34:01 +0800
+
+- Visible status refreshed after scaffold output.
 - Visible state: `IDLE`
 - Current task: None
 - Decision required: none
