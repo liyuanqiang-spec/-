@@ -506,3 +506,12 @@ Status: `DECISION_REQUIRED`
 - Detail: Main repository polling defaults were pushed, but `scripts/start_worker.sh` could not reload the existing launchd worker because the support clone is divergent and has local modified status files. See `DECISION_REQUIRED.md` item `DR-20260628-WORKER-RELOAD-SUPPORT-CLONE-DIVERGED`.
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Current worker config target: idle `120s`, active `30s`.
+
+## Worker Update 2026-06-28 16:53:33 +0800
+
+Status: `WORKER_RELOAD_COMPLETED`
+
+- Detail: User authorized support-clone repair. Created backup branch `backup/support-clone-20260628-165020`, stashed local support-clone changes, aligned `~/Library/Application Support/CodexGithubWorker/repo` to `origin/main`, and reran `scripts/start_worker.sh` successfully.
+- Result: existing launchd worker reloaded; plist `StartInterval` is `120`; worker heartbeat shows idle `120s` and active `30s`.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no dangerous sandbox.

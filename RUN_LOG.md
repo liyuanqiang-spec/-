@@ -339,3 +339,10 @@ This file records safe worker runs and Codex execution events.
 - Event: worker_reload_blocked
 - Detail: `scripts/start_worker.sh` failed before launchd reload because the support clone at `~/Library/Application Support/CodexGithubWorker/repo` is not fast-forwardable from `origin/main` and has local modified status files. Decision item `DR-20260628-WORKER-RELOAD-SUPPORT-CLONE-DIVERGED` was written.
 - Safety: no destructive support-clone reset was performed; main repository remains `PHASE_1_SIMULATION_ONLY`.
+
+## 2026-06-28 16:53:33 +0800
+
+- Event: worker_reload_completed
+- Detail: After user authorization, support clone was backed up with branch `backup/support-clone-20260628-165020`, local changes were stashed, support clone was aligned to `origin/main`, and existing launchd worker was reloaded through `scripts/start_worker.sh`.
+- Result: launchd plist `StartInterval=120`; worker heartbeat idle interval `120`; active interval `30`; no new system service was created.
+- Safety: `PHASE_1_SIMULATION_ONLY`; no account connection, no real orders, no cancellations, no fund movement, no original data deletion, no secret exposure, no dangerous sandbox.

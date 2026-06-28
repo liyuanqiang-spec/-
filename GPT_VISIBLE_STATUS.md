@@ -1,15 +1,15 @@
 # GPT Visible Status
 
-- Generated at: `2026-06-28T16:35:48+08:00`
-- Status: `BLOCKED`
+- Generated at: `2026-06-28T16:55:13+08:00`
+- Status: `IDLE`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Current task: none
 - Latest completed task: TASK-009 (completed) - Build quant system enhancement baseline | completed; generated quant gap report, backtest baseline report, replay CSV, time-value radar, scoring/state-machine replay baseline, and tests.
-- Decision required: yes - Worker reload blocked by divergent support clone.
-- Latest status marker: `DECISION_REQUIRED`
-- Latest commit: 44be384 2026-06-28 Increase worker polling frequency and continue TASK-009
+- Decision required: none
+- Latest status marker: `WORKER_RELOAD_COMPLETED`
+- Latest commit: 0004bfd 2026-06-28 Record worker reload decision required
 - Worker poll interval: idle 120s, active 30s
-- Next action: 人工处理 DECISION_REQUIRED.md 中未解决事项，然后重新刷新状态。
+- Next action: ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。
 
 ## ChatGPT Supervision Contract
 
