@@ -1,15 +1,15 @@
 # GPT Visible Status
 
-- Generated at: `2026-06-28T20:55:38+08:00`
-- Status: `IDLE`
+- Generated at: `2026-06-28T21:04:03+08:00`
+- Status: `WORKING`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
-- Current task: none
+- Current task: TASK-012 / running / Reduce idle worker calls and writes
 - Latest completed task: TASK-011A (completed) - Validate local historical tick files with offline replay adapter | completed; added offline tick adapter, validation script, sanitized non-performance tick fixture, tick smoke report, refreshed quant reports, and passed 21 tests.
 - Decision required: none
-- Latest status marker: `WORKER_COMPLETED`
-- Latest commit: ff28200 2026-06-28 Sync TASK-011A completion result
+- Latest status marker: `WORKER_RUNNING`
+- Latest commit: fea19d3 2026-06-28 Add worker call reduction task
 - Worker poll interval: idle 120s, active 30s
-- Next action: ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。
+- Next action: 等待当前任务完成；worker 会在完成、失败或阻塞后推送状态。
 
 ## ChatGPT Supervision Contract
 

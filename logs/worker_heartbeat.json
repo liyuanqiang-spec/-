@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-06-28T20:55:38+08:00",
-  "state": "idle",
-  "detail": "no pending safe task",
-  "task": "none",
+  "timestamp": "2026-06-28T21:04:03+08:00",
+  "state": "running",
+  "detail": "Task TASK-012 started",
+  "task": "TASK-012",
   "interval_seconds": 120,
   "idle_poll_interval_seconds": 120,
   "active_poll_interval_seconds": 30,

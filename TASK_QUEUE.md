@@ -91,11 +91,11 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Result: completed; added offline tick adapter, validation script, sanitized non-performance tick fixture, tick smoke report, refreshed quant reports, and passed 21 tests.
 
 ### TASK-012
-- Status: pending
+- Status: running
 - Type: worker_cost_control
 - Title: Reduce idle worker calls and writes
 - Request: Reduce background worker activity now that the queue is idle. Set idle polling to 600 seconds or slower, active-task polling to 60 seconds or slower, and make idle rounds read-only. When there is no pending task, do not call any model, do not run Codex, do not refresh status files, do not commit, and do not push. Keep a manual health-check command for on-demand checks. Update visible status to show the new intervals and the last worker check. Keep all work inside repository files and PHASE_1_SIMULATION_ONLY.
 - Expected output: updated worker config or scripts, refreshed WORKER_DASHBOARD.md, refreshed GPT_VISIBLE_STATUS.md, STATUS.md and RUN_LOG.md note showing old interval and new interval, and passing shell/Python checks.
 - Safety: repository_status_only
 - Created: 2026-06-28
-- Result: pending
+- Result: worker started
