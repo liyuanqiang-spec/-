@@ -130,6 +130,9 @@ append_decision() {
   if [ "${WORKER_SKIP_STATE_WRITES:-0}" = "1" ]; then
     return 0
   fi
+  if grep -F -- "- Item: $1" "$DECISION" >/dev/null 2>&1; then
+    return 0
+  fi
   {
     printf '\n## Decision Required %s\n\n' "$(date '+%Y-%m-%d %H:%M:%S %z')"
     printf -- '- Item: %s\n' "$1"
@@ -167,9 +170,22 @@ update_dashboard() {
   if [ "${WORKER_SKIP_STATE_WRITES:-0}" = "1" ]; then
     return 0
   fi
-  if [ -f "$ROOT/scripts/update_worker_dashboard.py" ]; then
-    python3 "$ROOT/scripts/update_worker_dashboard.py" >> "$LOG" 2>&1 || log "dashboard update failed"
+  if [ -f "$ROOT/scripts/refresh_visible_status.py" ]; then
+    if ! python3 "$ROOT/scripts/refresh_visible_status.py" --root "$ROOT" --quiet >> "$LOG" 2>&1; then
+      log "status_refresh failed"
+      append_decision "worker sync failed at status_refresh stage: visible status refresh failed"
+      append_status "BLOCKED_STATUS_REFRESH" "visible status refresh failed"
+      append_run_log "blocked" "worker sync failed at status_refresh stage"
+    fi
+  elif [ -f "$ROOT/scripts/update_worker_dashboard.py" ]; then
+    if ! python3 "$ROOT/scripts/update_worker_dashboard.py" >> "$LOG" 2>&1; then
+      log "dashboard update failed"
+      append_decision "worker sync failed at status_refresh stage: dashboard update failed"
+      append_status "BLOCKED_STATUS_REFRESH" "dashboard update failed"
+      append_run_log "blocked" "worker sync failed at status_refresh stage"
+    fi
   fi
+  return 0
 }
 
 git_pull_ff() {
@@ -200,8 +216,20 @@ commit_and_push() {
   fi
   git add "${existing_paths[@]}"
   if ! git diff --cached --quiet; then
-    git commit -m "$message" >> "$LOG" 2>&1 || true
-    run_with_timeout "$GIT_TIMEOUT_SECONDS" git push origin main
+    if ! git commit -m "$message" >> "$LOG" 2>&1; then
+      append_decision "worker sync failed at commit stage: git commit failed for $message"
+      append_status "BLOCKED_COMMIT" "git commit failed for $message"
+      append_run_log "blocked" "worker sync failed at commit stage for $message"
+      write_heartbeat "blocked" "git commit failed for $message"
+      return 1
+    fi
+    if ! run_with_timeout "$GIT_TIMEOUT_SECONDS" git push origin main; then
+      append_decision "worker sync failed at push stage: git push failed for $message"
+      append_status "BLOCKED_PUSH" "git push failed for $message"
+      append_run_log "blocked" "worker sync failed at push stage for $message"
+      write_heartbeat "blocked" "git push failed for $message"
+      return 1
+    fi
   fi
 }
 
@@ -313,6 +341,7 @@ run_codex_task_with_retries() {
 
 run_once_body() {
   cd "$ROOT"
+  update_dashboard
   if ! remote_ok; then
     append_decision "Git remote is not $EXPECTED_REMOTE"
     append_status "BLOCKED_REMOTE" "Git remote mismatch"
@@ -322,15 +351,20 @@ run_once_body() {
   fi
 
   git_pull_ff >> "$LOG" 2>&1 || {
-    append_decision "git pull failed; manual conflict/auth check required"
+    append_decision "worker sync failed at pull stage: git pull failed"
     append_status "BLOCKED_PULL" "git pull failed"
-    append_run_log "blocked" "git pull failed"
+    append_run_log "blocked" "worker sync failed at pull stage"
     write_heartbeat "blocked" "git pull failed"
     update_dashboard
     return 1
   }
+  update_dashboard
 
   if ! task_id="$(extract_first_task)"; then
+    log "no pending safe task"
+    write_heartbeat "idle" "no pending safe task"
+    update_dashboard
+    commit_and_push "Refresh visible worker status" WORKER_DASHBOARD.md GPT_VISIBLE_STATUS.md .gpt_state.json GPT_REVIEW.md logs/worker_heartbeat.json >> "$LOG" 2>&1 || true
     return 0
   fi
 
@@ -345,7 +379,7 @@ run_once_body() {
     append_run_log "blocked" "Task $task_id blocked by risk control"
     write_heartbeat "blocked" "Task $task_id blocked by risk control" "$task_id"
     update_dashboard
-    commit_and_push "Block unsafe worker task $task_id" TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md "$DASHBOARD_FILE" >> "$LOG" 2>&1 || true
+    commit_and_push "Block unsafe worker task $task_id" TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md "$DASHBOARD_FILE" GPT_VISIBLE_STATUS.md .gpt_state.json GPT_REVIEW.md logs/worker_heartbeat.json >> "$LOG" 2>&1 || true
     return 1
   fi
 
@@ -361,13 +395,7 @@ run_once_body() {
     append_run_log "gpt_handshake" "Task $task_id completed by local worker without codex exec; safety mode remained PHASE_1_SIMULATION_ONLY"
     write_heartbeat "completed" "Task $task_id completed by local worker" "$task_id"
     update_dashboard
-    commit_and_push "Worker completed GPT handshake $task_id" TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md "$DASHBOARD_FILE" logs/worker_heartbeat.json >> "$LOG" 2>&1 || {
-      append_decision "git push failed after GPT handshake task $task_id"
-      append_status "BLOCKED_PUSH" "git push failed after GPT handshake task $task_id"
-      append_run_log "blocked" "git push failed after GPT handshake task $task_id"
-      write_heartbeat "blocked" "git push failed after GPT handshake task $task_id" "$task_id"
-      return 1
-    }
+    commit_and_push "Worker completed GPT handshake $task_id" TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md "$DASHBOARD_FILE" GPT_VISIBLE_STATUS.md .gpt_state.json GPT_REVIEW.md logs/worker_heartbeat.json >> "$LOG" 2>&1 || return 1
     return 0
   fi
 
@@ -375,6 +403,8 @@ run_once_body() {
   append_status "WORKER_RUNNING" "Task $task_id started"
   append_run_log "started" "Task $task_id started"
   write_heartbeat "running" "Task $task_id started" "$task_id"
+  update_dashboard
+  commit_and_push "Worker started $task_id" TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md "$DASHBOARD_FILE" GPT_VISIBLE_STATUS.md .gpt_state.json GPT_REVIEW.md logs/worker_heartbeat.json >> "$LOG" 2>&1 || return 1
 
   prompt="Read AGENTS.md and TASK_QUEUE.md. Execute only task $task_id from TASK_QUEUE.md. Stay in PHASE_1_SIMULATION_ONLY. Do not connect real trading accounts. Do not place or cancel real orders. Do not transfer funds. Do not delete original data. Do not expose secrets. Do not use danger-full-access. Update STATUS.md and RUN_LOG.md with the result. Do not run git add, git commit, or git push inside codex exec; the outer worker will commit and push after you exit."
 
@@ -395,13 +425,7 @@ run_once_body() {
   fi
 
   update_dashboard
-  commit_and_push "Worker processed $task_id" AGENTS.md TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md RISK_CONTROL.md README.md WORKER_DASHBOARD.md PROJECT_PLAN.md DATA_SCHEMA.md DATA REPORTS scripts logs/worker_heartbeat.json src tests data reports .gitignore >> "$LOG" 2>&1 || {
-    append_decision "git push failed after worker processed $task_id"
-    append_status "BLOCKED_PUSH" "git push failed after worker processed $task_id"
-    append_run_log "blocked" "git push failed after worker processed $task_id"
-    write_heartbeat "blocked" "git push failed after worker processed $task_id" "$task_id"
-    return 1
-  }
+  commit_and_push "Worker processed $task_id" AGENTS.md TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md RISK_CONTROL.md README.md WORKER_DASHBOARD.md GPT_VISIBLE_STATUS.md GPT_REVIEW.md .gpt_state.json PROJECT_PLAN.md DATA_SCHEMA.md DATA REPORTS RELIABILITY_RUNBOOK.md scripts logs/worker_heartbeat.json src tests data reports .gitignore >> "$LOG" 2>&1 || return 1
 }
 
 run_once() {

@@ -61,12 +61,12 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Result: codex exec completed.
 
 ### TASK-008
-- Status: pending
+- Status: completed
 - Type: repo_status_setup
 - Title: Finish GPT visible status layer
 - Request: Complete the repository status layer using the files already created by ChatGPT. Refresh GPT_VISIBLE_STATUS.md, GPT_REVIEW.md, .gpt_state.json, and WORKER_DASHBOARD.md. Keep work limited to repository status, planning, tests, and simulation-only reporting.
 - Expected output: refreshed visible status, review log note, state file, dashboard, tests.
 - Safety: repository_status_only
 - Created: 2026-06-28
-- Last update: simplified by ChatGPT
-- Result: pending
+- Last update: completed by Codex 2026-06-28 12:38:15 +0800
+- Result: TASK-008 completed; GPT visible status layer, worker dashboard refresh, structured state file, health check, and worker reporting hooks stabilized.

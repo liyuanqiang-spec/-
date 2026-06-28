@@ -309,3 +309,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: completed
 - Detail: Task TASK-007 completed
+## 2026-06-28 12:38:15 +0800
+
+- Event: TASK-008 completed
+- Detail: Reliable communication flow stabilized for ChatGPT -> GitHub -> local Codex worker -> GitHub -> ChatGPT. Visible state generation now covers dashboard, GPT-visible status, structured state JSON, stale resolved decision filtering, worker task-selection push timing, and health checks.
+- Safety: `PHASE_1_SIMULATION_ONLY`; no trading account connection, no real order placement, no cancellation, no funds movement, no deletion of original data, no secret exposure, no dangerous sandbox.

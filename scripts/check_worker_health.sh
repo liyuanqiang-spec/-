@@ -2,34 +2,37 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-LABEL="com.codex.github-supervised-worker"
-PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
-WORKER_REPO="$HOME/Library/Application Support/CodexGithubWorker/repo"
-LOG="$ROOT/logs/worker.log"
-HEARTBEAT="$ROOT/logs/worker_heartbeat.json"
-LOCK_DIR="$ROOT/logs/worker.lock"
+STATUS="PASS"
+REASONS=()
 
-status="OK"
+fail() {
+  STATUS="FAIL"
+  REASONS+=("$1")
+}
 
 line() {
   printf '%s\n' "$*"
 }
 
-warn() {
-  status="WARN"
-  line "WARN: $*"
-}
-
-fail() {
-  status="FAIL"
-  line "FAIL: $*"
-}
-
 line "worker_health_check"
 line "root=$ROOT"
-line "label=$LABEL"
 
-for path in AGENTS.md TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md scripts/codex_worker.sh; do
+for path in \
+  AGENTS.md \
+  TASK_QUEUE.md \
+  STATUS.md \
+  RUN_LOG.md \
+  DECISION_REQUIRED.md \
+  RISK_CONTROL.md \
+  RELIABILITY_RUNBOOK.md \
+  WORKER_DASHBOARD.md \
+  GPT_VISIBLE_STATUS.md \
+  GPT_REVIEW.md \
+  .gpt_state.json \
+  scripts/refresh_visible_status.py \
+  scripts/codex_worker.sh \
+  scripts/start_worker.sh \
+  scripts/stop_worker.sh; do
   if [ -e "$ROOT/$path" ]; then
     line "file_ok=$path"
   else
@@ -37,85 +40,80 @@ for path in AGENTS.md TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md sc
   fi
 done
 
-if grep -q 'WORKER_IDLE_POLL_INTERVAL_SECONDS:-600' "$ROOT/scripts/codex_worker.sh" && grep -q 'WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-60' "$ROOT/scripts/codex_worker.sh" && grep -q 'WORKER_IDLE_POLL_INTERVAL_SECONDS:-600' "$ROOT/scripts/start_worker.sh" && grep -q 'WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-60' "$ROOT/scripts/start_worker.sh"; then
-  line "repo_idle_poll_interval_seconds=600"
-  line "repo_active_poll_interval_seconds=60"
-else
-  fail "repo worker intervals are not configured to idle=600 seconds and active=60 seconds"
-fi
-
-if [ -f "$PLIST" ]; then
-  plist_interval="$(awk '/<key>StartInterval<\/key>/ {getline; gsub(/.*<integer>|<\/integer>.*/, ""); print; exit}' "$PLIST" || true)"
-  line "launchd_plist=$PLIST"
-  line "launchd_plist_interval=${plist_interval:-unknown}"
-  if [ "${plist_interval:-}" != "600" ]; then
-    warn "active launchd plist may still need reload through scripts/start_worker.sh"
-  fi
-else
-  warn "launchd plist not found at $PLIST"
-fi
-
-if launchctl print "gui/$UID/$LABEL" >/dev/null 2>&1; then
-  launch_state="$(launchctl print "gui/$UID/$LABEL" 2>/dev/null | awk -F' = ' '/state =/ {print $2; exit}' || true)"
-  line "launchd_state=${launch_state:-unknown}"
-else
-  warn "launchd job is not currently loaded"
-fi
-
-if [ -f "$LOG" ]; then
-  line "worker_log=$LOG"
-else
-  warn "worker log has not been created yet"
-fi
-
-if [ -f "$HEARTBEAT" ]; then
-  line "heartbeat=$HEARTBEAT"
-  python3 - "$HEARTBEAT" <<'PY'
-from __future__ import annotations
-
-import json
-import sys
-from pathlib import Path
-
-payload = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-print(f"heartbeat_timestamp={payload.get('timestamp', 'unknown')}")
-print(f"heartbeat_state={payload.get('state', 'unknown')}")
-print(f"heartbeat_interval_seconds={payload.get('interval_seconds', 'unknown')}")
-print(f"heartbeat_idle_poll_interval_seconds={payload.get('idle_poll_interval_seconds', payload.get('interval_seconds', 'unknown'))}")
-print(f"heartbeat_active_poll_interval_seconds={payload.get('active_poll_interval_seconds', 'unknown')}")
-print(f"heartbeat_safety_mode={payload.get('safety_mode', 'unknown')}")
-PY
-else
-  warn "heartbeat file has not been created yet"
-fi
-
-if [ -d "$LOCK_DIR" ]; then
-  lock_pid="$(cat "$LOCK_DIR/pid" 2>/dev/null || true)"
-  if [ -n "$lock_pid" ] && kill -0 "$lock_pid" 2>/dev/null; then
-    warn "worker lock is active pid=$lock_pid"
+for script in scripts/codex_worker.sh scripts/start_worker.sh scripts/stop_worker.sh scripts/worker_launchd_entry.sh scripts/check_worker_health.sh; do
+  if [ -f "$ROOT/$script" ]; then
+    if bash -n "$ROOT/$script"; then
+      line "bash_syntax_ok=$script"
+    else
+      fail "bash syntax failed for $script"
+    fi
   else
-    warn "worker lock exists but pid is not active"
-  fi
-else
-  line "lock_state=clear"
-fi
-
-for script in scripts/codex_worker.sh scripts/start_worker.sh scripts/stop_worker.sh scripts/worker_launchd_entry.sh; do
-  if bash -n "$ROOT/$script"; then
-    line "bash_syntax_ok=$script"
-  else
-    fail "bash syntax failed for $script"
+    fail "missing bash script $script"
   fi
 done
 
-if WORKER_NO_GIT_MUTATION=1 WORKER_SKIP_PULL=1 WORKER_SKIP_REMOTE_CHECK=1 WORKER_SKIP_STATE_WRITES=1 "$ROOT/scripts/codex_worker.sh" --dry-run >/tmp/codex_worker_health_dry_run.out 2>/tmp/codex_worker_health_dry_run.err; then
-  line "dry_run=ok"
+if python3 - "$ROOT" <<'PY'
+from __future__ import annotations
+
+import importlib.util
+import sys
+from pathlib import Path
+
+root = Path(sys.argv[1])
+script = root / "scripts" / "refresh_visible_status.py"
+spec = importlib.util.spec_from_file_location("refresh_visible_status", script)
+if spec is None or spec.loader is None:
+    print("queue_parse=failed")
+    raise SystemExit(1)
+module = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = module
+spec.loader.exec_module(module)
+tasks = module.parse_queue_tasks((root / "TASK_QUEUE.md").read_text(encoding="utf-8"))
+if not tasks:
+    print("queue_parse=failed")
+    raise SystemExit(1)
+current = next((task for task in tasks if task.status == "running"), None) or next(
+    (task for task in tasks if task.status in module.READY_STATUSES), None
+)
+decisions = module.unresolved_decisions((root / "DECISION_REQUIRED.md").read_text(encoding="utf-8"))
+print(f"queue_parse=ok tasks={len(tasks)}")
+print(f"first_pending_or_running={module.task_summary(current)}")
+print(f"unresolved_decisions={len(decisions)}")
+PY
+then
+  :
 else
-  fail "worker dry-run failed"
-  sed 's/^/dry_run_stderr=/' /tmp/codex_worker_health_dry_run.err
+  fail "queue parse or decision parse failed"
 fi
 
-line "overall=$status"
-if [ "$status" = "FAIL" ]; then
-  exit 1
+VISIBLE_CHECK_OUT="$(mktemp "${TMPDIR:-/tmp}/codex_visible_check.XXXXXX")"
+if python3 "$ROOT/scripts/refresh_visible_status.py" --root "$ROOT" --check >"$VISIBLE_CHECK_OUT" 2>&1; then
+  sed 's/^/visible_status_check=/' "$VISIBLE_CHECK_OUT"
+else
+  sed 's/^/visible_status_check=/' "$VISIBLE_CHECK_OUT"
+  fail "visible status files are inconsistent with TASK_QUEUE.md or DECISION_REQUIRED.md"
 fi
+rm -f "$VISIBLE_CHECK_OUT"
+
+if ! grep -q 'codex exec --sandbox workspace-write' "$ROOT/scripts/codex_worker.sh"; then
+  fail "worker is not configured to use workspace-write"
+else
+  line "worker_sandbox=workspace-write"
+fi
+
+if grep -Eq 'codex exec .*--sandbox[ =](danger-full-access|dangerously-bypass)' "$ROOT/scripts/codex_worker.sh"; then
+  fail "worker script uses a dangerous sandbox"
+else
+  line "worker_dangerous_sandbox=absent"
+fi
+
+if [ "$STATUS" = "PASS" ]; then
+  line "PASS"
+  exit 0
+fi
+
+line "FAIL"
+for reason in "${REASONS[@]}"; do
+  line "- $reason"
+done
+exit 1

@@ -465,3 +465,10 @@ Status: `WORKER_COMPLETED`
 
 - Detail: Task TASK-007 completed
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+## Worker Update 2026-06-28 12:38:15 +0800
+
+Status: `TASK_008_COMPLETED`
+
+- Detail: Reliable ChatGPT-visible worker communication flow completed. `scripts/refresh_visible_status.py` now refreshes `WORKER_DASHBOARD.md`, `GPT_VISIBLE_STATUS.md`, and `.gpt_state.json`; `scripts/check_worker_health.sh` validates queue/status consistency; `scripts/codex_worker.sh` refreshes visible status at start, on task selection, and after completion/failure/block.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Current GitHub supervision state: ChatGPT can continue through `TASK_QUEUE.md`; Codex/Mac worker status is surfaced through `GPT_VISIBLE_STATUS.md`, `WORKER_DASHBOARD.md`, `.gpt_state.json`, `RUN_LOG.md`, and `DECISION_REQUIRED.md`.

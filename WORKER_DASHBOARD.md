@@ -1,21 +1,20 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-06-28 by ChatGPT connector`
+Last dashboard update: `2026-06-28 12:39:06 +0800`
 
 | Item | Result |
 |---|---|
-| Last heartbeat time | 2026-06-28T07:49:46+08:00 |
-| Worker status | WAITING_FOR_WORKER - latest durable worker status `WORKER_COMPLETED` |
-| Current task | `TASK-008` (pending) - Finish GPT visible status layer |
-| Recently completed task | `TASK-007` (completed) - Build first complete simulation version for silver option liquidity radar - codex exec completed |
-| Recent failed or blocked task | None currently unresolved |
-| Latest report link | [`reports/first_complete_simulation_report.md`](reports/first_complete_simulation_report.md) |
-| Latest simulation summary | contracts `7`, candidates `4`, rejected `1`, avg edge `2.398`, worst slip `3.2571`, flags `LOW_PASSIVE_FILL, LOW_SAMPLE, WIDE_LEG_SPREAD` |
-| Worker poll interval | idle `600s`, active `60s` |
-| Latest visible GitHub update | ChatGPT connector refreshed dashboard and added `RELIABILITY_RUNBOOK.md` |
-| DECISION_REQUIRED blocking | No - historical pull entries are resolved |
-| Current safety mode | `PHASE_1_SIMULATION_ONLY` |
-| Next recommendation | Execute `TASK-008`; then keep the long-term process in `RELIABILITY_RUNBOOK.md` as the standing reliability rule. |
+| Worker state | IDLE |
+| Current task | None |
+| First pending task | None |
+| Latest completed task | TASK-008 (completed) - Finish GPT visible status layer / TASK-008 completed; GPT visible status layer, worker dashboard refresh, structured state file, health check, and worker reporting hooks stabilized. |
+| Latest failed or blocked task | None |
+| Latest status | TASK_008_COMPLETED |
+| Latest report | REPORTS/latest_report.md |
+| Latest push/commit | 319b5c2 2026-06-28 Append reliability process review note |
+| Decision required | No unresolved item |
+| Safety mode | PHASE_1_SIMULATION_ONLY |
+| Next action | ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。 |
 
 ## Links
 
