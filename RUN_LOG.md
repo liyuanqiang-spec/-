@@ -369,3 +369,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: completed
 - Detail: Task TASK-010 completed
+
+## 2026-06-28 20:27:28 +0800
+
+- Event: blocked
+- Detail: Task TASK-011 blocked by risk control

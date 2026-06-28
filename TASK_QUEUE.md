@@ -91,9 +91,11 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Required checks: run `python3 scripts/refresh_visible_status.py`, `bash scripts/check_worker_health.sh`, `python3 -m compileall -q src tests scripts`, `python3 -m unittest discover -s tests`, and `bash -n scripts/codex_worker.sh`.
 - Safety: repository_only_simulation
 - Created: 2026-06-28
+- Last update: synced by Codex 2026-06-28 20:26:43 +0800
+- Result: completed; added repository-local multi-snapshot quote replay fixture, replay loader, deterministic stale quote/timeout/incomplete-leg tests, and refreshed baseline replay reports. Git result sync was rebased over TASK-011 and is ready to push.
 
 ### TASK-011
-- Status: pending
+- Status: decision_required
 - Type: local_tqsdk_tick_validation
 - Title: Run local TqSdk account and historical tick data smoke test
 - Request: Continue only after TASK-010 is completed or safely skipped. Run this on the local Mac mini worker environment, not in ChatGPT cloud. The user says a TqSdk account has already been provided locally and historical data has already been downloaded. Keep the repository in `PHASE_1_SIMULATION_ONLY`. Do not connect to any real broker trading account. Do not instantiate real trading gateways/accounts. Do not place, cancel, modify, or simulate sending real orders through any broker. Do not move funds. Do not commit credentials, phone numbers, verification codes, tokens, passwords, account IDs, or raw large data files.
