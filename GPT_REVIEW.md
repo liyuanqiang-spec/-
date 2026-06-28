@@ -15,3 +15,12 @@ This file records automated GPT reviews of worker output.
 Status: `BOOTSTRAPPED_PENDING_WORKER_STATUS_COMPLETION`
 
 Next safe worker action: execute `TASK-008` from `TASK_QUEUE.md` and refresh the visible status/dashboard files.
+
+## 2026-06-28 Reliability process note
+
+Status: `PROCESS_ADDED`
+
+- Added `RELIABILITY_RUNBOOK.md` as the standing process for worker-flow issues.
+- Refreshed `WORKER_DASHBOARD.md` so it shows `TASK-008` as the current pending item rather than an old resolved issue.
+- Refreshed `GPT_VISIBLE_STATUS.md` to show the current state.
+- User action needed: none for normal simulation-only continuation.
