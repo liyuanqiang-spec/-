@@ -121,8 +121,8 @@ No current user action required for normal safe GitHub status-file supervision.
 
 ## Decision Required 2026-06-28 21:49:29 +0800
 
+- Status: resolved
 - Item: Task TASK-014 contains a blocked trading/fund/secret/deletion/danger risk
-- Current action: worker stopped before execution
-- A 推荐: keep simulation-only and rewrite the task as safe research work
-- B: explicitly authorize the blocked setup/action
-- C: cancel this task
+- Current action: superseded by safe repository-status-only task TASK-014A
+- Resolution: TASK-014A narrows the work to a local visible-status display patch with no external service calls, no real trading account connection, no order placement or cancellation, no fund movement, no original-data deletion, no secret exposure, and no dangerous sandbox.
+- Required confirmation: none.

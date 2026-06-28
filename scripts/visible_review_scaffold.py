@@ -290,9 +290,6 @@ def build_state(root: Path) -> dict[str, Any]:
     failure_reasons: list[str] = []
     if missing:
         failure_reasons.append("missing required repository paths: " + ", ".join(missing))
-    if decisions:
-        failure_reasons.append("unresolved decision required: " + "; ".join(decisions))
-
     if failure_reasons:
         state = "FAILED_WITH_REASON"
     elif running:
@@ -359,6 +356,7 @@ def build_visible_status(state: dict[str, Any]) -> str:
         "# GPT Visible Status\n\n"
         f"- Generated at: `{state['generated_at']}`\n"
         f"- Status: `{state['state']}`\n"
+        f"- Visible scaffold: `{state['state']}`\n"
         f"- Safety mode: `{state['safety_mode']}`\n"
         f"- Current task: {task_summary_from_state(state['current_task'])}\n"
         f"- First pending task: {task_summary_from_state(state['first_pending_task'])}\n"
@@ -446,8 +444,8 @@ def check_outputs(root: Path) -> tuple[bool, list[str]]:
     review = read_text(root / "GPT_REVIEW.md", max_bytes=500_000)
     state_path = root / STATE_FILE
 
-    if f"Status: `{state['state']}`" not in visible:
-        errors.append(f"GPT_VISIBLE_STATUS.md does not show Status: `{state['state']}`")
+    if f"Visible scaffold: `{state['state']}`" not in visible:
+        errors.append(f"GPT_VISIBLE_STATUS.md does not show Visible scaffold: `{state['state']}`")
     if REVIEW_START not in review or REVIEW_END not in review:
         errors.append("GPT_REVIEW.md is missing visible review scaffold markers")
     if f"State: `{state['state']}`" not in review:

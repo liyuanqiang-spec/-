@@ -670,3 +670,29 @@ Status: `WORKER_RUNNING`
 
 - Detail: Task TASK-014A started
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-28 22:00:24 +0800
+
+Status: `TASK_014A_COMPLETED`
+
+- Detail: Completed the safe repository-status-only visible scaffold display patch.
+- Result: `GPT_VISIBLE_STATUS.md` now includes a `Visible scaffold:` line. The scaffold script and normal visible-status refresh both preserve the line; current codex-exec state shows `WORKER_BUSY`, and the next outer worker refresh after marking TASK-014A completed will show `SCAFFOLD_READY` if no task is active.
+- Updated files: `scripts/visible_review_scaffold.py`, `scripts/refresh_visible_status.py`, `tests/test_visible_review_scaffold.py`, `GPT_REVIEW.md`, `GPT_VISIBLE_STATUS.md`, `GPT_VISIBLE_REVIEW_STATE.json`, `WORKER_DASHBOARD.md`, and `DECISION_REQUIRED.md`.
+- Verification: `python3 scripts/visible_review_scaffold.py --check` passed; `python3 scripts/refresh_visible_status.py --check` passed; `python3 -m compileall -q src tests scripts` passed; `python3 -m unittest discover -s tests` passed with 26 tests; `bash -n scripts/codex_worker.sh` passed.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no external service calls from the scaffold scripts, no dangerous sandbox, no git add, no git commit, no git push inside codex exec.
+- Confirmation required: no.
+
+## Worker Update 2026-06-28 22:01:56 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-014A completed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-28 22:04:09 +0800
+
+Status: `BLOCKED_PULL`
+
+- Detail: git pull failed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

@@ -15,6 +15,9 @@ from typing import Any
 READY_STATUSES = {"pending", "queued", "todo"}
 RUNNING_STATUSES = {"running"}
 COMPLETED_STATUSES = {"completed"}
+VISIBLE_REVIEW_START = "<!-- visible-review-scaffold:start -->"
+VISIBLE_REVIEW_END = "<!-- visible-review-scaffold:end -->"
+VISIBLE_SCAFFOLD_STATES = {"SCAFFOLD_READY", "WORKER_BUSY", "FAILED_WITH_REASON"}
 REQUIRED_FILES = [
     "AGENTS.md",
     "TASK_QUEUE.md",
@@ -216,6 +219,65 @@ def worker_poll_intervals(root: Path) -> dict[str, int | str]:
     }
 
 
+def visible_review_block_state(text: str) -> str:
+    pattern = re.compile(
+        rf"{re.escape(VISIBLE_REVIEW_START)}(?P<body>.*?){re.escape(VISIBLE_REVIEW_END)}",
+        re.DOTALL,
+    )
+    matches = list(pattern.finditer(text))
+    if not matches:
+        return ""
+    body = matches[-1].group("body")
+    match = re.search(r"(?m)^-\s*State:\s*`?([A-Z_]+)`?", body)
+    return match.group(1) if match and match.group(1) in VISIBLE_SCAFFOLD_STATES else ""
+
+
+def visible_scaffold_state(root: Path, running: QueueTask | None) -> dict[str, str]:
+    missing = [
+        rel
+        for rel in (
+            "scripts/visible_review_scaffold.py",
+            "GPT_REVIEW.md",
+            "GPT_VISIBLE_REVIEW_STATE.json",
+        )
+        if not (root / rel).is_file()
+    ]
+    if missing:
+        return {
+            "state": "FAILED_WITH_REASON",
+            "reason": "missing visible scaffold files: " + ", ".join(missing),
+        }
+
+    review_state = visible_review_block_state(read_text(root / "GPT_REVIEW.md"))
+    if not review_state:
+        return {
+            "state": "FAILED_WITH_REASON",
+            "reason": "GPT_REVIEW.md is missing a visible review scaffold block",
+        }
+
+    try:
+        saved = json.loads((root / "GPT_VISIBLE_REVIEW_STATE.json").read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return {
+            "state": "FAILED_WITH_REASON",
+            "reason": f"GPT_VISIBLE_REVIEW_STATE.json is invalid: {exc}",
+        }
+    saved_state = str(saved.get("state", ""))
+    if saved_state not in VISIBLE_SCAFFOLD_STATES:
+        return {
+            "state": "FAILED_WITH_REASON",
+            "reason": "GPT_VISIBLE_REVIEW_STATE.json has no valid scaffold state",
+        }
+    if "FAILED_WITH_REASON" in {review_state, saved_state}:
+        return {
+            "state": "FAILED_WITH_REASON",
+            "reason": "latest visible scaffold artifact recorded a failure",
+        }
+    if running:
+        return {"state": "WORKER_BUSY", "reason": "current worker task is running"}
+    return {"state": "SCAFFOLD_READY", "reason": "visible scaffold artifacts are present"}
+
+
 def task_summary(task: QueueTask | None) -> str:
     if task is None:
         return "None"
@@ -239,10 +301,10 @@ def build_state(root: Path) -> dict[str, Any]:
         None,
     )
     decisions = unresolved_decisions(read_text(root / "DECISION_REQUIRED.md"))
-    if decisions:
-        state = "BLOCKED"
-    elif running:
+    if running:
         state = "WORKING"
+    elif decisions:
+        state = "BLOCKED"
     elif pending:
         state = "WAITING_FOR_WORKER"
     else:
@@ -260,6 +322,7 @@ def build_state(root: Path) -> dict[str, Any]:
     return {
         "generated_at": now_iso(),
         "state": state,
+        "visible_scaffold": visible_scaffold_state(root, running),
         "safety_mode": "PHASE_1_SIMULATION_ONLY",
         "latest_status": latest_status(root),
         "latest_commit": latest_commit(root),
@@ -291,6 +354,7 @@ def build_dashboard(state: dict[str, Any]) -> str:
     )
     rows = [
         ("Worker state", state["state"]),
+        ("Visible scaffold", state["visible_scaffold"]["state"]),
         ("Current task", task_summary_from_state(current)),
         ("First pending task", task_summary_from_state(state["first_pending_task"])),
         ("Latest completed task", task_summary_from_state(completed)),
@@ -352,6 +416,7 @@ def build_gpt_visible_status(state: dict[str, Any]) -> str:
         "# GPT Visible Status\n\n"
         f"- Generated at: `{state['generated_at']}`\n"
         f"- Status: `{state['state']}`\n"
+        f"- Visible scaffold: `{state['visible_scaffold']['state']}`\n"
         f"- Safety mode: `{state['safety_mode']}`\n"
         f"- Current task: {task_text}\n"
         f"- Latest completed task: {task_summary_from_state(state['latest_completed_task'])}\n"
@@ -424,8 +489,15 @@ def check_outputs(root: Path) -> tuple[bool, list[str]]:
         reasons.append(f"WORKER_DASHBOARD.md does not show state {expected_state}")
     if f"Status: `{expected_state}`" not in visible:
         reasons.append(f"GPT_VISIBLE_STATUS.md does not show Status: `{expected_state}`")
+    expected_scaffold = state["visible_scaffold"]["state"]
+    if f"Visible scaffold: `{expected_scaffold}`" not in visible:
+        reasons.append(f"GPT_VISIBLE_STATUS.md does not show Visible scaffold: `{expected_scaffold}`")
+    if expected_scaffold not in dashboard:
+        reasons.append(f"WORKER_DASHBOARD.md does not show visible scaffold state {expected_scaffold}")
     if saved_state.get("state") != expected_state:
         reasons.append(".gpt_state.json state does not match queue/decision state")
+    if saved_state.get("visible_scaffold", {}).get("state") != expected_scaffold:
+        reasons.append(".gpt_state.json visible scaffold state does not match repository state")
 
     current = state["current_task"]
     if expected_state in {"WORKING", "WAITING_FOR_WORKER"} and current:

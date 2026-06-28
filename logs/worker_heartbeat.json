@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-06-28T21:55:53+08:00",
-  "state": "running",
-  "detail": "Task TASK-014A started",
-  "task": "TASK-014A",
+  "timestamp": "2026-06-28T22:04:09+08:00",
+  "state": "blocked",
+  "detail": "git pull failed",
+  "task": "none",
   "interval_seconds": 120,
   "idle_poll_interval_seconds": 120,
   "active_poll_interval_seconds": 30,

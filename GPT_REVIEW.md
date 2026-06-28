@@ -53,23 +53,23 @@ Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
 <!-- visible-review-scaffold:start -->
 ## Visible Review Scaffold
 
-- Generated at: `2026-06-28T21:39:48+08:00`
-- State: `SCAFFOLD_READY`
+- Generated at: `2026-06-28T22:00:56+08:00`
+- State: `WORKER_BUSY`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
-- Current task: None
+- Current task: TASK-014A (running) - Add scaffold state line to visible status | worker started
 - First pending task: None
-- Latest completed task: TASK-013A (completed) - Build safe visible review scaffold | completed; added repository-only visible review scaffold script, scheduled/manual GitHub workflow check, refreshed GPT review/status files, resolved stale TASK-013 decision entr...
+- Latest completed task: TASK-013A (completed) - Build safe visible review scaffold | codex exec completed.
 - Decision required: none
 - Failure reason: none
-- Latest status marker: `TASK_013A_COMPLETED`
-- Latest run event: 2026-06-28 21:39:24 +0800 / TASK-013A completed / Built the repository-only visible review scaffold. Added `scripts/visible_review_scaffold.py`, a scheduled/manual read-only GitHub workflow at `.github/workflows/visible-review-scaffold.y...
-- Previous dashboard state: `IDLE`
+- Latest status marker: `TASK_014A_COMPLETED`
+- Latest run event: 2026-06-28 22:00:24 +0800 / TASK-014A completed / Added the repository-status-only `Visible scaffold:` display line to the visible scaffold and normal visible-status refresh paths.
+- Previous dashboard state: `WORKING`
 - Previous visible status: `UNKNOWN`
 - Project memory headings reviewed: PROJECT_MEMORY.md, Project, Core strategy, Current architecture, Software roles, Must build, Core KPI, Safety boundaries
 - Reports summary: 9 files; latest markdown `REPORTS/first_complete_simulation_report.md`; headings: TASK-007 First Complete Simulation Report, Run Command, Dashboard Entry, Reproducible Backtest Configuration, Candidate Simulation Table, Accepted Candidates
 - Source summary: 16 Python files; sample: src/__init__.py, src/codex_quant/__init__.py, src/codex_quant/backtester.py, src/codex_quant/config.py, src/codex_quant/contract_scanner.py, src/codex_quant/dashboard.py, src/codex_quant/low_liquidity_scanner.py, src/codex_quant/quant_baseline.py, src/codex_quant/quote_replay.py, src/codex_quant/report_writer.py, src/codex_quant/risk_control.py, src/codex_quant/run_pipeline.py
 - Test summary: 11 Python files; sample: tests/test_backtester.py, tests/test_dashboard.py, tests/test_low_liquidity_scanner.py, tests/test_pipeline.py, tests/test_quant_baseline.py, tests/test_quote_replay.py, tests/test_risk_control.py, tests/test_spread_calculator.py, tests/test_tick_replay_adapter.py, tests/test_visible_review_scaffold.py, tests/test_worker.py
-- Next safe human-supervision action: ChatGPT can review GPT_REVIEW.md and add the next safe simulation-only task to TASK_QUEUE.md.
+- Next safe human-supervision action: Wait for the current worker task to finish; check DECISION_REQUIRED.md only if a new open item appears.
 
 ## Scaffold Guarantees
 

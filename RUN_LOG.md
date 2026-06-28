@@ -473,3 +473,26 @@ This file records safe worker runs and Codex execution events.
 
 - Event: started
 - Detail: Task TASK-014A started
+
+## 2026-06-28 21:56:00 +0800
+
+- Event: attempt
+- Detail: Task TASK-014A codex exec attempt 1/3
+
+## 2026-06-28 22:00:24 +0800
+
+- Event: TASK-014A completed
+- Detail: Added the repository-status-only `Visible scaffold:` display line to the visible scaffold and normal visible-status refresh paths.
+- Result: `GPT_VISIBLE_STATUS.md` includes `Visible scaffold: WORKER_BUSY` while TASK-014A is running; after the outer worker marks TASK-014A completed and refreshes status, the same logic will show `SCAFFOLD_READY` when no worker task is active. `WORKER_DASHBOARD.md`, `GPT_REVIEW.md`, `GPT_VISIBLE_REVIEW_STATE.json`, `STATUS.md`, and `DECISION_REQUIRED.md` were refreshed.
+- Verification: `python3 scripts/visible_review_scaffold.py --check`; `python3 scripts/refresh_visible_status.py --check`; `python3 -m compileall -q src tests scripts`; `python3 -m unittest discover -s tests` with 26 tests; `bash -n scripts/codex_worker.sh`.
+- Safety: `PHASE_1_SIMULATION_ONLY`; no account connection, no real orders, no cancellations, no fund movement, no original-data deletion, no secret exposure, no external service calls from the scaffold scripts, no dangerous sandbox, and no git add/commit/push inside codex exec.
+
+## 2026-06-28 22:01:56 +0800
+
+- Event: completed
+- Detail: Task TASK-014A completed
+
+## 2026-06-28 22:04:09 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
