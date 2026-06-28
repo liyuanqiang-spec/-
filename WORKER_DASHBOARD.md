@@ -10,11 +10,11 @@ Last dashboard update: `2026-06-28 by ChatGPT connector`
 | Latest completed task | TASK-008 (completed) - Finish GPT visible status layer |
 | Latest failed or blocked task | None |
 | Latest status | TASK_008_COMPLETED |
-| Latest report | REPORTS/latest_report.md |
-| Latest visible GitHub update | ChatGPT added QUANT_SYSTEM_TARGETS.md and retargeted TASK-009 to quant system enhancement |
+| Latest expected reports | REPORTS/quant_system_gap_report.md; REPORTS/backtest_baseline_report.md |
+| Latest visible GitHub update | ChatGPT updated TASK-009 to use existing backtest or sample data where available |
 | Decision required | No unresolved item |
 | Safety mode | PHASE_1_SIMULATION_ONLY |
-| Next action | Mac mini worker should process TASK-009 on the next scan. |
+| Next action | Mac mini worker should process TASK-009 on the next scan and produce the two baseline reports. |
 
 ## Links
 
