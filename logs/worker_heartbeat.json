@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-06-28T22:04:09+08:00",
+  "timestamp": "2026-06-28T22:06:16+08:00",
   "state": "blocked",
-  "detail": "git pull failed",
-  "task": "none",
+  "detail": "Task TASK-015 blocked by risk control",
+  "task": "TASK-015",
   "interval_seconds": 120,
   "idle_poll_interval_seconds": 120,
   "active_poll_interval_seconds": 30,

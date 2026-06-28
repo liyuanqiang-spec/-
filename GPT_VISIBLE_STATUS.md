@@ -1,17 +1,17 @@
 # GPT Visible Status
 
-- Generated at: `2026-06-28T22:04:09+08:00`
-- Status: `WAITING_FOR_WORKER`
+- Generated at: `2026-06-28T22:06:16+08:00`
+- Status: `BLOCKED`
 - Visible scaffold: `FAILED_WITH_REASON`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
-- Current task: TASK-015 / pending / Add adaptive polling frequency for local GitHub worker
-- Latest completed task: TASK-014A (completed) - Add scaffold state line to visible status | worker started
-- Decision required: none
-- Latest status marker: `BLOCKED_PULL`
-- Last worker check: 2026-06-28T22:04:09+08:00 / blocked
-- Latest commit: c331a38 2026-06-28 Add TASK-015 adaptive worker polling
+- Current task: none
+- Latest completed task: TASK-014A (completed) - Add scaffold state line to visible status | codex exec completed
+- Decision required: yes - Task TASK-015 contains a blocked trading/fund/secret/deletion/danger risk
+- Latest status marker: `DECISION_REQUIRED`
+- Last worker check: 2026-06-28T22:06:16+08:00 / blocked / TASK-015
+- Latest commit: e0e62ba 2026-06-28 Worker processed TASK-014A
 - Worker poll interval: idle 600s, active 60s
-- Next action: 本机 worker 下一轮应执行第一个待处理安全任务。
+- Next action: 人工处理 DECISION_REQUIRED.md 中未解决事项，然后重新刷新状态。
 
 ## ChatGPT Supervision Contract
 

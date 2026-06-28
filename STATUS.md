@@ -696,3 +696,10 @@ Status: `BLOCKED_PULL`
 
 - Detail: git pull failed
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-28 22:06:16 +0800
+
+Status: `DECISION_REQUIRED`
+
+- Detail: Task TASK-015 blocked by risk control
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

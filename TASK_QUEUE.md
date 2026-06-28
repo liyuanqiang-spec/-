@@ -133,7 +133,7 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Result: codex exec completed
 
 ### TASK-015
-- Status: pending
+- Status: decision_required
 - Type: adaptive_worker_polling
 - Title: Add adaptive polling frequency for local GitHub worker
 - Safety: repository_status_only
