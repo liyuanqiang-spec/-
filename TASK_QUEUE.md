@@ -100,8 +100,14 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Status: decision_required
 - Type: auto_review_workflow
 - Title: Build visible GPT auto-review trigger
-- Request: Create the missing automatic review layer. Add `.github/workflows/gpt_orchestrator.yml` and `scripts/gpt_orchestrator.py`. The workflow must support manual run, schedule, and push-triggered review after status/report/code updates. The script must read PROJECT_MEMORY.md, TASK_QUEUE.md, STATUS.md, RUN_LOG.md, WORKER_DASHBOARD.md, GPT_VISIBLE_STATUS.md, DECISION_REQUIRED.md, REPORTS, src, and tests summaries; then write GPT_REVIEW.md and GPT_VISIBLE_STATUS.md. If a task is running or pending, only update visible status and do not request a model review. If idle, request a project-management review through the configured model key stored in repository Actions settings, append one safe next task if needed, and avoid duplicate reviews with `.gpt_state.json`. Do not expose any secret value. Keep all work repository-only and PHASE_1_SIMULATION_ONLY.
-- Expected output: workflow file, orchestrator script, refreshed GPT_REVIEW.md, refreshed GPT_VISIBLE_STATUS.md, state file, status/run-log notes, and passing syntax or unit checks. Visible status must say whether the auto-review layer is READY, WAITING_FOR_KEY, or FAILED_WITH_REASON.
-- Safety: repository_automation_only
+- Result: blocked by risk control.
+
+### TASK-013A
+- Status: pending
+- Type: visible_review_scaffold
+- Title: Build safe visible review scaffold
+- Request: Create a repository-only visible review scaffold without network calls. Add a scheduled and manual GitHub workflow file that runs a local Python script. Add `scripts/visible_review_scaffold.py`. The script should read PROJECT_MEMORY.md, TASK_QUEUE.md, STATUS.md, RUN_LOG.md, WORKER_DASHBOARD.md, GPT_VISIBLE_STATUS.md, DECISION_REQUIRED.md, REPORTS, src, and tests summaries. It should write or refresh GPT_REVIEW.md and GPT_VISIBLE_STATUS.md with a clear state: SCAFFOLD_READY, WORKER_BUSY, or FAILED_WITH_REASON. It must not call outside services. It must not read or print sensitive values. It must not edit strategy code or data. It must only summarize repository status and next safe human-supervision action.
+- Expected output: workflow file, local scaffold script, refreshed GPT_REVIEW.md, refreshed GPT_VISIBLE_STATUS.md, state file if useful, STATUS/RUN_LOG notes, and passing syntax checks.
+- Safety: repository_status_only
 - Created: 2026-06-28
-- Result: blocked by risk control
+- Result: pending
