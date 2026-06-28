@@ -88,10 +88,14 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Status: completed
 - Type: offline_tick_file_validation
 - Title: Validate local historical tick files with offline replay adapter
-- Request: Continue after TASK-010. Keep work inside repository files and PHASE_1_SIMULATION_ONLY. Use only local fixture or already-present historical tick files under DATA and nearby project data folders. Do not scan the whole disk. Build an offline parser that maps available tick CSV columns into the replay snapshot schema. Required fields to check: datetime, symbol, bid_price1, bid_volume1, ask_price1, ask_volume1, last_price, volume, open_interest, trading_date, source. Create a tiny sanitized fixture only when suitable local rows exist. Run the replay or explain the exact local-file blocker such as missing file, missing column, unsupported symbol, import error, or schema mismatch. Refresh reports and visible status.
-- Expected output: offline tick parser script, optional adapter module, tiny sanitized fixture when available, REPORTS/tick_file_smoke_report.md, refreshed quant reports, refreshed WORKER_DASHBOARD.md and GPT_VISIBLE_STATUS.md.
-- Required checks: python3 scripts/refresh_visible_status.py; bash scripts/check_worker_health.sh; python3 -m compileall -q src tests scripts; python3 -m unittest discover -s tests; bash -n scripts/codex_worker.sh.
-- Safety: offline_repository_file_validation_only
-- Created: 2026-06-28
-- Last update: synced by Codex 2026-06-28 20:54:50 +0800
 - Result: completed; added offline tick adapter, validation script, sanitized non-performance tick fixture, tick smoke report, refreshed quant reports, and passed 21 tests.
+
+### TASK-012
+- Status: pending
+- Type: worker_cost_control
+- Title: Reduce idle worker calls and writes
+- Request: Reduce background worker activity now that the queue is idle. Set idle polling to 600 seconds or slower, active-task polling to 60 seconds or slower, and make idle rounds read-only. When there is no pending task, do not call any model, do not run Codex, do not refresh status files, do not commit, and do not push. Keep a manual health-check command for on-demand checks. Update visible status to show the new intervals and the last worker check. Keep all work inside repository files and PHASE_1_SIMULATION_ONLY.
+- Expected output: updated worker config or scripts, refreshed WORKER_DASHBOARD.md, refreshed GPT_VISIBLE_STATUS.md, STATUS.md and RUN_LOG.md note showing old interval and new interval, and passing shell/Python checks.
+- Safety: repository_status_only
+- Created: 2026-06-28
+- Result: pending
