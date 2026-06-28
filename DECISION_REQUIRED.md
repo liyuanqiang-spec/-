@@ -10,6 +10,13 @@ No current user action required for normal safe GitHub status-file supervision.
 
 ## Resolved Decisions
 
+### DR-20260628-TASK-011-WORDING-BLOCKED
+- Status: resolved
+- Created: 2026-06-28 20:27:28 +0800
+- Item: TASK-011 was blocked by the worker risk scanner because the task wording mixed local data validation with sensitive broker/account/secret/trading terms.
+- Resolution: ChatGPT superseded TASK-011 and created TASK-011A as an offline repository-file validation task. TASK-011A is now running.
+- Required confirmation: none.
+
 ### DR-20260628-WORKER-RELOAD-SUPPORT-CLONE-DIVERGED
 - Status: resolved
 - Created: 2026-06-28 16:33:26 +0800
@@ -90,8 +97,7 @@ No current user action required for normal safe GitHub status-file supervision.
 
 ## Decision Required 2026-06-28 20:27:28 +0800
 
+- Status: resolved
 - Item: Task TASK-011 contains a blocked trading/fund/secret/deletion/danger risk
-- Current action: worker stopped before execution
-- A 推荐: keep simulation-only and rewrite the task as safe research work
-- B: explicitly authorize the blocked setup/action
-- C: cancel this task
+- Current action: superseded by TASK-011A; no current user action required
+- Resolution: Original task wording was replaced with offline repository-file validation only.
