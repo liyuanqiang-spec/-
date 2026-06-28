@@ -62,7 +62,8 @@ Key question: Does passive first-leg plus active second-leg simulation improve c
 
 ## Verification
 
-- python3 scripts/refresh_visible_status.py: passed.\n- bash scripts/check_worker_health.sh: passed.\n- python3 -m compileall -q src tests scripts: passed.\n- python3 -m unittest discover -s tests: passed, 17 tests.\n- bash -n scripts/codex_worker.sh: passed.
+- TASK-011A offline tick parser validation passed on repository-local sanitized tick fixture.
+- Required checks passed: python3 scripts/refresh_visible_status.py; bash scripts/check_worker_health.sh; python3 -m compileall -q src tests scripts; python3 -m unittest discover -s tests (21 tests); bash -n scripts/codex_worker.sh.
 
 ## Next Three Safe Codex Tasks
 

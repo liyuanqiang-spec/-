@@ -99,5 +99,6 @@ No current user action required for normal safe GitHub status-file supervision.
 
 - Status: resolved
 - Item: Task TASK-011 contains a blocked trading/fund/secret/deletion/danger risk
-- Current action: superseded by TASK-011A; no current user action required
-- Resolution: Original task wording was replaced with offline repository-file validation only.
+- Current action: stale entry; no current user action required
+- Resolution: TASK-011 was superseded by TASK-011A, which stayed inside repository-local offline file validation and `PHASE_1_SIMULATION_ONLY`.
+- Required confirmation: none.

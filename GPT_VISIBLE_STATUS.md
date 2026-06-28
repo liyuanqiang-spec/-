@@ -1,15 +1,15 @@
 # GPT Visible Status
 
-- Generated at: `2026-06-28T20:40:21+08:00`
-- Status: `BLOCKED`
+- Generated at: `2026-06-28T20:47:12+08:00`
+- Status: `IDLE`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
-- Current task: TASK-011A / running / Validate local historical tick files with offline replay adapter
-- Latest completed task: TASK-010 (completed) - Add multi-snapshot option quote replay fixture and loader | completed; added repository-local multi-snapshot quote replay fixture, replay loader, deterministic stale quote/timeout/incomplete-leg tests, and refreshed baseline replay reports. Git result sync was rebased and recorded in the queue.
-- Decision required: yes - Task TASK-011 contains a blocked trading/fund/secret/deletion/danger risk
-- Latest status marker: `WORKER_RUNNING`
-- Latest commit: 5f121a0 2026-06-28 Supersede blocked TASK-011 with offline safe task
+- Current task: none
+- Latest completed task: TASK-011A (completed) - Validate local historical tick files with offline replay adapter | codex exec completed
+- Decision required: none
+- Latest status marker: `WORKER_COMPLETED`
+- Latest commit: 7203358 2026-06-28 Worker started TASK-011A
 - Worker poll interval: idle 120s, active 30s
-- Next action: 人工处理 DECISION_REQUIRED.md 中未解决事项，然后重新刷新状态。
+- Next action: ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。
 
 ## ChatGPT Supervision Contract
 

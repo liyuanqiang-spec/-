@@ -562,3 +562,23 @@ Status: `WORKER_RUNNING`
 
 - Detail: Task TASK-011A started
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-28 20:44:53 +0800
+
+Status: `TASK_011A_COMPLETED`
+
+- Detail: Completed offline repository-file tick validation. Added an offline tick replay adapter and validation script that map tick CSV fields into the existing replay snapshot schema.
+- Result: no historical tick CSV was found under checked repository paths `DATA/raw/ticks.csv`, `DATA/raw/tick.csv`, `DATA/raw/silver_option_ticks.csv`, `DATA/raw/option_ticks.csv`, `data/raw/ticks.csv`, `data/raw/tick.csv`, `data/raw/silver_option_ticks.csv`, or `data/raw/option_ticks.csv`; generated `DATA/replay/silver_option_tick_smoke.csv` from existing local quote replay rows and wrote `REPORTS/tick_file_smoke_report.md`.
+- Replay result: 12 sanitized tick rows loaded into 12 replay snapshots; required fields passed for `datetime`, `symbol`, `bid_price1`, `bid_volume1`, `ask_price1`, `ask_volume1`, `last_price`, `volume`, `open_interest`, `trading_date`, and `source`; 2 candidate replays produced, 1 first-leg fill, 1 incomplete leg.
+- Refreshed reports: `REPORTS/tick_file_smoke_report.md`, `REPORTS/backtest_baseline_report.md`, `REPORTS/quant_system_gap_report.md`, `REPORTS/quant_baseline_replay.csv`, `WORKER_DASHBOARD.md`, and `GPT_VISIBLE_STATUS.md`.
+- Verification: `python3 scripts/refresh_visible_status.py` passed; `bash scripts/check_worker_health.sh` passed; `python3 -m compileall -q src tests scripts` passed; `python3 -m unittest discover -s tests` passed with 21 tests; `bash -n scripts/codex_worker.sh` passed.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no dangerous sandbox, no git add, no git commit, no git push inside codex exec.
+- Confirmation required: no.
+
+## Worker Update 2026-06-28 20:47:12 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-011A completed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

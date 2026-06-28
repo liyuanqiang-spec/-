@@ -385,3 +385,21 @@ This file records safe worker runs and Codex execution events.
 
 - Event: started
 - Detail: Task TASK-011A started
+
+## 2026-06-28 20:40:32 +0800
+
+- Event: attempt
+- Detail: Task TASK-011A codex exec attempt 1/3
+
+## 2026-06-28 20:44:53 +0800
+
+- Event: TASK-011A completed
+- Detail: Added offline tick replay adapter `src/codex_quant/tick_replay_adapter.py`, validation script `scripts/validate_offline_tick_files.py`, tests, sanitized tick fixture `DATA/replay/silver_option_tick_smoke.csv`, and report `REPORTS/tick_file_smoke_report.md`.
+- Result: no historical tick CSV was present under checked repository DATA paths, so validation used a sanitized fixture derived from existing local quote replay rows. Required tick fields all passed; 12 rows loaded into 12 replay snapshots; 2 candidate replays produced; refreshed quant baseline reports and visible status files.
+- Verification: required checks passed: `python3 scripts/refresh_visible_status.py`; `bash scripts/check_worker_health.sh`; `python3 -m compileall -q src tests scripts`; `python3 -m unittest discover -s tests` with 21 tests; `bash -n scripts/codex_worker.sh`.
+- Safety: `PHASE_1_SIMULATION_ONLY`; no account connection, no real orders, no cancellations, no fund movement, no original data deletion, no secret exposure, no dangerous sandbox, and no git add/commit/push inside codex exec.
+
+## 2026-06-28 20:47:12 +0800
+
+- Event: completed
+- Detail: Task TASK-011A completed
