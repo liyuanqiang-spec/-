@@ -1,20 +1,20 @@
 # GPT_VISIBLE_STATUS.md
 
-Last update: 2026-06-28 by ChatGPT GitHub connector.
+Last update: 2026-06-28.
 
-Status: `WORKER_CONTINUES_WITH_SAFE_TASK`
+Status: `WAITING_FOR_TASK_008`
 
 ## Current finding
 
-- GitHub repository files are readable through the connector.
-- `TASK_QUEUE.md` was simplified to a safe repository-status task.
-- Historical `git pull failed` entries in `DECISION_REQUIRED.md` are now marked resolved.
-- `GPT_REVIEW.md`, `.gpt_state.json`, `GPT_ORCHESTRATOR_WORKFLOW_TEMPLATE.yml`, and `scripts/gpt_orchestrator_stub.py` now exist.
+- The repository status files are readable.
+- `TASK-008` is the first pending item.
+- `WORKER_DASHBOARD.md` has been refreshed.
+- `RELIABILITY_RUNBOOK.md` now defines the standing process.
 
 ## User action needed
 
-None for normal simulation-only worker continuation.
+None.
 
 ## Next action
 
-The local worker should execute `TASK-008` on its next scan and refresh the visible status/dashboard files. ChatGPT-side hourly checking remains active.
+Worker processes `TASK-008`; hourly status watch reports the result.
