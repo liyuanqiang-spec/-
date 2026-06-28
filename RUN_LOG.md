@@ -440,3 +440,21 @@ This file records safe worker runs and Codex execution events.
 
 - Event: started
 - Detail: Task TASK-013A started
+
+## 2026-06-28 21:34:26 +0800
+
+- Event: attempt
+- Detail: Task TASK-013A codex exec attempt 1/3
+
+## 2026-06-28 21:39:24 +0800
+
+- Event: TASK-013A completed
+- Detail: Built the repository-only visible review scaffold. Added `scripts/visible_review_scaffold.py`, a scheduled/manual read-only GitHub workflow at `.github/workflows/visible-review-scaffold.yml`, and tests for decision parsing, redaction, and ready-state generation.
+- Result: Refreshed `GPT_REVIEW.md`, `GPT_VISIBLE_STATUS.md`, `GPT_VISIBLE_REVIEW_STATE.json`, `WORKER_DASHBOARD.md`, and `.gpt_state.json`; resolved stale TASK-013 and pull-failure decision entries; marked TASK-013A completed in `TASK_QUEUE.md`.
+- Verification: `python3 scripts/visible_review_scaffold.py --check`; `python3 -m compileall -q src tests scripts`; `python3 -m unittest discover -s tests` with 24 tests.
+- Safety: `PHASE_1_SIMULATION_ONLY`; no account connection, no real orders, no cancellations, no fund movement, no original-data deletion, no secret exposure, no external service calls from the scaffold script, no dangerous sandbox, and no git add/commit/push inside codex exec.
+
+## 2026-06-28 21:40:27 +0800
+
+- Event: completed
+- Detail: Task TASK-013A completed

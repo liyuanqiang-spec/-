@@ -105,16 +105,16 @@ No current user action required for normal safe GitHub status-file supervision.
 
 ## Decision Required 2026-06-28 21:21:24 +0800
 
+- Status: resolved
 - Item: Task TASK-013 contains a blocked trading/fund/secret/deletion/danger risk
-- Current action: worker stopped before execution
-- A 推荐: keep simulation-only and rewrite the task as safe research work
-- B: explicitly authorize the blocked setup/action
-- C: cancel this task
+- Current action: stale entry; no current user action required
+- Resolution: TASK-013 was superseded by TASK-013A, a repository-only visible review scaffold with no network calls, no real trading access, no order actions, no fund movement, no original-data deletion, no secret exposure, and no dangerous sandbox.
+- Required confirmation: none.
 
 ## Decision Required 2026-06-28 21:25:48 +0800
 
+- Status: resolved
 - Item: worker sync failed at pull stage: git pull failed
-- Current action: worker stopped before execution
-- A 推荐: keep simulation-only and rewrite the task as safe research work
-- B: explicitly authorize the blocked setup/action
-- C: cancel this task
+- Current action: stale entry; no current user action required
+- Resolution: TASK-013A reached codex exec and is being completed in the repository; outer worker remains responsible for git sync after codex exits.
+- Required confirmation: none.

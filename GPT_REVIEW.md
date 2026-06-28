@@ -49,3 +49,33 @@ Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
 - 这次不是 GitHub 登录或 Git 授权问题；之前看起来卡住，是因为本地 worker 完成 `TASK-010` 后，远端同时新增 `TASK-011`，导致 support clone 需要 rebase 后再推送。
 - 当前真正阻塞点是 `TASK-011`：任务文本涉及 TqSdk 账号、凭据检测和本地行情访问，已被安全扫描标为 `decision_required`。
 - 建议 GPT 下一步：把 `TASK-011` 改写成纯本地文件模式优先，不读取/打印密钥，不连接真实交易账户，不使用交易网关；账号数据模式只有在用户明确授权且保持只读行情时再做。
+
+<!-- visible-review-scaffold:start -->
+## Visible Review Scaffold
+
+- Generated at: `2026-06-28T21:39:48+08:00`
+- State: `SCAFFOLD_READY`
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Current task: None
+- First pending task: None
+- Latest completed task: TASK-013A (completed) - Build safe visible review scaffold | completed; added repository-only visible review scaffold script, scheduled/manual GitHub workflow check, refreshed GPT review/status files, resolved stale TASK-013 decision entr...
+- Decision required: none
+- Failure reason: none
+- Latest status marker: `TASK_013A_COMPLETED`
+- Latest run event: 2026-06-28 21:39:24 +0800 / TASK-013A completed / Built the repository-only visible review scaffold. Added `scripts/visible_review_scaffold.py`, a scheduled/manual read-only GitHub workflow at `.github/workflows/visible-review-scaffold.y...
+- Previous dashboard state: `IDLE`
+- Previous visible status: `UNKNOWN`
+- Project memory headings reviewed: PROJECT_MEMORY.md, Project, Core strategy, Current architecture, Software roles, Must build, Core KPI, Safety boundaries
+- Reports summary: 9 files; latest markdown `REPORTS/first_complete_simulation_report.md`; headings: TASK-007 First Complete Simulation Report, Run Command, Dashboard Entry, Reproducible Backtest Configuration, Candidate Simulation Table, Accepted Candidates
+- Source summary: 16 Python files; sample: src/__init__.py, src/codex_quant/__init__.py, src/codex_quant/backtester.py, src/codex_quant/config.py, src/codex_quant/contract_scanner.py, src/codex_quant/dashboard.py, src/codex_quant/low_liquidity_scanner.py, src/codex_quant/quant_baseline.py, src/codex_quant/quote_replay.py, src/codex_quant/report_writer.py, src/codex_quant/risk_control.py, src/codex_quant/run_pipeline.py
+- Test summary: 11 Python files; sample: tests/test_backtester.py, tests/test_dashboard.py, tests/test_low_liquidity_scanner.py, tests/test_pipeline.py, tests/test_quant_baseline.py, tests/test_quote_replay.py, tests/test_risk_control.py, tests/test_spread_calculator.py, tests/test_tick_replay_adapter.py, tests/test_visible_review_scaffold.py, tests/test_worker.py
+- Next safe human-supervision action: ChatGPT can review GPT_REVIEW.md and add the next safe simulation-only task to TASK_QUEUE.md.
+
+## Scaffold Guarantees
+
+- repository-local summary only
+- no network clients or external services
+- no environment variable or secret-file reads
+- no strategy code or data edits
+- redacted status text in generated summaries
+<!-- visible-review-scaffold:end -->

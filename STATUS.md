@@ -631,3 +631,21 @@ Status: `WORKER_RUNNING`
 
 - Detail: Task TASK-013A started
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-28 21:39:24 +0800
+
+Status: `TASK_013A_COMPLETED`
+
+- Detail: Completed the safe visible review scaffold for repository-only GPT supervision.
+- Result: Added `scripts/visible_review_scaffold.py`, `.github/workflows/visible-review-scaffold.yml`, `tests/test_visible_review_scaffold.py`, and `GPT_VISIBLE_REVIEW_STATE.json`; refreshed `GPT_REVIEW.md`, `GPT_VISIBLE_STATUS.md`, `WORKER_DASHBOARD.md`, and `.gpt_state.json`; resolved stale TASK-013 and pull-failure decision entries; marked `TASK-013A` completed in `TASK_QUEUE.md`.
+- Verification: `python3 scripts/visible_review_scaffold.py --check` passed; `python3 -m compileall -q src tests scripts` passed; `python3 -m unittest discover -s tests` passed with 24 tests.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no external service calls from the scaffold script, no dangerous sandbox, no git add, no git commit, no git push inside codex exec.
+- Confirmation required: no.
+
+## Worker Update 2026-06-28 21:40:27 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-013A completed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
