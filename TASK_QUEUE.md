@@ -131,3 +131,104 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Safety: repository_status_only
 - Created: 2026-06-28
 - Result: worker started
+
+### TASK-015
+- Status: pending
+- Type: adaptive_worker_polling
+- Title: Add adaptive polling frequency for local GitHub worker
+- Safety: repository_status_only
+- Created: 2026-06-28
+
+## Objective
+
+Improve the local Mac mini GitHub worker polling logic so it reacts faster when activated, then automatically reduces frequency after several idle checks.
+
+Do not edit strategy code, trading logic, broker/API code, account code, order code, fund movement code, secrets, raw market data, or production trading files.
+
+This task is only about worker scheduling, status files, and repository supervision.
+
+## Required behavior
+
+Implement adaptive polling in the local worker loop:
+
+1. **Active mode**
+   - When the worker finds a pending safe task, starts executing a task, or detects `WORKER_BUSY`, poll frequently.
+   - Suggested active interval: `30s` or `60s`.
+   - During active execution, update status files normally.
+
+2. **Warm mode**
+   - After a task completes, fails safely, or writes a blocker, keep higher frequency for a short period.
+   - Suggested warm interval: `60s`.
+   - Stay in warm mode for about `3` consecutive checks.
+
+3. **Idle mode**
+   - If there are no pending safe tasks and no unresolved blocker for several consecutive checks, automatically reduce frequency.
+   - Suggested idle interval: `600s`.
+   - Enter idle mode after `5` consecutive idle checks.
+
+4. **Immediate reactivation**
+   - If any new pending safe task appears in `TASK_QUEUE.md`, immediately switch back to active mode.
+   - If `DECISION_REQUIRED.md` has a new unresolved blocker, switch to warm mode and surface it in visible status.
+
+5. **Visible status**
+   - Update `GPT_VISIBLE_STATUS.md` to show:
+     - current worker mode: `ACTIVE`, `WARM`, or `IDLE`
+     - current poll interval
+     - consecutive idle count
+     - latest completed task
+     - unresolved blocker, if any
+     - next executable action
+
+6. **Dashboard**
+   - Update `WORKER_DASHBOARD.md` to include the adaptive polling state.
+   - It should be obvious whether the worker is sleeping long because it is truly idle.
+
+7. **Run log**
+   - Append clear notes to `RUN_LOG.md` when:
+     - active mode starts
+     - warm mode starts
+     - idle mode starts
+     - interval changes
+     - blocker detected
+     - new pending task detected
+
+8. **Configuration**
+   - Put polling parameters in one clearly editable place, for example:
+     - `ACTIVE_POLL_SECONDS=30`
+     - `WARM_POLL_SECONDS=60`
+     - `IDLE_POLL_SECONDS=600`
+     - `IDLE_BACKOFF_AFTER_CHECKS=5`
+     - `WARM_CHECKS_AFTER_ACTIVITY=3`
+   - Prefer environment variables with safe defaults, or a small config section inside the worker script.
+
+9. **Safety scanner**
+   - Keep existing safety scanner behavior.
+   - Do not weaken risk controls.
+   - If a task is unsafe, do not execute it. Mark it blocked and write a clear reason.
+
+10. **No external service calls**
+   - Do not call brokers, exchanges, trading software, financial accounts, or outside services.
+   - Normal GitHub pull/commit/push for repository status synchronization is allowed if already used by the worker.
+
+## Expected output
+
+- Updated worker polling logic.
+- Updated status/dashboard/reporting files:
+  - `GPT_VISIBLE_STATUS.md`
+  - `WORKER_DASHBOARD.md`
+  - `STATUS.md`
+  - `RUN_LOG.md`
+  - `DECISION_REQUIRED.md` only if a real unresolved decision exists.
+- Passing syntax checks.
+- A short note in `TASK_QUEUE.md` marking this task completed when done.
+
+## Acceptance criteria
+
+The task is complete only when:
+
+1. Worker can run in adaptive modes: `ACTIVE`, `WARM`, `IDLE`.
+2. New safe pending task causes high-frequency polling.
+3. Several idle checks automatically reduce polling frequency.
+4. `GPT_VISIBLE_STATUS.md` clearly exposes mode and interval.
+5. No trading, account, broker, secret, raw data, or unsafe action is touched.
+6. The repo is committed and pushed successfully.
