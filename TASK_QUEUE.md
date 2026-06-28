@@ -257,7 +257,7 @@ The task is complete only when:
 - Result: codex exec completed
 
 ### TASK-018
-- Status: pending
+- Status: running
 - Type: local_review_artifact_visibility
 - Title: Make local review input visible in GitHub
 - Request: Repository-only status task. The visible status names `GPT_LOCAL_REVIEW_INPUT.md`, but the file is not visible from GitHub fetch. Fix the local review dry-run flow so the generated review input is committed and pushed as part of the same safe worker result, or generated before the final worker commit. Keep this as a local deterministic check only; no outside service calls, no model calls, no environment dumps, and no changes to quant strategy modules or sample data. Refresh `GPT_REVIEW.md`, `.gpt_state.json`, `GPT_VISIBLE_STATUS.md`, `WORKER_DASHBOARD.md`, `STATUS.md`, and `RUN_LOG.md`.
