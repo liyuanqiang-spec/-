@@ -1,6 +1,6 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-06-28 20:29:03 +0800`
+Last dashboard update: `2026-06-28 20:29:39 +0800`
 
 | Item | Result |
 |---|---|
@@ -10,8 +10,8 @@ Last dashboard update: `2026-06-28 20:29:03 +0800`
 | Latest completed task | TASK-010 (completed) - Add multi-snapshot option quote replay fixture and loader / completed; added repository-local multi-snapshot quote replay fixture, replay loader, deterministic stale quote/timeout/incomplete-leg tests, and refreshed baseline replay reports. Git result sync was rebased over TASK-011 and recorded in the queue. |
 | Latest failed or blocked task | TASK-011 (decision_required) - Run local TqSdk account and historical tick data smoke test |
 | Latest status | DECISION_REQUIRED |
-| Latest report | REPORTS/quant_system_gap_report.md |
-| Latest push/commit | 9fd542c 2026-06-28 Block unsafe worker task TASK-011 |
+| Latest report | REPORTS/first_complete_simulation_report.md |
+| Latest push/commit | 8d4e169 2026-06-28 Sync TASK-010 completion result |
 | Worker poll interval | idle 120s, active 30s |
 | Decision required | Yes - Task TASK-011 contains a blocked trading/fund/secret/deletion/danger risk |
 | Safety mode | PHASE_1_SIMULATION_ONLY |
