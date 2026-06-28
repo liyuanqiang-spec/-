@@ -70,3 +70,14 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Created: 2026-06-28
 - Last update: completed by Codex 2026-06-28 12:38:15 +0800
 - Result: TASK-008 completed; GPT visible status layer, worker dashboard refresh, structured state file, health check, and worker reporting hooks stabilized.
+
+### TASK-009
+- Status: pending
+- Type: project_software_update
+- Title: Safe repository software update baseline
+- Request: Perform a repository-only software update pass. Read RELIABILITY_RUNBOOK.md first. Inventory Python modules, tests, scripts, reports, and dependency files. Update only project code, tests, documentation, and repository-local configuration where needed. Preserve the visible status flow. Run health checks and test commands. Write a concise upgrade report in REPORTS/software_update_baseline.md.
+- Expected output: updated repository code or documentation as needed, software update baseline report, refreshed dashboard, refreshed GPT visible status, passing health checks and tests.
+- Safety: repository_only
+- Created: 2026-06-28
+- Last update: created by ChatGPT after TASK-008 completion
+- Result: pending
