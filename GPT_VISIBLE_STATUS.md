@@ -1,15 +1,14 @@
 # GPT Visible Status
 
-- Generated at: `2026-06-28 by ChatGPT connector`
-- Status: `WAITING_FOR_WORKER`
+- Generated at: `2026-06-28T14:56:47+08:00`
+- Status: `WORKING`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
-- Current task: TASK-009 (pending) - Build quant system enhancement baseline
-- Latest completed task: TASK-008 (completed) - Finish GPT visible status layer
+- Current task: TASK-009 / running / Build quant system enhancement baseline
+- Latest completed task: TASK-008 (completed) - Finish GPT visible status layer | TASK-008 completed; GPT visible status layer, worker dashboard refresh, structured state file, health check, and worker reporting hooks stabilized.
 - Decision required: none
-- Latest status marker: `TASK_008_COMPLETED`
-- Quant target file: `QUANT_SYSTEM_TARGETS.md`
-- Expected outputs: `REPORTS/quant_system_gap_report.md`; `REPORTS/backtest_baseline_report.md`
-- Next action: Mac mini worker should process TASK-009 on the next scan using existing backtest or sample data where available.
+- Latest status marker: `WORKER_RUNNING`
+- Latest commit: 198c2b6 2026-06-28 Refresh GPT visible status for backtest baseline
+- Next action: 等待当前任务完成；worker 会在完成、失败或阻塞后推送状态。
 
 ## ChatGPT Supervision Contract
 
