@@ -1,21 +1,21 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-06-28 17:40:54 +0800`
+Last dashboard update: `2026-06-28 17:49:38 +0800`
 
 | Item | Result |
 |---|---|
-| Worker state | WORKING |
-| Current task | TASK-010 (running) - Add multi-snapshot option quote replay fixture and loader |
+| Worker state | IDLE |
+| Current task | None |
 | First pending task | None |
-| Latest completed task | TASK-009 (completed) - Build quant system enhancement baseline / completed; generated quant gap report, backtest baseline report, replay CSV, time-value radar, scoring/state-machine replay baseline, and tests. |
+| Latest completed task | TASK-010 (completed) - Add multi-snapshot option quote replay fixture and loader |
 | Latest failed or blocked task | None |
-| Latest status | WORKER_RUNNING |
-| Latest report | REPORTS/quant_system_gap_report.md |
-| Latest push/commit | c78166c 2026-06-28 Refresh visible status for TASK-010 |
+| Latest status | WORKER_COMPLETED |
+| Latest report | REPORTS/first_complete_simulation_report.md |
+| Latest push/commit | 1d65fac 2026-06-28 Worker started TASK-010 |
 | Worker poll interval | idle 120s, active 30s |
 | Decision required | No unresolved item |
 | Safety mode | PHASE_1_SIMULATION_ONLY |
-| Next action | 等待当前任务完成；worker 会在完成、失败或阻塞后推送状态。 |
+| Next action | ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。 |
 
 ## Links
 

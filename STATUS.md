@@ -522,3 +522,20 @@ Status: `WORKER_RUNNING`
 
 - Detail: Task TASK-010 started
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-28 17:48:19 +0800
+
+Status: `TASK_010_COMPLETED`
+
+- Detail: Added repository-local TASK-010 multi-snapshot silver option quote replay fixture and loader. The baseline now consumes ordered quote snapshots with bid/ask size, depth, freshness/staleness, deterministic repricing, first-leg timeout, passive fill probability, incomplete-leg handling, and second-leg adverse-move protection.
+- Result: 12 quote rows, 2 replayed spread candidates, 1 first-leg fill, 1 first-leg timeout, 1 incomplete-leg outcome, 2 stale quote observations. Refreshed `REPORTS/backtest_baseline_report.md`, `REPORTS/quant_system_gap_report.md`, `REPORTS/quant_baseline_replay.csv`, `WORKER_DASHBOARD.md`, and `GPT_VISIBLE_STATUS.md`.
+- Verification: `python3 scripts/refresh_visible_status.py` passed; `bash scripts/check_worker_health.sh` passed; `python3 -m compileall -q src tests scripts` passed; `python3 -m unittest discover -s tests` passed with 17 tests; `bash -n scripts/codex_worker.sh` passed.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no dangerous sandbox, no git add, no git commit, no git push inside codex exec.
+
+## Worker Update 2026-06-28 17:49:38 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-010 completed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

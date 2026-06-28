@@ -1,15 +1,15 @@
 # GPT Visible Status
 
-- Generated at: `2026-06-28T17:40:54+08:00`
-- Status: `WORKING`
+- Generated at: `2026-06-28T17:49:38+08:00`
+- Status: `IDLE`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
-- Current task: TASK-010 / running / Add multi-snapshot option quote replay fixture and loader
-- Latest completed task: TASK-009 (completed) - Build quant system enhancement baseline | completed; generated quant gap report, backtest baseline report, replay CSV, time-value radar, scoring/state-machine replay baseline, and tests.
+- Current task: none
+- Latest completed task: TASK-010 (completed) - Add multi-snapshot option quote replay fixture and loader
 - Decision required: none
-- Latest status marker: `WORKER_RUNNING`
-- Latest commit: c78166c 2026-06-28 Refresh visible status for TASK-010
+- Latest status marker: `WORKER_COMPLETED`
+- Latest commit: 1d65fac 2026-06-28 Worker started TASK-010
 - Worker poll interval: idle 120s, active 30s
-- Next action: 等待当前任务完成；worker 会在完成、失败或阻塞后推送状态。
+- Next action: ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。
 
 ## ChatGPT Supervision Contract
 

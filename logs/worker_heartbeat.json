@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-06-28T17:40:54+08:00",
-  "state": "running",
-  "detail": "Task TASK-010 started",
+  "timestamp": "2026-06-28T17:49:38+08:00",
+  "state": "completed",
+  "detail": "Task TASK-010 completed",
   "task": "TASK-010",
   "interval_seconds": 120,
   "idle_poll_interval_seconds": 120,

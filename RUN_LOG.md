@@ -351,3 +351,21 @@ This file records safe worker runs and Codex execution events.
 
 - Event: started
 - Detail: Task TASK-010 started
+
+## 2026-06-28 17:40:59 +0800
+
+- Event: attempt
+- Detail: Task TASK-010 codex exec attempt 1/3
+
+## 2026-06-28 17:48:19 +0800
+
+- Event: TASK-010 completed
+- Detail: Added local multi-snapshot silver option quote replay fixture `DATA/replay/silver_option_quote_replay.csv`, documented it in `DATA/replay/README.md`, implemented ordered quote replay loader/state-machine metrics in `src/codex_quant/quote_replay.py`, integrated replay metrics into `src/codex_quant/quant_baseline.py`, updated `REPORTS/quant_baseline_replay.csv`, `REPORTS/backtest_baseline_report.md`, and `REPORTS/quant_system_gap_report.md`, and added deterministic replay tests.
+- Result: replay fixture has 12 quote rows across 3 timestamps; baseline replay covers `AG2608C7200/AG2608C7400` and `AG2608P7200/AG2608P7000`; outcomes are 1 first-leg fill, 1 first-leg timeout, 1 incomplete leg, 2 stale quote observations, and max replay second-leg adverse move 2 points.
+- Verification: required checks passed: `python3 scripts/refresh_visible_status.py`; `bash scripts/check_worker_health.sh`; `python3 -m compileall -q src tests scripts`; `python3 -m unittest discover -s tests` with 17 tests; `bash -n scripts/codex_worker.sh`.
+- Safety: `PHASE_1_SIMULATION_ONLY`; no account connection, no real orders, no cancellations, no fund movement, no original data deletion, no secret exposure, no dangerous sandbox, and no git add/commit/push inside codex exec.
+
+## 2026-06-28 17:49:38 +0800
+
+- Event: completed
+- Detail: Task TASK-010 completed

@@ -62,7 +62,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--quant-baseline",
         action="store_true",
-        help="run the TASK-009 quant system enhancement baseline report",
+        help="run the TASK-010 quant baseline with local multi-snapshot quote replay",
     )
     parser.add_argument(
         "--verification",

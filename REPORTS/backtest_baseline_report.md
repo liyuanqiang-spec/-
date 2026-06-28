@@ -1,18 +1,20 @@
 # Backtest Baseline Report
 
-结论：本次回测基线已跑通“期权链扫描 -> 时间价值雷达 -> 垂直价差生成 -> 评分 -> 第一腿被动成交模拟 -> 第二腿主动补腿模拟 -> replay 报告”。当前结果只适合作为 pipeline 验证，不代表真实收益能力。
+结论：本次回测基线已跑通“期权链扫描 -> 时间价值雷达 -> 垂直价差生成 -> 评分 -> 第一腿被动成交模拟 -> 第二腿主动补腿模拟 -> 多快照 replay 报告”。当前结果只适合作为 pipeline 验证，不代表真实收益能力。
 
 ## Reproducible Configuration
 
 - Contract universe: `DATA/contracts/sample_options.csv`.
+- Multi-snapshot quote fixture: `DATA/replay/silver_option_quote_replay.csv`.
 - Scan gate: `volume >= 30`, `spread_pct <= 25%`.
 - Entry rule: adjacent-strike vertical spreads by underlying, expiry, and option type.
 - First-leg rule: less liquid leg is quoted passively inside its bid-ask spread.
-- Second-leg rule: after simulated first-leg fill, the other leg is completed immediately with deterministic active hedge slippage.
+- Replay rule: consume ordered local quote snapshots, skip stale first-leg quotes, reprice deterministic passive limits, timeout after 60 seconds, and mark incomplete legs.
+- Second-leg rule: after simulated first-leg fill, the other leg is completed immediately with deterministic active hedge slippage and replay adverse-move protection.
 - Exit rule: no live exit; this baseline evaluates entry quality and leg-completion risk only.
 - Fee assumption: 0.2 option points per leg.
 - Margin/risk assumption: max loss is capped by vertical width for acceptable debit spreads; candidates breaching width are rejected.
-- Data source: local fixture/sample only; no broker, account, market feed, paid API, or credential access.
+- Data source: local fixture/sample only; no broker, account, market feed, paid API, credential, or external execution system access.
 
 ## Result Table
 
@@ -29,6 +31,12 @@
 | Worst simulated second-leg slippage | 3.2571 |
 | Max drawdown | 0 |
 | Incomplete-leg rate | 25.00% |
+| Quote replay snapshots | 12 |
+| Quote replay candidates | 2 |
+| Replay first-leg fills | 1 |
+| Replay first-leg timeouts | 1 |
+| Replay incomplete-leg rate | 50.00% |
+| Replay stale quote observations | 2 |
 | Reliability | LOW_SAMPLE |
 
 ## Top Scored Spreads
@@ -57,7 +65,16 @@
 
 - Replay CSV: `REPORTS/quant_baseline_replay.csv`.
 - State paths used: accepted candidates use `IDLE > FOUND > PENDING_FIRST_LEG > FIRST_LEG_FILLED > HEDGING_SECOND_LEG > DONE`; incomplete/rejected candidates use `IDLE > FOUND > PENDING_FIRST_LEG > FAILED > COOLDOWN`.
+- TASK-010 replay state paths include `STALE_QUOTE`, `REPRICED`, `FIRST_LEG_TIMEOUT`, `INCOMPLETE_LEG`, `SECOND_LEG_PROTECTION`, and `DONE` when triggered by ordered snapshots.
 - Maximum adverse move observed: 3.2571.
+- Maximum replay second-leg adverse move observed: 2.
+
+## Multi-Snapshot Quote Replay
+
+| Candidate | First Leg | Hedge Leg | Snapshots | Fill Prob | Timeout Sec | Elapsed Sec | Stale Quotes | Reprices | Filled | Timed Out | Incomplete | Second-Leg Adverse | State Path | Flags |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
+| AG2608C7200/AG2608C7400 | SELL AG2608C7400 | BUY AG2608C7200 | 3 | 75.80% | 60 | 25 | 0 | 1 | True | False | False | 2 | IDLE > FOUND > PENDING_FIRST_LEG > REPRICED > FIRST_LEG_FILLED > HEDGING_SECOND_LEG > DONE | None |
+| AG2608P7200/AG2608P7000 | SELL AG2608P7000 | BUY AG2608P7200 | 3 | 25.60% | 60 | 75 | 2 | 0 | False | True | True | 0 | IDLE > FOUND > PENDING_FIRST_LEG > STALE_QUOTE > FIRST_LEG_TIMEOUT > INCOMPLETE_LEG > COOLDOWN | STALE_QUOTE_SEEN, FIRST_LEG_TIMEOUT, INCOMPLETE_LEG |
 
 ## Risk Summary
 
@@ -69,7 +86,7 @@
 
 ## Verification
 
-- `python3 scripts/refresh_visible_status.py`: passed, visible state WORKING during execution. - `bash scripts/check_worker_health.sh`: passed. - `python3 -m compileall -q src tests scripts`: passed. - `python3 -m unittest discover -s tests`: passed, 14 tests. - `bash -n scripts/codex_worker.sh`: passed.
+- python3 scripts/refresh_visible_status.py: passed.\n- bash scripts/check_worker_health.sh: passed.\n- python3 -m compileall -q src tests scripts: passed.\n- python3 -m unittest discover -s tests: passed, 17 tests.\n- bash -n scripts/codex_worker.sh: passed.
 
 ## Safety Boundary
 
