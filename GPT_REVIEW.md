@@ -53,23 +53,26 @@ Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
 <!-- visible-review-scaffold:start -->
 ## Visible Review Scaffold
 
-- Generated at: `2026-06-28T22:00:56+08:00`
-- State: `WORKER_BUSY`
+- Generated at: `2026-06-28T22:29:56+08:00`
+- State: `SCAFFOLD_READY`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
-- Current task: TASK-014A (running) - Add scaffold state line to visible status | worker started
+- Worker mode: `WARM`
+- Current poll interval: `60s`
+- Consecutive idle checks: `0`
+- Current task: None
 - First pending task: None
-- Latest completed task: TASK-013A (completed) - Build safe visible review scaffold | codex exec completed.
+- Latest completed task: TASK-015 (completed) - Add adaptive polling frequency for local GitHub worker | completed; added adaptive ACTIVE/WARM/IDLE polling, visible polling state, health checks, and a local Terminal monitor window入口.
 - Decision required: none
 - Failure reason: none
-- Latest status marker: `TASK_014A_COMPLETED`
-- Latest run event: 2026-06-28 22:00:24 +0800 / TASK-014A completed / Added the repository-status-only `Visible scaffold:` display line to the visible scaffold and normal visible-status refresh paths.
-- Previous dashboard state: `WORKING`
+- Latest status marker: `TASK_015_COMPLETED`
+- Latest run event: 2026-06-28 22:25:42 +0800 / workflow-scope-push-repair / GitHub rejected the generated `.github/workflows` file because the current OAuth token lacks `workflow` scope.
+- Previous dashboard state: `IDLE`
 - Previous visible status: `UNKNOWN`
 - Project memory headings reviewed: PROJECT_MEMORY.md, Project, Core strategy, Current architecture, Software roles, Must build, Core KPI, Safety boundaries
 - Reports summary: 9 files; latest markdown `REPORTS/first_complete_simulation_report.md`; headings: TASK-007 First Complete Simulation Report, Run Command, Dashboard Entry, Reproducible Backtest Configuration, Candidate Simulation Table, Accepted Candidates
 - Source summary: 16 Python files; sample: src/__init__.py, src/codex_quant/__init__.py, src/codex_quant/backtester.py, src/codex_quant/config.py, src/codex_quant/contract_scanner.py, src/codex_quant/dashboard.py, src/codex_quant/low_liquidity_scanner.py, src/codex_quant/quant_baseline.py, src/codex_quant/quote_replay.py, src/codex_quant/report_writer.py, src/codex_quant/risk_control.py, src/codex_quant/run_pipeline.py
 - Test summary: 11 Python files; sample: tests/test_backtester.py, tests/test_dashboard.py, tests/test_low_liquidity_scanner.py, tests/test_pipeline.py, tests/test_quant_baseline.py, tests/test_quote_replay.py, tests/test_risk_control.py, tests/test_spread_calculator.py, tests/test_tick_replay_adapter.py, tests/test_visible_review_scaffold.py, tests/test_worker.py
-- Next safe human-supervision action: Wait for the current worker task to finish; check DECISION_REQUIRED.md only if a new open item appears.
+- Next safe human-supervision action: ChatGPT can review GPT_REVIEW.md and add the next safe simulation-only task to TASK_QUEUE.md.
 
 ## Scaffold Guarantees
 
@@ -79,3 +82,24 @@ Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
 - no strategy code or data edits
 - redacted status text in generated summaries
 <!-- visible-review-scaffold:end -->
+
+## 2026-06-28 22:19:07 +0800
+
+- TASK-015 completed: adaptive polling and visible local monitor are ready.
+- Visible state: `IDLE`
+- Current task: None
+- Decision required: none
+
+## 2026-06-28 22:20:40 +0800
+
+- GitHub-visible monitor and adaptive polling commit refreshed.
+- Visible state: `IDLE`
+- Current task: None
+- Decision required: none
+
+## 2026-06-28 22:29:56 +0800
+
+- Workflow-scope push repair applied; local monitor remains active.
+- Visible state: `IDLE`
+- Current task: None
+- Decision required: none

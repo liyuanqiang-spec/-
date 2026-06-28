@@ -9,6 +9,7 @@ __pycache__/
 .codex_worker.out
 .codex_worker.err
 logs/*.log
+logs/worker_poll_state.json
 logs/worker_task.txt
 logs/worker.lock/
 reports/*.html

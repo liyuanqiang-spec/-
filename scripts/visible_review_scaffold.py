@@ -263,7 +263,7 @@ def task_summary_from_state(task: dict[str, str] | None) -> str:
 
 
 def file_presence(root: Path) -> dict[str, str]:
-    required = CORE_FILES + SUMMARY_DIRS + [WORKFLOW_FILE]
+    required = CORE_FILES + SUMMARY_DIRS
     result: dict[str, str] = {}
     for rel in required:
         path = root / rel
@@ -273,7 +273,40 @@ def file_presence(root: Path) -> dict[str, str]:
             result[rel] = "present_file"
         else:
             result[rel] = "missing"
+    workflow_path = root / WORKFLOW_FILE
+    result[WORKFLOW_FILE] = "present_file" if workflow_path.is_file() else "not_installed"
     return result
+
+
+def polling_state(root: Path, running: QueueTask | None, pending: QueueTask | None, decisions: list[str]) -> dict[str, Any]:
+    path = root / "logs" / "worker_poll_state.json"
+    payload: dict[str, Any] = {}
+    if path.exists():
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            payload = {}
+    mode = str(payload.get("mode", "")).upper()
+    if mode not in {"ACTIVE", "WARM", "IDLE"}:
+        if running or pending:
+            mode = "ACTIVE"
+        elif decisions:
+            mode = "WARM"
+        else:
+            mode = "IDLE"
+    if running or pending:
+        mode = "ACTIVE"
+    elif decisions and mode == "IDLE":
+        mode = "WARM"
+    interval = payload.get("interval_seconds")
+    if not isinstance(interval, int):
+        interval = {"ACTIVE": 30, "WARM": 60, "IDLE": 600}.get(mode, 600)
+    return {
+        "mode": mode,
+        "interval_seconds": interval,
+        "consecutive_idle_checks": int(payload.get("consecutive_idle_checks", 0) or 0),
+        "reason": str(payload.get("reason", "not yet recorded")),
+    }
 
 
 def build_state(root: Path) -> dict[str, Any]:
@@ -315,6 +348,7 @@ def build_state(root: Path) -> dict[str, Any]:
         "state": state,
         "failure_reasons": failure_reasons,
         "safety_mode": SAFETY_MODE,
+        "adaptive_polling": polling_state(root, running, pending, decisions),
         "current_task": running.to_state() if running else None,
         "first_pending_task": pending.to_state() if pending else None,
         "latest_completed_task": completed.to_state() if completed else None,
@@ -357,6 +391,10 @@ def build_visible_status(state: dict[str, Any]) -> str:
         f"- Generated at: `{state['generated_at']}`\n"
         f"- Status: `{state['state']}`\n"
         f"- Visible scaffold: `{state['state']}`\n"
+        f"- Worker mode: `{state['adaptive_polling']['mode']}`\n"
+        f"- Current poll interval: `{state['adaptive_polling']['interval_seconds']}s`\n"
+        f"- Consecutive idle checks: `{state['adaptive_polling']['consecutive_idle_checks']}`\n"
+        f"- Polling reason: {state['adaptive_polling']['reason']}\n"
         f"- Safety mode: `{state['safety_mode']}`\n"
         f"- Current task: {task_summary_from_state(state['current_task'])}\n"
         f"- First pending task: {task_summary_from_state(state['first_pending_task'])}\n"
@@ -396,6 +434,9 @@ def build_review_block(state: dict[str, Any]) -> str:
         f"- Generated at: `{state['generated_at']}`\n"
         f"- State: `{state['state']}`\n"
         f"- Safety mode: `{state['safety_mode']}`\n"
+        f"- Worker mode: `{state['adaptive_polling']['mode']}`\n"
+        f"- Current poll interval: `{state['adaptive_polling']['interval_seconds']}s`\n"
+        f"- Consecutive idle checks: `{state['adaptive_polling']['consecutive_idle_checks']}`\n"
         f"- Current task: {task_summary_from_state(state['current_task'])}\n"
         f"- First pending task: {task_summary_from_state(state['first_pending_task'])}\n"
         f"- Latest completed task: {task_summary_from_state(state['latest_completed_task'])}\n"
@@ -446,12 +487,12 @@ def check_outputs(root: Path) -> tuple[bool, list[str]]:
 
     if f"Visible scaffold: `{state['state']}`" not in visible:
         errors.append(f"GPT_VISIBLE_STATUS.md does not show Visible scaffold: `{state['state']}`")
+    if f"Worker mode: `{state['adaptive_polling']['mode']}`" not in visible:
+        errors.append(f"GPT_VISIBLE_STATUS.md does not show Worker mode: `{state['adaptive_polling']['mode']}`")
     if REVIEW_START not in review or REVIEW_END not in review:
         errors.append("GPT_REVIEW.md is missing visible review scaffold markers")
     if f"State: `{state['state']}`" not in review:
         errors.append(f"GPT_REVIEW.md does not show State: `{state['state']}`")
-    if not (root / WORKFLOW_FILE).is_file():
-        errors.append(f"missing workflow file: {WORKFLOW_FILE}")
     if not state_path.is_file():
         errors.append(f"missing state file: {STATE_FILE}")
     else:

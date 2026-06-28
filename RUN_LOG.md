@@ -501,3 +501,17 @@ This file records safe worker runs and Codex execution events.
 
 - Event: blocked
 - Detail: Task TASK-015 blocked by risk control
+
+## 2026-06-28 22:16:42 +0800
+
+- Event: TASK-015 completed
+- Detail: Added adaptive worker polling and a visible Terminal monitor so GPT-supervised commands can be watched locally.
+- Result: Existing launchd worker now starts the repository worker in adaptive loop mode. ACTIVE uses 30s, WARM uses 60s, IDLE uses 600s after 5 idle checks, and WARM remains for 3 checks after activity. Visible status files show mode, interval, idle count, and reason. A desktop launcher opens the live monitor window.
+- Safety: repository-status-only; no strategy code, trading account, broker/API connection, order placement/cancellation, fund movement, raw data deletion, secret exposure, external service call, or dangerous sandbox.
+
+## 2026-06-28 22:25:42 +0800
+
+- Event: workflow-scope-push-repair
+- Detail: GitHub rejected the generated `.github/workflows` file because the current OAuth token lacks `workflow` scope.
+- Result: Removed the workflow file from the commit path and kept the repository-local visible monitor/status scaffold. The local GPT -> GitHub status-file -> Codex worker channel does not require GitHub Actions workflow scope.
+- Safety: no external authorization change was performed.

@@ -18,6 +18,7 @@ COMPLETED_STATUSES = {"completed"}
 VISIBLE_REVIEW_START = "<!-- visible-review-scaffold:start -->"
 VISIBLE_REVIEW_END = "<!-- visible-review-scaffold:end -->"
 VISIBLE_SCAFFOLD_STATES = {"SCAFFOLD_READY", "WORKER_BUSY", "FAILED_WITH_REASON"}
+POLL_MODES = {"ACTIVE", "WARM", "IDLE"}
 REQUIRED_FILES = [
     "AGENTS.md",
     "TASK_QUEUE.md",
@@ -197,10 +198,12 @@ def latest_report(root: Path) -> str:
 
 def worker_poll_intervals(root: Path) -> dict[str, int | str]:
     worker_script = read_text(root / "scripts" / "codex_worker.sh")
-    idle_match = re.search(r"WORKER_IDLE_POLL_INTERVAL_SECONDS:-(\d+)", worker_script)
-    active_match = re.search(r"WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-(\d+)", worker_script)
+    idle_match = re.search(r"WORKER_IDLE_POLL(?:_INTERVAL)?_SECONDS:-(\d+)", worker_script)
+    active_match = re.search(r"WORKER_ACTIVE_POLL(?:_INTERVAL)?_SECONDS:-(\d+)", worker_script)
+    warm_match = re.search(r"WORKER_WARM_POLL(?:_INTERVAL)?_SECONDS:-(\d+)", worker_script)
     idle: int | None = int(idle_match.group(1)) if idle_match else None
     active: int | None = int(active_match.group(1)) if active_match else None
+    warm: int | None = int(warm_match.group(1)) if warm_match else None
 
     heartbeat = root / "logs" / "worker_heartbeat.json"
     if heartbeat.exists():
@@ -216,6 +219,56 @@ def worker_poll_intervals(root: Path) -> dict[str, int | str]:
     return {
         "idle_seconds": idle if idle is not None else "unknown",
         "active_seconds": active if active is not None else "unknown",
+        "warm_seconds": warm if warm is not None else "unknown",
+    }
+
+
+def adaptive_polling_state(
+    root: Path,
+    running: QueueTask | None,
+    pending: QueueTask | None,
+    decisions: list[str],
+) -> dict[str, Any]:
+    intervals = worker_poll_intervals(root)
+    poll_path = root / "logs" / "worker_poll_state.json"
+    payload: dict[str, Any] = {}
+    if poll_path.exists():
+        try:
+            payload = json.loads(poll_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            payload = {}
+
+    mode = str(payload.get("mode", "")).upper()
+    if mode not in POLL_MODES:
+        if running or pending:
+            mode = "ACTIVE"
+        elif decisions:
+            mode = "WARM"
+        else:
+            mode = "IDLE"
+
+    if running or pending:
+        mode = "ACTIVE"
+    elif decisions and mode == "IDLE":
+        mode = "WARM"
+
+    default_interval = {
+        "ACTIVE": intervals["active_seconds"],
+        "WARM": intervals["warm_seconds"],
+        "IDLE": intervals["idle_seconds"],
+    }.get(mode, intervals["idle_seconds"])
+    interval = payload.get("interval_seconds", default_interval)
+    if not isinstance(interval, int):
+        interval = default_interval
+
+    return {
+        "mode": mode,
+        "interval_seconds": interval,
+        "consecutive_idle_checks": int(payload.get("consecutive_idle_checks", 0) or 0),
+        "idle_backoff_after_checks": int(payload.get("idle_backoff_after_checks", 5) or 5),
+        "warm_remaining_checks": int(payload.get("warm_remaining_checks", 0) or 0),
+        "reason": str(payload.get("reason", "not yet recorded")),
+        "timestamp": str(payload.get("timestamp", "")),
     }
 
 
@@ -323,6 +376,7 @@ def build_state(root: Path) -> dict[str, Any]:
         "generated_at": now_iso(),
         "state": state,
         "visible_scaffold": visible_scaffold_state(root, running),
+        "adaptive_polling": adaptive_polling_state(root, running, pending, decisions),
         "safety_mode": "PHASE_1_SIMULATION_ONLY",
         "latest_status": latest_status(root),
         "latest_commit": latest_commit(root),
@@ -355,6 +409,10 @@ def build_dashboard(state: dict[str, Any]) -> str:
     rows = [
         ("Worker state", state["state"]),
         ("Visible scaffold", state["visible_scaffold"]["state"]),
+        ("Worker mode", state["adaptive_polling"]["mode"]),
+        ("Current poll interval", f"{state['adaptive_polling']['interval_seconds']}s"),
+        ("Consecutive idle checks", str(state["adaptive_polling"]["consecutive_idle_checks"])),
+        ("Polling reason", state["adaptive_polling"]["reason"]),
         ("Current task", task_summary_from_state(current)),
         ("First pending task", task_summary_from_state(state["first_pending_task"])),
         ("Latest completed task", task_summary_from_state(completed)),
@@ -365,8 +423,9 @@ def build_dashboard(state: dict[str, Any]) -> str:
         ("Latest push/commit", state["latest_commit"]),
         (
             "Worker poll interval",
-            f"idle {state['worker_poll_intervals']['idle_seconds']}s, "
-            f"active {state['worker_poll_intervals']['active_seconds']}s",
+            f"active {state['worker_poll_intervals']['active_seconds']}s, "
+            f"warm {state['worker_poll_intervals']['warm_seconds']}s, "
+            f"idle {state['worker_poll_intervals']['idle_seconds']}s",
         ),
         ("Decision required", decision_text),
         ("Safety mode", state["safety_mode"]),
@@ -417,6 +476,10 @@ def build_gpt_visible_status(state: dict[str, Any]) -> str:
         f"- Generated at: `{state['generated_at']}`\n"
         f"- Status: `{state['state']}`\n"
         f"- Visible scaffold: `{state['visible_scaffold']['state']}`\n"
+        f"- Worker mode: `{state['adaptive_polling']['mode']}`\n"
+        f"- Current poll interval: `{state['adaptive_polling']['interval_seconds']}s`\n"
+        f"- Consecutive idle checks: `{state['adaptive_polling']['consecutive_idle_checks']}`\n"
+        f"- Polling reason: {state['adaptive_polling']['reason']}\n"
         f"- Safety mode: `{state['safety_mode']}`\n"
         f"- Current task: {task_text}\n"
         f"- Latest completed task: {task_summary_from_state(state['latest_completed_task'])}\n"
@@ -424,7 +487,7 @@ def build_gpt_visible_status(state: dict[str, Any]) -> str:
         f"- Latest status marker: `{state['latest_status']}`\n"
         f"- Last worker check: {state['last_worker_check']}\n"
         f"- Latest commit: {state['latest_commit']}\n"
-        f"- Worker poll interval: idle {state['worker_poll_intervals']['idle_seconds']}s, active {state['worker_poll_intervals']['active_seconds']}s\n"
+        f"- Worker poll interval: active {state['worker_poll_intervals']['active_seconds']}s, warm {state['worker_poll_intervals']['warm_seconds']}s, idle {state['worker_poll_intervals']['idle_seconds']}s\n"
         f"- Next action: {state['next_action']}\n\n"
         "## ChatGPT Supervision Contract\n\n"
         "- ChatGPT writes safe work into `TASK_QUEUE.md`.\n"
@@ -494,10 +557,17 @@ def check_outputs(root: Path) -> tuple[bool, list[str]]:
         reasons.append(f"GPT_VISIBLE_STATUS.md does not show Visible scaffold: `{expected_scaffold}`")
     if expected_scaffold not in dashboard:
         reasons.append(f"WORKER_DASHBOARD.md does not show visible scaffold state {expected_scaffold}")
+    expected_mode = state["adaptive_polling"]["mode"]
+    if f"Worker mode: `{expected_mode}`" not in visible:
+        reasons.append(f"GPT_VISIBLE_STATUS.md does not show Worker mode: `{expected_mode}`")
+    if expected_mode not in dashboard:
+        reasons.append(f"WORKER_DASHBOARD.md does not show worker mode {expected_mode}")
     if saved_state.get("state") != expected_state:
         reasons.append(".gpt_state.json state does not match queue/decision state")
     if saved_state.get("visible_scaffold", {}).get("state") != expected_scaffold:
         reasons.append(".gpt_state.json visible scaffold state does not match repository state")
+    if saved_state.get("adaptive_polling", {}).get("mode") != expected_mode:
+        reasons.append(".gpt_state.json adaptive polling mode does not match repository state")
 
     current = state["current_task"]
     if expected_state in {"WORKING", "WAITING_FOR_WORKER"} and current:

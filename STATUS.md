@@ -703,3 +703,14 @@ Status: `DECISION_REQUIRED`
 
 - Detail: Task TASK-015 blocked by risk control
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-28 22:16:42 +0800
+
+Status: `TASK_015_COMPLETED`
+
+- Detail: Completed adaptive worker polling and visible monitor setup.
+- Root cause found: the worker was running headless under launchd, so command output went to log/status files instead of the current Codex window. The fixed-interval launchd setup also made the active poll setting less visible than expected.
+- Result: `scripts/start_worker.sh` now launches the existing worker in adaptive `--loop` mode; `scripts/codex_worker.sh` records ACTIVE/WARM/IDLE polling state; `GPT_VISIBLE_STATUS.md` and `WORKER_DASHBOARD.md` expose worker mode, interval, and idle count; `scripts/worker_monitor.sh`, `scripts/open_worker_monitor.sh`, and the iCloud Desktop launcher `查看Codex后台执行窗口.command` provide a visible Terminal monitor.
+- GitHub workflow note: a generated `.github/workflows` file was omitted because the current GitHub OAuth token lacks `workflow` scope. The required local monitor and GitHub status-file supervision do not require that scope.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Confirmation required: no.

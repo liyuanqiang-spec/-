@@ -10,8 +10,11 @@ WORKER_REPO="$SUPPORT_DIR/repo"
 LOG="$WORKER_REPO/logs/worker.log"
 ENTRY="$SUPPORT_DIR/worker_entry.sh"
 LAUNCH_LOG="$LAUNCH_LOG_DIR/worker.log"
-IDLE_INTERVAL="${WORKER_IDLE_POLL_INTERVAL_SECONDS:-600}"
-ACTIVE_INTERVAL="${WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-60}"
+ACTIVE_INTERVAL="${WORKER_ACTIVE_POLL_SECONDS:-${WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-30}}"
+WARM_INTERVAL="${WORKER_WARM_POLL_SECONDS:-${WORKER_WARM_POLL_INTERVAL_SECONDS:-60}}"
+IDLE_INTERVAL="${WORKER_IDLE_POLL_SECONDS:-${WORKER_IDLE_POLL_INTERVAL_SECONDS:-600}}"
+IDLE_BACKOFF_AFTER_CHECKS="${WORKER_IDLE_BACKOFF_AFTER_CHECKS:-5}"
+WARM_CHECKS_AFTER_ACTIVITY="${WORKER_WARM_CHECKS_AFTER_ACTIVITY:-3}"
 REMOTE_URL="https://github.com/liyuanqiang-spec/-.git"
 
 mkdir -p "$HOME/Library/LaunchAgents" "$SUPPORT_DIR" "$LAUNCH_LOG_DIR"
@@ -32,10 +35,16 @@ cat > "$ENTRY" <<ENTRY
 set -euo pipefail
 export PATH="\$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:\${PATH:-}"
 export CODEX_WORKER_ROOT="$WORKER_REPO"
-export WORKER_IDLE_POLL_INTERVAL_SECONDS="$IDLE_INTERVAL"
+export WORKER_ACTIVE_POLL_SECONDS="$ACTIVE_INTERVAL"
+export WORKER_WARM_POLL_SECONDS="$WARM_INTERVAL"
+export WORKER_IDLE_POLL_SECONDS="$IDLE_INTERVAL"
 export WORKER_ACTIVE_POLL_INTERVAL_SECONDS="$ACTIVE_INTERVAL"
+export WORKER_WARM_POLL_INTERVAL_SECONDS="$WARM_INTERVAL"
+export WORKER_IDLE_POLL_INTERVAL_SECONDS="$IDLE_INTERVAL"
+export WORKER_IDLE_BACKOFF_AFTER_CHECKS="$IDLE_BACKOFF_AFTER_CHECKS"
+export WORKER_WARM_CHECKS_AFTER_ACTIVITY="$WARM_CHECKS_AFTER_ACTIVITY"
 cd "$WORKER_REPO"
-exec /bin/bash "$WORKER_REPO/scripts/codex_worker.sh" --once
+exec /bin/bash "$WORKER_REPO/scripts/codex_worker.sh" --loop
 ENTRY
 chmod +x "$ENTRY"
 
@@ -51,9 +60,9 @@ cat > "$PLIST" <<PLIST
     <string>/bin/bash</string>
     <string>$ENTRY</string>
   </array>
-  <key>StartInterval</key>
-  <integer>$IDLE_INTERVAL</integer>
   <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
   <true/>
   <key>StandardOutPath</key>
   <string>$LAUNCH_LOG</string>
@@ -69,4 +78,4 @@ fi
 
 launchctl bootstrap "gui/$UID" "$PLIST"
 launchctl kickstart -k "gui/$UID/$LABEL" >/dev/null 2>&1 || true
-echo "worker started: $LABEL idle_interval=${IDLE_INTERVAL}s active_interval=${ACTIVE_INTERVAL}s log=$LOG launch_log=$LAUNCH_LOG"
+echo "worker started: $LABEL mode=adaptive_loop active=${ACTIVE_INTERVAL}s warm=${WARM_INTERVAL}s idle=${IDLE_INTERVAL}s idle_backoff=${IDLE_BACKOFF_AFTER_CHECKS} warm_checks=${WARM_CHECKS_AFTER_ACTIVITY} log=$LOG launch_log=$LAUNCH_LOG"

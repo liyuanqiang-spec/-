@@ -108,14 +108,23 @@ else
 fi
 
 if grep -q 'WORKER_IDLE_POLL_INTERVAL_SECONDS:-600' "$ROOT/scripts/codex_worker.sh" \
-  && grep -q 'WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-60' "$ROOT/scripts/codex_worker.sh" \
+  && grep -q 'WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-30' "$ROOT/scripts/codex_worker.sh" \
+  && grep -q 'WORKER_WARM_POLL_INTERVAL_SECONDS:-60' "$ROOT/scripts/codex_worker.sh" \
   && grep -q 'WORKER_IDLE_POLL_INTERVAL_SECONDS:-600' "$ROOT/scripts/start_worker.sh" \
-  && grep -q 'WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-60' "$ROOT/scripts/start_worker.sh" \
+  && grep -q 'WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-30' "$ROOT/scripts/start_worker.sh" \
+  && grep -q 'WORKER_WARM_POLL_INTERVAL_SECONDS:-60' "$ROOT/scripts/start_worker.sh" \
   && grep -q 'default=600' "$ROOT/src/codex_quant/worker.py" \
+  && grep -q 'default=30' "$ROOT/src/codex_quant/worker.py" \
   && grep -q 'default=60' "$ROOT/src/codex_quant/worker.py"; then
-  line "worker_poll_intervals=idle_600s_active_60s"
+  line "worker_poll_intervals=active_30s_warm_60s_idle_600s"
 else
-  fail "worker polling defaults are not idle=600 seconds and active=60 seconds"
+  fail "worker polling defaults are not active=30 seconds, warm=60 seconds, and idle=600 seconds"
+fi
+
+if grep -q 'codex_worker.sh" --loop' "$ROOT/scripts/start_worker.sh"; then
+  line "worker_launch_mode=adaptive_loop"
+else
+  fail "worker start script does not launch adaptive loop mode"
 fi
 
 if grep -q 'Refresh visible worker status' "$ROOT/scripts/codex_worker.sh"; then

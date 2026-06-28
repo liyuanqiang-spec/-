@@ -16,8 +16,12 @@ LOG="$ROOT/logs/worker.log"
 TASK_FILE="$ROOT/logs/worker_task.txt"
 LOCK_DIR="$ROOT/logs/worker.lock"
 HEARTBEAT="$ROOT/logs/worker_heartbeat.json"
-IDLE_POLL_INTERVAL_SECONDS="${WORKER_IDLE_POLL_INTERVAL_SECONDS:-600}"
-ACTIVE_POLL_INTERVAL_SECONDS="${WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-60}"
+POLL_STATE="$ROOT/logs/worker_poll_state.json"
+ACTIVE_POLL_INTERVAL_SECONDS="${WORKER_ACTIVE_POLL_SECONDS:-${WORKER_ACTIVE_POLL_INTERVAL_SECONDS:-30}}"
+WARM_POLL_INTERVAL_SECONDS="${WORKER_WARM_POLL_SECONDS:-${WORKER_WARM_POLL_INTERVAL_SECONDS:-60}}"
+IDLE_POLL_INTERVAL_SECONDS="${WORKER_IDLE_POLL_SECONDS:-${WORKER_IDLE_POLL_INTERVAL_SECONDS:-600}}"
+IDLE_BACKOFF_AFTER_CHECKS="${WORKER_IDLE_BACKOFF_AFTER_CHECKS:-5}"
+WARM_CHECKS_AFTER_ACTIVITY="${WORKER_WARM_CHECKS_AFTER_ACTIVITY:-3}"
 EXPECTED_REMOTE="https://github.com/liyuanqiang-spec/-.git"
 GIT_TIMEOUT_SECONDS="${GIT_TIMEOUT_SECONDS:-120}"
 CODEX_EXEC_TIMEOUT_SECONDS="${CODEX_EXEC_TIMEOUT_SECONDS:-1800}"
@@ -310,6 +314,145 @@ raise SystemExit(1)
 PY
 }
 
+unresolved_decision_count() {
+  python3 - "$ROOT" <<'PY'
+from __future__ import annotations
+
+import importlib.util
+import sys
+from pathlib import Path
+
+root = Path(sys.argv[1])
+script = root / "scripts" / "refresh_visible_status.py"
+spec = importlib.util.spec_from_file_location("refresh_visible_status", script)
+if spec is None or spec.loader is None:
+    print(0)
+    raise SystemExit(0)
+module = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = module
+spec.loader.exec_module(module)
+decision_text = (root / "DECISION_REQUIRED.md").read_text(encoding="utf-8")
+print(len(module.unresolved_decisions(decision_text)))
+PY
+}
+
+adaptive_poll_after_round() {
+  local pending=0
+  local decisions=0
+  if queue_has_pending; then
+    pending=1
+  fi
+  decisions="$(unresolved_decision_count 2>/dev/null || printf '0')"
+
+  local result interval mode changed idle_count reason
+  result="$(
+    python3 - "$POLL_STATE" "$HEARTBEAT" "$pending" "$decisions" \
+      "$ACTIVE_POLL_INTERVAL_SECONDS" "$WARM_POLL_INTERVAL_SECONDS" "$IDLE_POLL_INTERVAL_SECONDS" \
+      "$IDLE_BACKOFF_AFTER_CHECKS" "$WARM_CHECKS_AFTER_ACTIVITY" <<'PY'
+from __future__ import annotations
+
+import json
+import sys
+from datetime import datetime
+from pathlib import Path
+
+poll_path = Path(sys.argv[1])
+heartbeat_path = Path(sys.argv[2])
+pending = int(sys.argv[3])
+decisions = int(sys.argv[4])
+active_interval = int(sys.argv[5])
+warm_interval = int(sys.argv[6])
+idle_interval = int(sys.argv[7])
+idle_after = int(sys.argv[8])
+warm_checks = int(sys.argv[9])
+
+def read_json(path: Path) -> dict:
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+previous = read_json(poll_path)
+heartbeat = read_json(heartbeat_path)
+previous_mode = str(previous.get("mode", ""))
+previous_heartbeat = str(previous.get("last_heartbeat_timestamp", ""))
+heartbeat_timestamp = str(heartbeat.get("timestamp", ""))
+heartbeat_state = str(heartbeat.get("state", ""))
+activity_states = {"selected", "running", "completed", "failed", "blocked", "timeout"}
+new_activity = bool(
+    heartbeat_timestamp
+    and heartbeat_timestamp != previous_heartbeat
+    and heartbeat_state in activity_states
+)
+
+if pending:
+    mode = "ACTIVE"
+    interval = active_interval
+    idle_count = 0
+    warm_remaining = warm_checks
+    reason = "new pending safe task detected"
+elif decisions:
+    mode = "WARM"
+    interval = warm_interval
+    idle_count = 0
+    warm_remaining = warm_checks
+    reason = "unresolved blocker detected"
+elif new_activity:
+    mode = "WARM"
+    interval = warm_interval
+    idle_count = 0
+    warm_remaining = warm_checks
+    reason = f"recent worker activity: {heartbeat_state}"
+else:
+    previous_warm = int(previous.get("warm_remaining_checks", 0) or 0)
+    warm_remaining = max(previous_warm - 1, 0)
+    idle_count = int(previous.get("consecutive_idle_checks", 0) or 0) + 1
+    if warm_remaining > 0:
+        mode = "WARM"
+        interval = warm_interval
+        reason = f"warm after activity ({warm_remaining} checks left)"
+    elif idle_count >= idle_after:
+        mode = "IDLE"
+        interval = idle_interval
+        reason = f"idle backoff after {idle_count} checks"
+    else:
+        mode = "WARM"
+        interval = warm_interval
+        reason = f"idle check {idle_count}/{idle_after}"
+
+payload = {
+    "timestamp": datetime.now().astimezone().isoformat(timespec="seconds"),
+    "mode": mode,
+    "interval_seconds": interval,
+    "active_poll_seconds": active_interval,
+    "warm_poll_seconds": warm_interval,
+    "idle_poll_seconds": idle_interval,
+    "consecutive_idle_checks": idle_count,
+    "idle_backoff_after_checks": idle_after,
+    "warm_remaining_checks": warm_remaining,
+    "warm_checks_after_activity": warm_checks,
+    "pending_safe_task": bool(pending),
+    "unresolved_blockers": decisions,
+    "last_heartbeat_timestamp": heartbeat_timestamp,
+    "last_heartbeat_state": heartbeat_state,
+    "reason": reason,
+}
+poll_path.parent.mkdir(parents=True, exist_ok=True)
+poll_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+changed = 1 if mode != previous_mode else 0
+print(f"{interval}|{mode}|{changed}|{idle_count}|{reason}")
+PY
+  )"
+
+  IFS='|' read -r interval mode changed idle_count reason <<< "$result"
+  if [ "${changed:-0}" = "1" ]; then
+    log "adaptive polling mode=${mode:-UNKNOWN} interval=${interval:-$IDLE_POLL_INTERVAL_SECONDS}s idle_checks=${idle_count:-0} reason=${reason:-unknown}" >/dev/null
+  fi
+  printf '%s\n' "${interval:-$IDLE_POLL_INTERVAL_SECONDS}"
+}
+
 task_type() {
   python3 - "$TASK_FILE" <<'PY'
 from pathlib import Path
@@ -500,11 +643,7 @@ case "${1:---once}" in
   --loop)
     while true; do
       run_once || true
-      if queue_has_pending; then
-        sleep "$ACTIVE_POLL_INTERVAL_SECONDS"
-      else
-        sleep "$IDLE_POLL_INTERVAL_SECONDS"
-      fi
+      sleep "$(adaptive_poll_after_round)"
     done
     ;;
   *)

@@ -272,7 +272,8 @@ def main() -> int:
     parser.add_argument("--loop", action="store_true", help="keep checking the queue")
     parser.add_argument("--interval", type=int, default=None, help="deprecated alias for idle loop seconds")
     parser.add_argument("--idle-interval", type=int, default=600, help="seconds between idle loop checks")
-    parser.add_argument("--active-interval", type=int, default=60, help="seconds between active loop checks")
+    parser.add_argument("--active-interval", type=int, default=30, help="seconds between active loop checks")
+    parser.add_argument("--warm-interval", type=int, default=60, help="seconds between warm loop checks")
     args = parser.parse_args()
     idle_interval = args.interval if args.interval is not None else args.idle_interval
 
@@ -283,12 +284,20 @@ def main() -> int:
     append_run_log(
         "worker_started",
         "loop",
-        f"idle_poll_interval_seconds={idle_interval}; active_poll_interval_seconds={args.active_interval}",
+        f"active_poll_interval_seconds={args.active_interval}; warm_poll_interval_seconds={args.warm_interval}; idle_poll_interval_seconds={idle_interval}",
     )
+    warm_remaining = 0
     while True:
         processed = process_once()
-        interval = args.active_interval if processed else idle_interval
-        time.sleep(max(interval, 60))
+        if processed:
+            warm_remaining = 3
+            interval = args.active_interval
+        elif warm_remaining > 0:
+            warm_remaining -= 1
+            interval = args.warm_interval
+        else:
+            interval = idle_interval
+        time.sleep(max(interval, 30))
 
 
 if __name__ == "__main__":

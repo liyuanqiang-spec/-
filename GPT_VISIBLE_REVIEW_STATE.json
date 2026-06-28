@@ -1,0 +1,124 @@
+{
+  "generated_at": "2026-06-28T22:29:56+08:00",
+  "state": "SCAFFOLD_READY",
+  "failure_reasons": [],
+  "safety_mode": "PHASE_1_SIMULATION_ONLY",
+  "adaptive_polling": {
+    "mode": "WARM",
+    "interval_seconds": 60,
+    "consecutive_idle_checks": 0,
+    "reason": "TASK-015 completed; warm mode after activity"
+  },
+  "current_task": null,
+  "first_pending_task": null,
+  "latest_completed_task": {
+    "id": "TASK-015",
+    "status": "completed",
+    "type": "adaptive_worker_polling",
+    "title": "Add adaptive polling frequency for local GitHub worker",
+    "request": "",
+    "result": "completed; added adaptive ACTIVE/WARM/IDLE polling, visible polling state, health checks, and a local Terminal monitor window入口.",
+    "safety": "repository_status_only"
+  },
+  "task_counts": {
+    "completed": 16,
+    "decision_required": 2,
+    "superseded": 2
+  },
+  "decision_required": {
+    "has_unresolved": false,
+    "items": []
+  },
+  "latest_status_marker": "TASK_015_COMPLETED",
+  "latest_run_event": "2026-06-28 22:25:42 +0800 / workflow-scope-push-repair / GitHub rejected the generated `.github/workflows` file because the current OAuth token lacks `workflow` scope.",
+  "dashboard_state": "IDLE",
+  "dashboard_current_task": "None",
+  "previous_visible_status": "UNKNOWN",
+  "project_memory_headings": [
+    "PROJECT_MEMORY.md",
+    "Project",
+    "Core strategy",
+    "Current architecture",
+    "Software roles",
+    "Must build",
+    "Core KPI",
+    "Safety boundaries"
+  ],
+  "reports": {
+    "count": 9,
+    "sample": [
+      "REPORTS/Codex项目初始化报告.md",
+      "REPORTS/backtest_baseline_report.md",
+      "REPORTS/first_complete_simulation_report.md",
+      "REPORTS/first_complete_simulation_summary.json",
+      "REPORTS/latest_report.md",
+      "REPORTS/low_liquidity_candidates.md",
+      "REPORTS/quant_baseline_replay.csv",
+      "REPORTS/quant_system_gap_report.md",
+      "REPORTS/tick_file_smoke_report.md"
+    ],
+    "latest_markdown": "REPORTS/first_complete_simulation_report.md",
+    "latest_headings": [
+      "TASK-007 First Complete Simulation Report",
+      "Run Command",
+      "Dashboard Entry",
+      "Reproducible Backtest Configuration",
+      "Candidate Simulation Table",
+      "Accepted Candidates"
+    ]
+  },
+  "src_summary": {
+    "python_file_count": 16,
+    "sample": [
+      "src/__init__.py",
+      "src/codex_quant/__init__.py",
+      "src/codex_quant/backtester.py",
+      "src/codex_quant/config.py",
+      "src/codex_quant/contract_scanner.py",
+      "src/codex_quant/dashboard.py",
+      "src/codex_quant/low_liquidity_scanner.py",
+      "src/codex_quant/quant_baseline.py",
+      "src/codex_quant/quote_replay.py",
+      "src/codex_quant/report_writer.py",
+      "src/codex_quant/risk_control.py",
+      "src/codex_quant/run_pipeline.py"
+    ]
+  },
+  "tests_summary": {
+    "python_file_count": 11,
+    "sample": [
+      "tests/test_backtester.py",
+      "tests/test_dashboard.py",
+      "tests/test_low_liquidity_scanner.py",
+      "tests/test_pipeline.py",
+      "tests/test_quant_baseline.py",
+      "tests/test_quote_replay.py",
+      "tests/test_risk_control.py",
+      "tests/test_spread_calculator.py",
+      "tests/test_tick_replay_adapter.py",
+      "tests/test_visible_review_scaffold.py",
+      "tests/test_worker.py"
+    ]
+  },
+  "path_presence": {
+    "PROJECT_MEMORY.md": "present_file",
+    "TASK_QUEUE.md": "present_file",
+    "STATUS.md": "present_file",
+    "RUN_LOG.md": "present_file",
+    "WORKER_DASHBOARD.md": "present_file",
+    "GPT_VISIBLE_STATUS.md": "present_file",
+    "DECISION_REQUIRED.md": "present_file",
+    "REPORTS": "present_dir",
+    "src": "present_dir",
+    "tests": "present_dir",
+    ".github/workflows/visible-review-scaffold.yml": "not_installed"
+  },
+  "next_action": "ChatGPT can review GPT_REVIEW.md and add the next safe simulation-only task to TASK_QUEUE.md.",
+  "guarantees": [
+    "repository-local summary only",
+    "no network clients or external services",
+    "no environment variable or secret-file reads",
+    "no strategy code or data edits",
+    "redacted status text in generated summaries"
+  ]
+}
