@@ -137,3 +137,19 @@ Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
 - Visible state: `IDLE`
 - Current task: None
 - Decision required: none
+
+<!-- local-review-trigger-dry-run:start -->
+## Local Review Trigger Dry Run
+
+- Marker: `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`
+- Generated at: `2026-06-29T00:05:38+08:00`
+- Input file: `GPT_LOCAL_REVIEW_INPUT.md`
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Default state: disabled unless `LOCAL_REVIEW_TRIGGER_DRY_RUN_ENABLED=1` is set for the worker.
+- Network calls: none.
+- Task append: none.
+- Trigger: TASK-017 local post-push review trigger dry run completed
+- Worker state: `IDLE`
+- Latest completed task: TASK-017 (completed) - Add local post-push review trigger dry run | completed; added disabled-by-default local post-push review trigger dry run, generated `GPT_LOCAL_REVIEW_INPUT.md`, refreshed review/status/dashboard files with `LOCAL_REVIEW_TRIGGER_DRY_RU...
+- Decision required: none
+<!-- local-review-trigger-dry-run:end -->

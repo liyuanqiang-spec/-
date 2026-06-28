@@ -218,6 +218,7 @@ Status: `WORKER_COMPLETED`
 ## Worker Update 2026-06-27 17:58:05 +0800
 
 Status: `WORKER_REPAIRED`
+*** End Patch
 
 - Detail: Added worker PATH setup, non-interactive Git mode, Git timeout, Codex execution timeout, and outer-worker-only Git commit handling.
 - Verification: `scripts/codex_worker.sh --dry-run` selected `TASK-002`.
@@ -754,4 +755,22 @@ Status: `BLOCKED_PULL`
 Status: `WORKER_RUNNING`
 
 - Detail: Task TASK-017 started
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 00:04:01 +0800
+
+Status: `TASK_017_COMPLETED`
+
+- Detail: Completed the repository-only local post-push review trigger dry run.
+- Result: Added `scripts/local_review_trigger_dry_run.py`, wired a disabled-by-default post-push worker hook through `LOCAL_REVIEW_TRIGGER_DRY_RUN_ENABLED`, generated `GPT_LOCAL_REVIEW_INPUT.md`, and refreshed review/status/dashboard surfaces with `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`.
+- Verification: `python3 scripts/local_review_trigger_dry_run.py --check`; `python3 scripts/refresh_visible_status.py --check`; `python3 scripts/visible_review_scaffold.py --check`; `python3 -m compileall -q src tests scripts`; `python3 -m unittest discover -s tests` with 31 tests; `bash -n scripts/codex_worker.sh`; `bash scripts/check_worker_health.sh`.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no external service call, no dangerous sandbox, and no git add/commit/push inside codex exec.
+- Confirmation required: no.
+
+## Worker Update 2026-06-29 00:07:13 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-017 completed
 - Safety mode: `PHASE_1_SIMULATION_ONLY`

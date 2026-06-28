@@ -28,6 +28,7 @@ CODEX_EXEC_TIMEOUT_SECONDS="${CODEX_EXEC_TIMEOUT_SECONDS:-1800}"
 ROUND_TIMEOUT_SECONDS="${WORKER_ROUND_TIMEOUT_SECONDS:-2400}"
 LOCK_STALE_SECONDS="${WORKER_LOCK_STALE_SECONDS:-3600}"
 MAX_TASK_ATTEMPTS="${WORKER_MAX_TASK_ATTEMPTS:-3}"
+LOCAL_REVIEW_TRIGGER_DRY_RUN_ENABLED="${LOCAL_REVIEW_TRIGGER_DRY_RUN_ENABLED:-0}"
 
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PATH:-}"
 export GIT_TERMINAL_PROMPT=0
@@ -235,6 +236,36 @@ git_pull_ff() {
   run_with_timeout "$GIT_TIMEOUT_SECONDS" git pull --ff-only --quiet origin main
 }
 
+run_local_review_trigger_dry_run() {
+  local message="$1"
+  case "${LOCAL_REVIEW_TRIGGER_DRY_RUN_ENABLED}" in
+    1|true|TRUE|yes|YES)
+      ;;
+    *)
+      return 0
+      ;;
+  esac
+
+  if [ ! -f "$ROOT/scripts/local_review_trigger_dry_run.py" ]; then
+    append_run_log "local_review_trigger_dry_run_skipped" "script missing after successful push for $message"
+    log "local review trigger dry run skipped: script missing"
+    return 0
+  fi
+
+  if python3 "$ROOT/scripts/local_review_trigger_dry_run.py" --root "$ROOT" --trigger-message "$message" --quiet >> "$LOG" 2>&1; then
+    append_run_log "local_review_trigger_dry_run" "LOCAL_REVIEW_TRIGGER_DRY_RUN_READY after successful push for $message"
+    if [ -f "$ROOT/scripts/refresh_visible_status.py" ]; then
+      python3 "$ROOT/scripts/refresh_visible_status.py" --root "$ROOT" --quiet >> "$LOG" 2>&1 || true
+    fi
+    log "local review trigger dry run ready after successful push for $message"
+    return 0
+  fi
+
+  append_run_log "local_review_trigger_dry_run_failed" "dry-run reviewer failed after successful push for $message"
+  log "local review trigger dry run failed after successful push for $message"
+  return 0
+}
+
 commit_and_push() {
   local message="$1"
   shift
@@ -269,6 +300,7 @@ commit_and_push() {
       write_heartbeat "blocked" "git push failed for $message"
       return 1
     fi
+    run_local_review_trigger_dry_run "$message"
   fi
 }
 
@@ -608,7 +640,7 @@ run_once_body() {
   fi
 
   update_dashboard
-  commit_and_push "Worker processed $task_id" AGENTS.md TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md RISK_CONTROL.md README.md WORKER_DASHBOARD.md GPT_VISIBLE_STATUS.md GPT_REVIEW.md .gpt_state.json PROJECT_PLAN.md DATA_SCHEMA.md DATA REPORTS RELIABILITY_RUNBOOK.md scripts logs/worker_heartbeat.json src tests data reports .gitignore >> "$LOG" 2>&1 || return 1
+  commit_and_push "Worker processed $task_id" AGENTS.md TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md RISK_CONTROL.md README.md WORKER_DASHBOARD.md GPT_VISIBLE_STATUS.md GPT_REVIEW.md GPT_LOCAL_REVIEW_INPUT.md GPT_REVIEW_PACKET.md .gpt_state.json PROJECT_PLAN.md DATA_SCHEMA.md DATA REPORTS RELIABILITY_RUNBOOK.md scripts logs/worker_heartbeat.json src tests data reports .gitignore >> "$LOG" 2>&1 || return 1
 }
 
 run_once() {

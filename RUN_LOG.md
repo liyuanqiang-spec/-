@@ -555,3 +555,21 @@ This file records safe worker runs and Codex execution events.
 
 - Event: started
 - Detail: Task TASK-017 started
+
+## 2026-06-28 23:59:21 +0800
+
+- Event: attempt
+- Detail: Task TASK-017 codex exec attempt 1/3
+
+## 2026-06-29 00:04:51 +0800
+
+- Event: TASK-017 completed
+- Detail: Added a repository-only local post-push review trigger dry run.
+- Result: Added `scripts/local_review_trigger_dry_run.py`, wired `scripts/codex_worker.sh` to run the dry-run reviewer only after a successful worker push and only when `LOCAL_REVIEW_TRIGGER_DRY_RUN_ENABLED=1`, generated `GPT_LOCAL_REVIEW_INPUT.md`, and refreshed `GPT_REVIEW.md`, `.gpt_state.json`, `GPT_VISIBLE_STATUS.md`, and `WORKER_DASHBOARD.md` with `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`.
+- Verification: `python3 scripts/local_review_trigger_dry_run.py --check`; `python3 scripts/refresh_visible_status.py --check`; `python3 scripts/visible_review_scaffold.py --check`; `python3 -m compileall -q src tests scripts`; `python3 -m unittest discover -s tests` with 31 tests; `bash -n scripts/codex_worker.sh`; `bash scripts/check_worker_health.sh`.
+- Safety: `PHASE_1_SIMULATION_ONLY`; no account connection, no real orders, no cancellations, no fund movement, no original-data deletion, no secret exposure, no external service calls, no dangerous sandbox, and no git add/commit/push inside codex exec.
+
+## 2026-06-29 00:07:13 +0800
+
+- Event: completed
+- Detail: Task TASK-017 completed

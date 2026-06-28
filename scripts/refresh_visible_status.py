@@ -19,6 +19,10 @@ VISIBLE_REVIEW_START = "<!-- visible-review-scaffold:start -->"
 VISIBLE_REVIEW_END = "<!-- visible-review-scaffold:end -->"
 VISIBLE_SCAFFOLD_STATES = {"SCAFFOLD_READY", "WORKER_BUSY", "FAILED_WITH_REASON"}
 POLL_MODES = {"ACTIVE", "WARM", "IDLE"}
+LOCAL_REVIEW_MARKER = "LOCAL_REVIEW_TRIGGER_DRY_RUN_READY"
+LOCAL_REVIEW_INPUT_FILE = "GPT_LOCAL_REVIEW_INPUT.md"
+LOCAL_REVIEW_START = "<!-- local-review-trigger-dry-run:start -->"
+LOCAL_REVIEW_END = "<!-- local-review-trigger-dry-run:end -->"
 REQUIRED_FILES = [
     "AGENTS.md",
     "TASK_QUEUE.md",
@@ -331,6 +335,38 @@ def visible_scaffold_state(root: Path, running: QueueTask | None) -> dict[str, s
     return {"state": "SCAFFOLD_READY", "reason": "visible scaffold artifacts are present"}
 
 
+def local_review_trigger_state(root: Path) -> dict[str, str]:
+    script_path = root / "scripts" / "local_review_trigger_dry_run.py"
+    input_path = root / LOCAL_REVIEW_INPUT_FILE
+    review_text = read_text(root / "GPT_REVIEW.md")
+    input_text = read_text(input_path)
+
+    if (
+        script_path.is_file()
+        and input_path.is_file()
+        and LOCAL_REVIEW_START in review_text
+        and LOCAL_REVIEW_END in review_text
+        and LOCAL_REVIEW_MARKER in review_text
+        and LOCAL_REVIEW_MARKER in input_text
+    ):
+        return {
+            "state": LOCAL_REVIEW_MARKER,
+            "input_file": LOCAL_REVIEW_INPUT_FILE,
+            "reason": "local deterministic dry-run artifact is present",
+        }
+    if script_path.is_file():
+        return {
+            "state": "DISABLED_BY_DEFAULT",
+            "input_file": LOCAL_REVIEW_INPUT_FILE,
+            "reason": "enable LOCAL_REVIEW_TRIGGER_DRY_RUN_ENABLED=1 to run after a successful worker push",
+        }
+    return {
+        "state": "NOT_INSTALLED",
+        "input_file": LOCAL_REVIEW_INPUT_FILE,
+        "reason": "local review dry-run script is not installed",
+    }
+
+
 def task_summary(task: QueueTask | None) -> str:
     if task is None:
         return "None"
@@ -376,6 +412,7 @@ def build_state(root: Path) -> dict[str, Any]:
         "generated_at": now_iso(),
         "state": state,
         "visible_scaffold": visible_scaffold_state(root, running),
+        "local_review_trigger": local_review_trigger_state(root),
         "adaptive_polling": adaptive_polling_state(root, running, pending, decisions),
         "safety_mode": "PHASE_1_SIMULATION_ONLY",
         "latest_status": latest_status(root),
@@ -409,6 +446,8 @@ def build_dashboard(state: dict[str, Any]) -> str:
     rows = [
         ("Worker state", state["state"]),
         ("Visible scaffold", state["visible_scaffold"]["state"]),
+        ("Local review trigger", state["local_review_trigger"]["state"]),
+        ("Local review input", state["local_review_trigger"]["input_file"]),
         ("Worker mode", state["adaptive_polling"]["mode"]),
         ("Current poll interval", f"{state['adaptive_polling']['interval_seconds']}s"),
         ("Consecutive idle checks", str(state["adaptive_polling"]["consecutive_idle_checks"])),
@@ -476,6 +515,8 @@ def build_gpt_visible_status(state: dict[str, Any]) -> str:
         f"- Generated at: `{state['generated_at']}`\n"
         f"- Status: `{state['state']}`\n"
         f"- Visible scaffold: `{state['visible_scaffold']['state']}`\n"
+        f"- Local review trigger: `{state['local_review_trigger']['state']}`\n"
+        f"- Local review input: `{state['local_review_trigger']['input_file']}`\n"
         f"- Worker mode: `{state['adaptive_polling']['mode']}`\n"
         f"- Current poll interval: `{state['adaptive_polling']['interval_seconds']}s`\n"
         f"- Consecutive idle checks: `{state['adaptive_polling']['consecutive_idle_checks']}`\n"
@@ -557,6 +598,11 @@ def check_outputs(root: Path) -> tuple[bool, list[str]]:
         reasons.append(f"GPT_VISIBLE_STATUS.md does not show Visible scaffold: `{expected_scaffold}`")
     if expected_scaffold not in dashboard:
         reasons.append(f"WORKER_DASHBOARD.md does not show visible scaffold state {expected_scaffold}")
+    expected_local_review = state["local_review_trigger"]["state"]
+    if f"Local review trigger: `{expected_local_review}`" not in visible:
+        reasons.append(f"GPT_VISIBLE_STATUS.md does not show Local review trigger: `{expected_local_review}`")
+    if expected_local_review not in dashboard:
+        reasons.append(f"WORKER_DASHBOARD.md does not show local review trigger state {expected_local_review}")
     expected_mode = state["adaptive_polling"]["mode"]
     if f"Worker mode: `{expected_mode}`" not in visible:
         reasons.append(f"GPT_VISIBLE_STATUS.md does not show Worker mode: `{expected_mode}`")
@@ -566,6 +612,8 @@ def check_outputs(root: Path) -> tuple[bool, list[str]]:
         reasons.append(".gpt_state.json state does not match queue/decision state")
     if saved_state.get("visible_scaffold", {}).get("state") != expected_scaffold:
         reasons.append(".gpt_state.json visible scaffold state does not match repository state")
+    if saved_state.get("local_review_trigger", {}).get("state") != expected_local_review:
+        reasons.append(".gpt_state.json local review trigger state does not match repository state")
     if saved_state.get("adaptive_polling", {}).get("mode") != expected_mode:
         reasons.append(".gpt_state.json adaptive polling mode does not match repository state")
 

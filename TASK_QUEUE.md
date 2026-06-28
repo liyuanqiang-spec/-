@@ -246,10 +246,12 @@ The task is complete only when:
 - Result: codex exec completed
 
 ### TASK-017
-- Status: running
+- Status: completed
 - Type: local_review_trigger_dry_run
 - Title: Add local post-push review trigger dry run
 - Request: Repository-only dry run. Add a local worker hook that runs after a safe task completes and the worker push step succeeds. In this pass, the hook must not call any outside service and must not append new tasks. It should only collect repository status into a compact review input file such as `GPT_LOCAL_REVIEW_INPUT.md`, then run a deterministic dry-run reviewer script such as `scripts/local_review_trigger_dry_run.py` to write `GPT_REVIEW.md`, `.gpt_state.json`, and `GPT_VISIBLE_STATUS.md` with a clear marker `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`. It must be disabled by default unless a local configuration flag is set. Keep changes to worker hook wiring, review scripts, tests, and status files. Do not modify quant strategy modules or data files.
 - Expected output: `scripts/local_review_trigger_dry_run.py`, optional worker hook change guarded by a local flag, `GPT_LOCAL_REVIEW_INPUT.md`, refreshed review/status/dashboard files, syntax checks passing, and TASK-017 marked completed.
 - Safety: repository_status_only
 - Created: 2026-06-28
+- Last update: updated by worker
+- Result: codex exec completed
