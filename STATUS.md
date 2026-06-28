@@ -781,3 +781,21 @@ Status: `WORKER_RUNNING`
 
 - Detail: Task TASK-018 started
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 06:19:47 +0800
+
+Status: `TASK_018_COMPLETED`
+
+- Detail: Completed the repository-only local review artifact visibility fix.
+- Result: `scripts/codex_worker.sh` now runs `scripts/local_review_trigger_dry_run.py` before the final worker commit for completed safe tasks instead of after push, so `GPT_LOCAL_REVIEW_INPUT.md` is present before the outer worker add/commit/push step. Regenerated `GPT_LOCAL_REVIEW_INPUT.md`, `GPT_REVIEW.md`, `.gpt_state.json`, `GPT_VISIBLE_STATUS.md`, `GPT_VISIBLE_REVIEW_STATE.json`, and `WORKER_DASHBOARD.md` with `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`.
+- Verification: `bash -n scripts/codex_worker.sh`; `python3 scripts/local_review_trigger_dry_run.py --check`; `python3 scripts/refresh_visible_status.py --check`; `python3 scripts/visible_review_scaffold.py --check`; `python3 -m compileall -q src tests scripts`; `python3 -m unittest discover -s tests` with 32 tests.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no external service call, no model call, no dangerous sandbox, and no git add/commit/push inside codex exec.
+- Confirmation required: no.
+
+## Worker Update 2026-06-29 06:21:21 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-018 completed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

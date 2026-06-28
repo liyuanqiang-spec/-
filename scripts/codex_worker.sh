@@ -247,22 +247,22 @@ run_local_review_trigger_dry_run() {
   esac
 
   if [ ! -f "$ROOT/scripts/local_review_trigger_dry_run.py" ]; then
-    append_run_log "local_review_trigger_dry_run_skipped" "script missing after successful push for $message"
+    append_run_log "local_review_trigger_dry_run_skipped" "script missing before final worker commit for $message"
     log "local review trigger dry run skipped: script missing"
     return 0
   fi
 
   if python3 "$ROOT/scripts/local_review_trigger_dry_run.py" --root "$ROOT" --trigger-message "$message" --quiet >> "$LOG" 2>&1; then
-    append_run_log "local_review_trigger_dry_run" "LOCAL_REVIEW_TRIGGER_DRY_RUN_READY after successful push for $message"
+    append_run_log "local_review_trigger_dry_run" "LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for $message"
     if [ -f "$ROOT/scripts/refresh_visible_status.py" ]; then
       python3 "$ROOT/scripts/refresh_visible_status.py" --root "$ROOT" --quiet >> "$LOG" 2>&1 || true
     fi
-    log "local review trigger dry run ready after successful push for $message"
+    log "local review trigger dry run ready before final worker commit for $message"
     return 0
   fi
 
-  append_run_log "local_review_trigger_dry_run_failed" "dry-run reviewer failed after successful push for $message"
-  log "local review trigger dry run failed after successful push for $message"
+  append_run_log "local_review_trigger_dry_run_failed" "dry-run reviewer failed before final worker commit for $message"
+  log "local review trigger dry run failed before final worker commit for $message"
   return 0
 }
 
@@ -300,7 +300,6 @@ commit_and_push() {
       write_heartbeat "blocked" "git push failed for $message"
       return 1
     fi
-    run_local_review_trigger_dry_run "$message"
   fi
 }
 
@@ -610,6 +609,7 @@ run_once_body() {
     append_run_log "gpt_handshake" "Task $task_id completed by local worker without codex exec; safety mode remained PHASE_1_SIMULATION_ONLY"
     write_heartbeat "completed" "Task $task_id completed by local worker" "$task_id"
     update_dashboard
+    run_local_review_trigger_dry_run "Worker completed GPT handshake $task_id"
     commit_and_push "Worker completed GPT handshake $task_id" TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md "$DASHBOARD_FILE" GPT_VISIBLE_STATUS.md .gpt_state.json GPT_REVIEW.md logs/worker_heartbeat.json >> "$LOG" 2>&1 || return 1
     return 0
   fi
@@ -640,6 +640,7 @@ run_once_body() {
   fi
 
   update_dashboard
+  run_local_review_trigger_dry_run "Worker processed $task_id"
   commit_and_push "Worker processed $task_id" AGENTS.md TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md RISK_CONTROL.md README.md WORKER_DASHBOARD.md GPT_VISIBLE_STATUS.md GPT_REVIEW.md GPT_LOCAL_REVIEW_INPUT.md GPT_REVIEW_PACKET.md .gpt_state.json PROJECT_PLAN.md DATA_SCHEMA.md DATA REPORTS RELIABILITY_RUNBOOK.md scripts logs/worker_heartbeat.json src tests data reports .gitignore >> "$LOG" 2>&1 || return 1
 }
 

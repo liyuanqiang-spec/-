@@ -358,7 +358,7 @@ def local_review_trigger_state(root: Path) -> dict[str, str]:
         return {
             "state": "DISABLED_BY_DEFAULT",
             "input_file": LOCAL_REVIEW_INPUT_FILE,
-            "reason": "enable LOCAL_REVIEW_TRIGGER_DRY_RUN_ENABLED=1 to run after a successful worker push",
+            "reason": "enable LOCAL_REVIEW_TRIGGER_DRY_RUN_ENABLED=1 to generate before the final worker commit",
         }
     return {
         "state": "NOT_INSTALLED",

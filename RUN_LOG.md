@@ -578,3 +578,21 @@ This file records safe worker runs and Codex execution events.
 
 - Event: started
 - Detail: Task TASK-018 started
+
+## 2026-06-29 06:16:55 +0800
+
+- Event: attempt
+- Detail: Task TASK-018 codex exec attempt 1/3
+
+## 2026-06-29 06:19:47 +0800
+
+- Event: TASK-018 completed
+- Detail: Fixed local review artifact visibility by generating the review input before the final worker commit.
+- Result: Updated `scripts/codex_worker.sh` so completed safe tasks run `scripts/local_review_trigger_dry_run.py` before the final worker commit instead of after push. Regenerated `GPT_LOCAL_REVIEW_INPUT.md`, `GPT_REVIEW.md`, `.gpt_state.json`, `GPT_VISIBLE_STATUS.md`, `GPT_VISIBLE_REVIEW_STATE.json`, and `WORKER_DASHBOARD.md` with `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`.
+- Verification: `bash -n scripts/codex_worker.sh`; `python3 scripts/local_review_trigger_dry_run.py --check`; `python3 scripts/refresh_visible_status.py --check`; `python3 scripts/visible_review_scaffold.py --check`; `python3 -m compileall -q src tests scripts`; `python3 -m unittest discover -s tests` with 32 tests.
+- Safety: `PHASE_1_SIMULATION_ONLY`; no account connection, no real orders, no cancellations, no fund movement, no original-data deletion, no secret exposure, no external service calls, no model calls, no dangerous sandbox, and no git add/commit/push inside codex exec.
+
+## 2026-06-29 06:21:21 +0800
+
+- Event: completed
+- Detail: Task TASK-018 completed

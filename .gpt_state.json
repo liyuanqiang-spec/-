@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-06-29T06:16:46+08:00",
-  "state": "WORKING",
+  "generated_at": "2026-06-29T06:21:21+08:00",
+  "state": "IDLE",
   "visible_scaffold": {
-    "state": "WORKER_BUSY",
-    "reason": "current worker task is running"
+    "state": "SCAFFOLD_READY",
+    "reason": "visible scaffold artifacts are present"
   },
   "local_review_trigger": {
     "state": "LOCAL_REVIEW_TRIGGER_DRY_RUN_READY",
@@ -11,7 +11,7 @@
     "reason": "local deterministic dry-run artifact is present"
   },
   "adaptive_polling": {
-    "mode": "ACTIVE",
+    "mode": "IDLE",
     "interval_seconds": 600,
     "consecutive_idle_checks": 40,
     "idle_backoff_after_checks": 5,
@@ -20,40 +20,24 @@
     "timestamp": "2026-06-29T06:06:36+08:00"
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "WORKER_RUNNING",
-  "latest_commit": "97692d6 2026-06-29 Append TASK-018 local review artifact visibility",
-  "last_worker_check": "2026-06-29T06:16:46+08:00 / running / TASK-018",
+  "latest_status": "WORKER_COMPLETED",
+  "latest_commit": "44b2331 2026-06-29 Worker started TASK-018",
+  "last_worker_check": "2026-06-29T06:21:21+08:00 / completed / TASK-018",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {
     "idle_seconds": 600,
     "active_seconds": 30,
     "warm_seconds": 60
   },
-  "current_task": {
-    "id": "TASK-018",
-    "status": "running",
-    "type": "local_review_artifact_visibility",
-    "title": "Make local review input visible in GitHub",
-    "request": "Repository-only status task. The visible status names `GPT_LOCAL_REVIEW_INPUT.md`, but the file is not visible from GitHub fetch. Fix the local review dry-run flow so the generated review input is committed and pushed as part of the same safe worker result, or generated before the final worker commit. Keep this as a local deterministic check only; no outside service calls, no model calls, no environment dumps, and no changes to quant strategy modules or sample data. Refresh `GPT_REVIEW.md`, `.gpt_state.json`, `GPT_VISIBLE_STATUS.md`, `WORKER_DASHBOARD.md`, `STATUS.md`, and `RUN_LOG.md`.",
-    "result": "",
-    "safety": "repository_status_only"
-  },
-  "first_running_task": {
-    "id": "TASK-018",
-    "status": "running",
-    "type": "local_review_artifact_visibility",
-    "title": "Make local review input visible in GitHub",
-    "request": "Repository-only status task. The visible status names `GPT_LOCAL_REVIEW_INPUT.md`, but the file is not visible from GitHub fetch. Fix the local review dry-run flow so the generated review input is committed and pushed as part of the same safe worker result, or generated before the final worker commit. Keep this as a local deterministic check only; no outside service calls, no model calls, no environment dumps, and no changes to quant strategy modules or sample data. Refresh `GPT_REVIEW.md`, `.gpt_state.json`, `GPT_VISIBLE_STATUS.md`, `WORKER_DASHBOARD.md`, `STATUS.md`, and `RUN_LOG.md`.",
-    "result": "",
-    "safety": "repository_status_only"
-  },
+  "current_task": null,
+  "first_running_task": null,
   "first_pending_task": null,
   "latest_completed_task": {
-    "id": "TASK-017",
+    "id": "TASK-018",
     "status": "completed",
-    "type": "local_review_trigger_dry_run",
-    "title": "Add local post-push review trigger dry run",
-    "request": "Repository-only dry run. Add a local worker hook that runs after a safe task completes and the worker push step succeeds. In this pass, the hook must not call any outside service and must not append new tasks. It should only collect repository status into a compact review input file such as `GPT_LOCAL_REVIEW_INPUT.md`, then run a deterministic dry-run reviewer script such as `scripts/local_review_trigger_dry_run.py` to write `GPT_REVIEW.md`, `.gpt_state.json`, and `GPT_VISIBLE_STATUS.md` with a clear marker `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`. It must be disabled by default unless a local configuration flag is set. Keep changes to worker hook wiring, review scripts, tests, and status files. Do not modify quant strategy modules or data files.",
+    "type": "local_review_artifact_visibility",
+    "title": "Make local review input visible in GitHub",
+    "request": "Repository-only status task. The visible status names `GPT_LOCAL_REVIEW_INPUT.md`, but the file is not visible from GitHub fetch. Fix the local review dry-run flow so the generated review input is committed and pushed as part of the same safe worker result, or generated before the final worker commit. Keep this as a local deterministic check only; no outside service calls, no model calls, no environment dumps, and no changes to quant strategy modules or sample data. Refresh `GPT_REVIEW.md`, `.gpt_state.json`, `GPT_VISIBLE_STATUS.md`, `WORKER_DASHBOARD.md`, `STATUS.md`, and `RUN_LOG.md`.",
     "result": "codex exec completed",
     "safety": "repository_status_only"
   },
@@ -70,5 +54,5 @@
     "has_unresolved": false,
     "items": []
   },
-  "next_action": "等待当前任务完成；worker 会在完成、失败或阻塞后推送状态。"
+  "next_action": "ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。"
 }

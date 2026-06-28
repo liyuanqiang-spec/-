@@ -128,6 +128,14 @@ class LocalReviewTriggerDryRunTest(unittest.TestCase):
         self.assertIn("run_local_review_trigger_dry_run", worker_text)
         self.assertIn("LOCAL_REVIEW_TRIGGER_DRY_RUN_READY", worker_text)
 
+    def test_worker_generates_review_input_before_final_commit(self):
+        worker_text = (ROOT / "scripts" / "codex_worker.sh").read_text(encoding="utf-8")
+        review_index = worker_text.index('run_local_review_trigger_dry_run "Worker processed $task_id"')
+        commit_index = worker_text.index('commit_and_push "Worker processed $task_id"')
+        self.assertLess(review_index, commit_index)
+        self.assertIn("before final worker commit", worker_text)
+        self.assertNotIn("after successful push", worker_text)
+
 
 if __name__ == "__main__":
     unittest.main()

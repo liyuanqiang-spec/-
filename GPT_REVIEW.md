@@ -53,25 +53,25 @@ Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
 <!-- visible-review-scaffold:start -->
 ## Visible Review Scaffold
 
-- Generated at: `2026-06-28T23:36:00+08:00`
+- Generated at: `2026-06-29T06:20:30+08:00`
 - State: `SCAFFOLD_READY`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Worker mode: `IDLE`
 - Current poll interval: `600s`
-- Consecutive idle checks: `9`
+- Consecutive idle checks: `40`
 - Current task: None
 - First pending task: None
-- Latest completed task: TASK-016 (completed) - Prepare repository-local model review packet | completed; prepared `GPT_REVIEW_PACKET.md` and `REPORTS/model_review_packet.md`, added the repository-local packet script and tests, refreshed review/visible/dashboard/status/lo...
+- Latest completed task: TASK-018 (completed) - Make local review input visible in GitHub | completed; local review dry-run generation now runs before the final worker commit, `GPT_LOCAL_REVIEW_INPUT.md` is generated before the outer worker add/commit/push step, review...
 - Decision required: none
 - Failure reason: none
-- Latest status marker: `TASK_016_COMPLETED`
-- Latest run event: 2026-06-28 23:35:16 +0800 / TASK-016 completed / Prepared a concise repository-local model review packet bridge from existing status/review/report Markdown only.
-- Previous dashboard state: `IDLE`
+- Latest status marker: `TASK_018_COMPLETED`
+- Latest run event: 2026-06-29 06:19:47 +0800 / TASK-018 completed / Fixed local review artifact visibility by generating the review input before the final worker commit.
+- Previous dashboard state: `WORKING`
 - Previous visible status: `UNKNOWN`
 - Project memory headings reviewed: PROJECT_MEMORY.md, Project, Core strategy, Current architecture, Software roles, Must build, Core KPI, Safety boundaries
-- Reports summary: 10 files; latest markdown `REPORTS/model_review_packet.md`; headings: GPT Review Packet, Current State, Latest Report Summary, Quant-System Gap Summary, Next Three Safe Repository Tasks, Review Focus
+- Reports summary: 10 files; latest markdown `REPORTS/first_complete_simulation_report.md`; headings: TASK-007 First Complete Simulation Report, Run Command, Dashboard Entry, Reproducible Backtest Configuration, Candidate Simulation Table, Accepted Candidates
 - Source summary: 16 Python files; sample: src/__init__.py, src/codex_quant/__init__.py, src/codex_quant/backtester.py, src/codex_quant/config.py, src/codex_quant/contract_scanner.py, src/codex_quant/dashboard.py, src/codex_quant/low_liquidity_scanner.py, src/codex_quant/quant_baseline.py, src/codex_quant/quote_replay.py, src/codex_quant/report_writer.py, src/codex_quant/risk_control.py, src/codex_quant/run_pipeline.py
-- Test summary: 12 Python files; sample: tests/test_backtester.py, tests/test_dashboard.py, tests/test_low_liquidity_scanner.py, tests/test_model_review_packet.py, tests/test_pipeline.py, tests/test_quant_baseline.py, tests/test_quote_replay.py, tests/test_risk_control.py, tests/test_spread_calculator.py, tests/test_tick_replay_adapter.py, tests/test_visible_review_scaffold.py, tests/test_worker.py
+- Test summary: 13 Python files; sample: tests/test_backtester.py, tests/test_dashboard.py, tests/test_local_review_trigger_dry_run.py, tests/test_low_liquidity_scanner.py, tests/test_model_review_packet.py, tests/test_pipeline.py, tests/test_quant_baseline.py, tests/test_quote_replay.py, tests/test_risk_control.py, tests/test_spread_calculator.py, tests/test_tick_replay_adapter.py, tests/test_visible_review_scaffold.py
 - Next safe human-supervision action: ChatGPT can review GPT_REVIEW.md and add the next safe simulation-only task to TASK_QUEUE.md.
 
 ## Scaffold Guarantees
@@ -142,14 +142,14 @@ Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
 ## Local Review Trigger Dry Run
 
 - Marker: `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`
-- Generated at: `2026-06-29T00:05:38+08:00`
+- Generated at: `2026-06-29T06:20:30+08:00`
 - Input file: `GPT_LOCAL_REVIEW_INPUT.md`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
-- Default state: disabled unless `LOCAL_REVIEW_TRIGGER_DRY_RUN_ENABLED=1` is set for the worker.
+- Default state: disabled unless `LOCAL_REVIEW_TRIGGER_DRY_RUN_ENABLED=1` is set for the worker before the final commit.
 - Network calls: none.
 - Task append: none.
-- Trigger: TASK-017 local post-push review trigger dry run completed
+- Trigger: TASK-018 completed local review input visibility fix
 - Worker state: `IDLE`
-- Latest completed task: TASK-017 (completed) - Add local post-push review trigger dry run | completed; added disabled-by-default local post-push review trigger dry run, generated `GPT_LOCAL_REVIEW_INPUT.md`, refreshed review/status/dashboard files with `LOCAL_REVIEW_TRIGGER_DRY_RU...
+- Latest completed task: TASK-018 (completed) - Make local review input visible in GitHub | completed; local review dry-run generation now runs before the final worker commit, `GPT_LOCAL_REVIEW_INPUT.md` is generated before the outer worker add/commit/push step, review/status/dashb...
 - Decision required: none
 <!-- local-review-trigger-dry-run:end -->

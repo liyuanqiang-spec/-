@@ -284,7 +284,7 @@ def build_review_block(context: ReviewContext) -> str:
         f"- Generated at: `{context.generated_at}`\n"
         f"- Input file: `{INPUT_FILE}`\n"
         f"- Safety mode: `{SAFETY_MODE}`\n"
-        "- Default state: disabled unless `LOCAL_REVIEW_TRIGGER_DRY_RUN_ENABLED=1` is set for the worker.\n"
+        "- Default state: disabled unless `LOCAL_REVIEW_TRIGGER_DRY_RUN_ENABLED=1` is set for the worker before the final commit.\n"
         "- Network calls: none.\n"
         "- Task append: none.\n"
         f"- Trigger: {context.trigger_message}\n"
