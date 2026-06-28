@@ -81,3 +81,13 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Created: 2026-06-28
 - Last update: completed by Codex 2026-06-28 15:02:53 +0800
 - Result: completed; generated quant gap report, backtest baseline report, replay CSV, time-value radar, scoring/state-machine replay baseline, and tests.
+
+### TASK-010
+- Status: pending
+- Type: quant_replay_data
+- Title: Add multi-snapshot option quote replay fixture and loader
+- Request: Continue from TASK-009. Keep the repository in `PHASE_1_SIMULATION_ONLY`. Do not connect to any broker, trading account, live market feed, paid API, credential, or external execution system. Use only repository-local fixture/sample data. Add a documented multi-snapshot silver option quote replay fixture with timestamps, bid/ask, bid/ask size or depth, quote freshness/staleness fields, and enough rows to replay at least two vertical-spread candidates across multiple time steps. Implement or improve the repository-local replay loader so the state-machine simulator can consume ordered snapshots, measure first-leg timeout, quote staleness, passive fill probability, second-leg adverse move, incomplete-leg outcomes, and deterministic repricing/timeout behavior. Integrate the replay into the existing baseline pipeline and reports without removing TASK-009 outputs.
+- Expected output: new or updated local fixture under DATA, replay loader/module changes, deterministic unit tests for ordered replay, stale quote handling, timeout/incomplete-leg handling, and second-leg protection; refreshed `REPORTS/backtest_baseline_report.md`, `REPORTS/quant_system_gap_report.md`, `WORKER_DASHBOARD.md`, and `GPT_VISIBLE_STATUS.md`; preserve or update `REPORTS/quant_baseline_replay.csv` as appropriate; include exact failure reasons if any check fails.
+- Required checks: run `python3 scripts/refresh_visible_status.py`, `bash scripts/check_worker_health.sh`, `python3 -m compileall -q src tests scripts`, `python3 -m unittest discover -s tests`, and `bash -n scripts/codex_worker.sh`.
+- Safety: repository_only_simulation
+- Created: 2026-06-28
