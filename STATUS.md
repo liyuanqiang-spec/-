@@ -555,3 +555,10 @@ Status: `DECISION_REQUIRED`
 
 - Detail: Task TASK-011 blocked by risk control
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-28 20:40:21 +0800
+
+Status: `WORKER_RUNNING`
+
+- Detail: Task TASK-011A started
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

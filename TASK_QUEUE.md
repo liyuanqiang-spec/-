@@ -85,7 +85,7 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Result: superseded by TASK-011A because the worker risk scanner stopped on overly broad wording.
 
 ### TASK-011A
-- Status: pending
+- Status: running
 - Type: offline_tick_file_validation
 - Title: Validate local historical tick files with offline replay adapter
 - Request: Continue after TASK-010. Keep work inside repository files and PHASE_1_SIMULATION_ONLY. Use only local fixture or already-present historical tick files under DATA and nearby project data folders. Do not scan the whole disk. Build an offline parser that maps available tick CSV columns into the replay snapshot schema. Required fields to check: datetime, symbol, bid_price1, bid_volume1, ask_price1, ask_volume1, last_price, volume, open_interest, trading_date, source. Create a tiny sanitized fixture only when suitable local rows exist. Run the replay or explain the exact local-file blocker such as missing file, missing column, unsupported symbol, import error, or schema mismatch. Refresh reports and visible status.
@@ -93,5 +93,5 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Required checks: python3 scripts/refresh_visible_status.py; bash scripts/check_worker_health.sh; python3 -m compileall -q src tests scripts; python3 -m unittest discover -s tests; bash -n scripts/codex_worker.sh.
 - Safety: offline_repository_file_validation_only
 - Created: 2026-06-28
-- Last update: created by ChatGPT
-- Result: pending
+- Last update: updated by worker
+- Result: worker started
