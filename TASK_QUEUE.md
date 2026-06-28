@@ -94,8 +94,14 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Status: completed
 - Type: worker_cost_control
 - Title: Reduce idle worker calls and writes
-- Request: Reduce background worker activity now that the queue is idle. Set idle polling to 600 seconds or slower, active-task polling to 60 seconds or slower, and make idle rounds read-only. When there is no pending task, do not call any model, do not run Codex, do not refresh status files, do not commit, and do not push. Keep a manual health-check command for on-demand checks. Update visible status to show the new intervals and the last worker check. Keep all work inside repository files and PHASE_1_SIMULATION_ONLY.
-- Expected output: updated worker config or scripts, refreshed WORKER_DASHBOARD.md, refreshed GPT_VISIBLE_STATUS.md, STATUS.md and RUN_LOG.md note showing old interval and new interval, and passing shell/Python checks.
-- Safety: repository_status_only
+- Result: codex exec completed.
+
+### TASK-013
+- Status: pending
+- Type: auto_review_workflow
+- Title: Build visible GPT auto-review trigger
+- Request: Create the missing automatic review layer. Add `.github/workflows/gpt_orchestrator.yml` and `scripts/gpt_orchestrator.py`. The workflow must support manual run, schedule, and push-triggered review after status/report/code updates. The script must read PROJECT_MEMORY.md, TASK_QUEUE.md, STATUS.md, RUN_LOG.md, WORKER_DASHBOARD.md, GPT_VISIBLE_STATUS.md, DECISION_REQUIRED.md, REPORTS, src, and tests summaries; then write GPT_REVIEW.md and GPT_VISIBLE_STATUS.md. If a task is running or pending, only update visible status and do not request a model review. If idle, request a project-management review through the configured model key stored in repository Actions settings, append one safe next task if needed, and avoid duplicate reviews with `.gpt_state.json`. Do not expose any secret value. Keep all work repository-only and PHASE_1_SIMULATION_ONLY.
+- Expected output: workflow file, orchestrator script, refreshed GPT_REVIEW.md, refreshed GPT_VISIBLE_STATUS.md, state file, status/run-log notes, and passing syntax or unit checks. Visible status must say whether the auto-review layer is READY, WAITING_FOR_KEY, or FAILED_WITH_REASON.
+- Safety: repository_automation_only
 - Created: 2026-06-28
-- Result: codex exec completed
+- Result: pending
