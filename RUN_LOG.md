@@ -463,3 +463,13 @@ This file records safe worker runs and Codex execution events.
 
 - Event: blocked
 - Detail: Task TASK-014 blocked by risk control
+
+## 2026-06-28 21:51:36 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-06-28 21:55:53 +0800
+
+- Event: started
+- Detail: Task TASK-014A started

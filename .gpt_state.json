@@ -1,17 +1,33 @@
 {
-  "generated_at": "2026-06-28T21:49:30+08:00",
+  "generated_at": "2026-06-28T21:55:53+08:00",
   "state": "BLOCKED",
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "DECISION_REQUIRED",
-  "latest_commit": "e9d36e0 2026-06-28 Add visible scaffold status fix task",
-  "last_worker_check": "2026-06-28T21:49:30+08:00 / blocked / TASK-014",
+  "latest_status": "WORKER_RUNNING",
+  "latest_commit": "3624f16 2026-06-28 Add narrowed TASK-014A status display patch",
+  "last_worker_check": "2026-06-28T21:55:53+08:00 / running / TASK-014A",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {
     "idle_seconds": 600,
     "active_seconds": 60
   },
-  "current_task": null,
-  "first_running_task": null,
+  "current_task": {
+    "id": "TASK-014A",
+    "status": "running",
+    "type": "status_display_patch",
+    "title": "Add scaffold state line to visible status",
+    "request": "Repository-status-only patch. Adjust the existing visible review script so `GPT_VISIBLE_STATUS.md` includes one line named `Visible scaffold:` with one of these values: `SCAFFOLD_READY`, `WORKER_BUSY`, or `FAILED_WITH_REASON`. Use only existing local repository status and review files as inputs. If `GPT_REVIEW.md` already contains a successful scaffold block and no current worker task is active, write `SCAFFOLD_READY`. Refresh `GPT_VISIBLE_STATUS.md`, `GPT_REVIEW.md`, `WORKER_DASHBOARD.md`, `STATUS.md`, and `RUN_LOG.md`. Keep changes limited to status/review/reporting files and the status script. Run syntax checks.",
+    "result": "worker started",
+    "safety": "repository_status_only"
+  },
+  "first_running_task": {
+    "id": "TASK-014A",
+    "status": "running",
+    "type": "status_display_patch",
+    "title": "Add scaffold state line to visible status",
+    "request": "Repository-status-only patch. Adjust the existing visible review script so `GPT_VISIBLE_STATUS.md` includes one line named `Visible scaffold:` with one of these values: `SCAFFOLD_READY`, `WORKER_BUSY`, or `FAILED_WITH_REASON`. Use only existing local repository status and review files as inputs. If `GPT_REVIEW.md` already contains a successful scaffold block and no current worker task is active, write `SCAFFOLD_READY`. Refresh `GPT_VISIBLE_STATUS.md`, `GPT_REVIEW.md`, `WORKER_DASHBOARD.md`, `STATUS.md`, and `RUN_LOG.md`. Keep changes limited to status/review/reporting files and the status script. Run syntax checks.",
+    "result": "worker started",
+    "safety": "repository_status_only"
+  },
   "first_pending_task": null,
   "latest_completed_task": {
     "id": "TASK-013A",
@@ -28,7 +44,7 @@
     "type": "visible_status_alignment",
     "title": "Show scaffold readiness in GPT visible status",
     "request": "Keep this repository-status-only. Update the visible review scaffold so `GPT_VISIBLE_STATUS.md` displays the scaffold state explicitly when the scaffold is ready. The file should show `SCAFFOLD_READY` when `GPT_REVIEW.md` has a successful visible-review scaffold block, `WORKER_BUSY` when a safe worker task is running, and `FAILED_WITH_REASON` when the local scaffold check fails. Do not call outside services. Do not read or print secrets. Do not edit strategy code, trading logic, data, or reports except the status/review files. Refresh `GPT_VISIBLE_STATUS.md`, `GPT_REVIEW.md`, `WORKER_DASHBOARD.md`, `STATUS.md`, and `RUN_LOG.md`.",
-    "result": "blocked by risk control",
+    "result": "blocked by risk control.",
     "safety": "repository_status_only"
   },
   "decision_required": {

@@ -123,11 +123,11 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Result: blocked by risk control.
 
 ### TASK-014A
-- Status: pending
+- Status: running
 - Type: status_display_patch
 - Title: Add scaffold state line to visible status
 - Request: Repository-status-only patch. Adjust the existing visible review script so `GPT_VISIBLE_STATUS.md` includes one line named `Visible scaffold:` with one of these values: `SCAFFOLD_READY`, `WORKER_BUSY`, or `FAILED_WITH_REASON`. Use only existing local repository status and review files as inputs. If `GPT_REVIEW.md` already contains a successful scaffold block and no current worker task is active, write `SCAFFOLD_READY`. Refresh `GPT_VISIBLE_STATUS.md`, `GPT_REVIEW.md`, `WORKER_DASHBOARD.md`, `STATUS.md`, and `RUN_LOG.md`. Keep changes limited to status/review/reporting files and the status script. Run syntax checks.
 - Expected output: visible status includes a clear `Visible scaffold:` line, review file refreshed, dashboard/status/log refreshed, syntax checks pass.
 - Safety: repository_status_only
 - Created: 2026-06-28
-- Result: pending
+- Result: worker started
