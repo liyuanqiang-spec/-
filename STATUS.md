@@ -649,3 +649,10 @@ Status: `WORKER_COMPLETED`
 
 - Detail: Task TASK-013A completed
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-28 21:49:29 +0800
+
+Status: `DECISION_REQUIRED`
+
+- Detail: Task TASK-014 blocked by risk control
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

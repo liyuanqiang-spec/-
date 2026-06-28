@@ -118,3 +118,11 @@ No current user action required for normal safe GitHub status-file supervision.
 - Current action: stale entry; no current user action required
 - Resolution: TASK-013A reached codex exec and is being completed in the repository; outer worker remains responsible for git sync after codex exits.
 - Required confirmation: none.
+
+## Decision Required 2026-06-28 21:49:29 +0800
+
+- Item: Task TASK-014 contains a blocked trading/fund/secret/deletion/danger risk
+- Current action: worker stopped before execution
+- A 推荐: keep simulation-only and rewrite the task as safe research work
+- B: explicitly authorize the blocked setup/action
+- C: cancel this task

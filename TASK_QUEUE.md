@@ -113,11 +113,11 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Result: codex exec completed.
 
 ### TASK-014
-- Status: pending
+- Status: decision_required
 - Type: visible_status_alignment
 - Title: Show scaffold readiness in GPT visible status
 - Request: Keep this repository-status-only. Update the visible review scaffold so `GPT_VISIBLE_STATUS.md` displays the scaffold state explicitly when the scaffold is ready. The file should show `SCAFFOLD_READY` when `GPT_REVIEW.md` has a successful visible-review scaffold block, `WORKER_BUSY` when a safe worker task is running, and `FAILED_WITH_REASON` when the local scaffold check fails. Do not call outside services. Do not read or print secrets. Do not edit strategy code, trading logic, data, or reports except the status/review files. Refresh `GPT_VISIBLE_STATUS.md`, `GPT_REVIEW.md`, `WORKER_DASHBOARD.md`, `STATUS.md`, and `RUN_LOG.md`.
 - Expected output: visible status clearly includes `SCAFFOLD_READY`, updated scaffold script if needed, refreshed visible files, and passing syntax checks.
 - Safety: repository_status_only
 - Created: 2026-06-28
-- Result: pending
+- Result: blocked by risk control
