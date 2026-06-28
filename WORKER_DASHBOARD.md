@@ -1,17 +1,17 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-06-28 20:47:12 +0800`
+Last dashboard update: `2026-06-28 20:55:14 +0800`
 
 | Item | Result |
 |---|---|
 | Worker state | IDLE |
 | Current task | None |
 | First pending task | None |
-| Latest completed task | TASK-011A (completed) - Validate local historical tick files with offline replay adapter / codex exec completed |
+| Latest completed task | TASK-011A (completed) - Validate local historical tick files with offline replay adapter / completed; added offline tick adapter, validation script, sanitized non-performance tick fixture, tick smoke report, refreshed quant reports, and passed 21 tests. |
 | Latest failed or blocked task | None |
 | Latest status | WORKER_COMPLETED |
-| Latest report | REPORTS/backtest_baseline_report.md |
-| Latest push/commit | 7203358 2026-06-28 Worker started TASK-011A |
+| Latest report | REPORTS/tick_file_smoke_report.md |
+| Latest push/commit | 8efbf65 2026-06-28 Worker processed TASK-011A |
 | Worker poll interval | idle 120s, active 30s |
 | Decision required | No unresolved item |
 | Safety mode | PHASE_1_SIMULATION_ONLY |
