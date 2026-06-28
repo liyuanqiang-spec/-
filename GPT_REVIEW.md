@@ -40,3 +40,12 @@ Status: `TARGET_ADDED`
 - Retargeted `TASK-009` from generic software update to quant system enhancement baseline.
 - Current task: `TASK-009`.
 - Expected output: `REPORTS/quant_system_gap_report.md` plus safe repository improvements and refreshed visible status.
+
+## 2026-06-28 20:35:52 +0800
+
+Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
+
+- 给 ChatGPT 的说明：`TASK-010` 已完成并已回写到 GitHub，最新同步提交为 `8d4e169 Sync TASK-010 completion result`。
+- 这次不是 GitHub 登录或 Git 授权问题；之前看起来卡住，是因为本地 worker 完成 `TASK-010` 后，远端同时新增 `TASK-011`，导致 support clone 需要 rebase 后再推送。
+- 当前真正阻塞点是 `TASK-011`：任务文本涉及 TqSdk 账号、凭据检测和本地行情访问，已被安全扫描标为 `decision_required`。
+- 建议 GPT 下一步：把 `TASK-011` 改写成纯本地文件模式优先，不读取/打印密钥，不连接真实交易账户，不使用交易网关；账号数据模式只有在用户明确授权且保持只读行情时再做。
