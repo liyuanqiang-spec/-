@@ -4,9 +4,14 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "37 * * * *"
+  issues:
+    types: [opened, edited, labeled]
+  issue_comment:
+    types: [created]
 
 permissions:
   contents: write
+  issues: read
 
 concurrency:
   group: repo-agent-${{ github.ref }}
@@ -14,6 +19,8 @@ concurrency:
 
 jobs:
   codex_task_runner:
+    # Avoid allowing arbitrary public issue/comment authors to run Codex on the repo.
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' || github.event.sender.login == github.repository_owner
     runs-on: ubuntu-latest
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -35,55 +42,92 @@ jobs:
             echo "OPENAI_API_KEY present: False"
           fi
 
-      - name: Check task queue
-        id: queue
+      - name: Prepare Codex prompt
+        id: prompt
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
+          import json
           import os
           import re
 
-          text = Path("TASK_QUEUE.md").read_text(encoding="utf-8") if Path("TASK_QUEUE.md").exists() else ""
-          sections = re.findall(r"^###\s+(TASK-[A-Za-z0-9-]+)(.*?)(?=^###\s+TASK-|\Z)", text, flags=re.M | re.S)
-          pending = ""
-          for task_id, body in sections:
-              m = re.search(r"^- Status:\s*([^\n]+)", body, flags=re.M)
-              if m and m.group(1).strip().lower() == "pending":
-                  pending = task_id
-                  break
-          has_pending = "true" if pending else "false"
+          event_name = os.environ.get("GITHUB_EVENT_NAME", "")
+          event_path = Path(os.environ.get("GITHUB_EVENT_PATH", ""))
+          event = json.loads(event_path.read_text(encoding="utf-8")) if event_path.exists() else {}
+
+          base = """# Codex Cloud Task Runner\n\nYou are Codex running inside GitHub Actions for this repository.\n\nCurrent boundary: PHASE_1_SIMULATION_ONLY.\n\nHard stops:\n- Do not connect to real trading accounts.\n- Do not place or cancel orders.\n- Do not move funds.\n- Do not read, print, log, commit, or expose secrets, tokens, passwords, API keys, environment dumps, or credentials.\n- Do not delete original/raw data.\n- Do not use dangerous permissions.\n- Do not weaken existing risk controls.\n\nExecution rules:\n1. Keep work repository-only unless the task is only documentation/status verification.\n2. Prefer existing platform/plugin capabilities over custom worker hooks.\n3. Keep changes minimal and directly tied to the task.\n4. Run deterministic checks for changed files when practical.\n5. Update visible status/review/setup files when relevant.\n6. Leave the repository in a committable state.\n"""
+
+          should_run = False
+          task_label = "none"
+          source = "none"
+          task_markdown = ""
+
+          def issue_labels(issue):
+              return {item.get("name", "") for item in issue.get("labels", []) if isinstance(item, dict)}
+
+          if event_name in {"issues", "issue_comment"}:
+              issue = event.get("issue") or {}
+              labels = issue_labels(issue)
+              if {"codex", "automation", "repository-status-only"} & labels:
+                  title = issue.get("title", "")
+                  body = issue.get("body", "") or ""
+                  number = issue.get("number", "unknown")
+                  comment = (event.get("comment") or {}).get("body", "") if event_name == "issue_comment" else ""
+                  task_markdown = f"""## GitHub Issue task\n\nSource issue: #{number}\nTitle: {title}\n\nIssue body:\n\n{body}\n\nLatest triggering comment, if any:\n\n{comment}\n"""
+                  should_run = True
+                  task_label = f"issue-{number}"
+                  source = event_name
+          else:
+              queue_path = Path("TASK_QUEUE.md")
+              text = queue_path.read_text(encoding="utf-8") if queue_path.exists() else ""
+              sections = re.findall(r"^###\s+(TASK-[A-Za-z0-9-]+)(.*?)(?=^###\s+TASK-|\Z)", text, flags=re.M | re.S)
+              for task_id, body in sections:
+                  m = re.search(r"^- Status:\s*([^\n]+)", body, flags=re.M)
+                  if m and m.group(1).strip().lower() == "pending":
+                      task_markdown = f"## TASK_QUEUE task\n\n### {task_id}{body}"
+                      should_run = True
+                      task_label = task_id
+                      source = "TASK_QUEUE.md"
+                      break
+
+          prompt_path = Path("codex-runtime-prompt.md")
+          prompt_path.write_text(base + "\n\n" + task_markdown, encoding="utf-8")
+
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
-              fh.write(f"has_pending={has_pending}\n")
-              fh.write(f"task_id={pending}\n")
-          print(f"first_pending_task={pending or 'none'}")
+              fh.write(f"should_run={'true' if should_run else 'false'}\n")
+              fh.write(f"task_id={task_label}\n")
+              fh.write(f"source={source}\n")
+
+          print(f"codex_should_run={should_run} source={source} task={task_label}")
           PY
 
-      - name: Run Codex on first pending task
+      - name: Run Codex
         id: run_codex
-        if: steps.key.outputs.present == 'true' && steps.queue.outputs.has_pending == 'true'
+        if: steps.key.outputs.present == 'true' && steps.prompt.outputs.should_run == 'true'
         uses: openai/codex-action@v1
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
-          prompt-file: .github/codex/prompts/execute-task.md
+          prompt-file: codex-runtime-prompt.md
           output-file: codex-output.md
           sandbox: workspace-write
           safety-strategy: drop-sudo
 
       - name: Skip Codex run
-        if: steps.key.outputs.present != 'true' || steps.queue.outputs.has_pending != 'true'
+        if: steps.key.outputs.present != 'true' || steps.prompt.outputs.should_run != 'true'
         run: |
-          echo "Codex skipped. key_present=${{ steps.key.outputs.present }} has_pending=${{ steps.queue.outputs.has_pending }} task=${{ steps.queue.outputs.task_id }}"
+          echo "Codex skipped. key_present=${{ steps.key.outputs.present }} should_run=${{ steps.prompt.outputs.should_run }} task=${{ steps.prompt.outputs.task_id }} source=${{ steps.prompt.outputs.source }}"
 
       - name: Commit Codex outputs
-        if: steps.key.outputs.present == 'true' && steps.queue.outputs.has_pending == 'true'
+        if: steps.key.outputs.present == 'true' && steps.prompt.outputs.should_run == 'true'
         shell: bash
         run: |
+          rm -f codex-runtime-prompt.md
           if ! git diff --quiet; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add -A
-            git commit -m "Run Codex task ${{ steps.queue.outputs.task_id }}"
+            git commit -m "Run Codex task ${{ steps.prompt.outputs.task_id }}"
             git pull --rebase
             git push
           else
