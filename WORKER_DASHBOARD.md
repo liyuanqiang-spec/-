@@ -1,31 +1,31 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-06-29 19:25:53 +0800`
+Last dashboard update: `2026-06-29 19:32:48 +0800`
 
 | Item | Result |
 |---|---|
-| Worker state | BLOCKED |
-| Visible scaffold | SCAFFOLD_READY |
+| Worker state | WORKING |
+| Visible scaffold | WORKER_BUSY |
 | Local review trigger | LOCAL_REVIEW_TRIGGER_DRY_RUN_READY |
 | Local review input | GPT_LOCAL_REVIEW_INPUT.md |
-| Worker mode | WARM |
-| Current poll interval | 60s |
+| Worker mode | ACTIVE |
+| Current poll interval | 30s |
 | Consecutive idle checks | 0 |
-| Polling reason | unresolved blocker detected |
+| Polling reason | new pending safe task detected |
 | Night quiet window | 22:00-08:00 active=False |
 | Night poll interval | warm 600s, idle 1800s |
-| Current task | None |
+| Current task | TASK-022-LOCAL-MAIL-RETRY (running) - Local worker mail retry / worker started |
 | First pending task | None |
-| Latest completed task | TASK-021-LOCAL-MAIL-SMOKE (completed) - Local worker visible smoke check / codex exec completed |
+| Latest completed task | TASK-021-LOCAL-MAIL-SMOKE (completed) - Local worker visible smoke check / LOCAL_WORKER_MAIL_SKIPPED_NO_RECIPIENT |
 | Latest failed or blocked task | TASK-020-GPT-INTERACTIVE-REPLY (decision_required) - GPT interactive reply to local worker / blocked by local guard |
-| Latest status | WORKER_COMPLETED |
-| Last worker check | 2026-06-29T19:25:53+08:00 / completed / TASK-021-LOCAL-MAIL-SMOKE |
+| Latest status | WORKER_RUNNING |
+| Last worker check | 2026-06-29T19:32:48+08:00 / running / TASK-022-LOCAL-MAIL-RETRY |
 | Latest report | REPORTS/software_progress_audit.md |
-| Latest push/commit | 590d611 2026-06-29 Worker started TASK-021-LOCAL-MAIL-SMOKE |
+| Latest push/commit | f681374 2026-06-29 Queue local worker mail retry |
 | Worker poll interval | active 30s, warm 60s, idle 600s |
 | Decision required | Yes - Task TASK-020-GPT-INTERACTIVE-REPLY contains a blocked trading/fund/secret/deletion/danger risk |
 | Safety mode | PHASE_1_SIMULATION_ONLY |
-| Next action | 人工处理 DECISION_REQUIRED.md 中未解决事项，然后重新刷新状态。 |
+| Next action | 等待当前任务完成；worker 会在完成、失败或阻塞后推送状态。 |
 
 ## Links
 

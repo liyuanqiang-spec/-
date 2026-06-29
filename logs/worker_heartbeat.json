@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-06-29T19:25:53+08:00",
-  "state": "completed",
-  "detail": "Task TASK-021-LOCAL-MAIL-SMOKE completed",
-  "task": "TASK-021-LOCAL-MAIL-SMOKE",
+  "timestamp": "2026-06-29T19:32:48+08:00",
+  "state": "running",
+  "detail": "Task TASK-022-LOCAL-MAIL-RETRY started",
+  "task": "TASK-022-LOCAL-MAIL-RETRY",
   "interval_seconds": 600,
   "idle_poll_interval_seconds": 600,
   "active_poll_interval_seconds": 30,

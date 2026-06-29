@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-06-29T19:25:53+08:00",
-  "state": "BLOCKED",
+  "generated_at": "2026-06-29T19:32:48+08:00",
+  "state": "WORKING",
   "visible_scaffold": {
-    "state": "SCAFFOLD_READY",
-    "reason": "visible scaffold artifacts are present"
+    "state": "WORKER_BUSY",
+    "reason": "current worker task is running"
   },
   "local_review_trigger": {
     "state": "LOCAL_REVIEW_TRIGGER_DRY_RUN_READY",
@@ -11,8 +11,8 @@
     "reason": "local deterministic dry-run artifact is present"
   },
   "adaptive_polling": {
-    "mode": "WARM",
-    "interval_seconds": 60,
+    "mode": "ACTIVE",
+    "interval_seconds": 30,
     "consecutive_idle_checks": 0,
     "idle_backoff_after_checks": 5,
     "warm_remaining_checks": 3,
@@ -24,13 +24,13 @@
       "warm_poll_seconds": 600,
       "idle_poll_seconds": 1800
     },
-    "reason": "unresolved blocker detected",
-    "timestamp": "2026-06-29T19:13:59+08:00"
+    "reason": "new pending safe task detected",
+    "timestamp": "2026-06-29T19:32:08+08:00"
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "WORKER_COMPLETED",
-  "latest_commit": "590d611 2026-06-29 Worker started TASK-021-LOCAL-MAIL-SMOKE",
-  "last_worker_check": "2026-06-29T19:25:53+08:00 / completed / TASK-021-LOCAL-MAIL-SMOKE",
+  "latest_status": "WORKER_RUNNING",
+  "latest_commit": "f681374 2026-06-29 Queue local worker mail retry",
+  "last_worker_check": "2026-06-29T19:32:48+08:00 / running / TASK-022-LOCAL-MAIL-RETRY",
   "latest_report": "REPORTS/software_progress_audit.md",
   "worker_poll_intervals": {
     "idle_seconds": 600,
@@ -41,17 +41,33 @@
     "night_warm_seconds": 600,
     "night_idle_seconds": 1800
   },
-  "current_task": null,
-  "first_running_task": null,
+  "current_task": {
+    "id": "TASK-022-LOCAL-MAIL-RETRY",
+    "status": "running",
+    "type": "local_status_check",
+    "title": "Local worker mail retry",
+    "request": "Run the local mail smoke path again. If the worker has a previous successful local mail-test recipient available in its own local history or repo-visible prior status, reuse that same recipient without printing it. Do not write recipient values. Do not print local configuration. Update GPT_CODEX_CONVERSATION.md with LOCAL_WORKER_MAIL_SENT or LOCAL_WORKER_MAIL_FAILED. Keep PHASE_1_SIMULATION_ONLY.",
+    "result": "worker started",
+    "safety": "repository_status_only"
+  },
+  "first_running_task": {
+    "id": "TASK-022-LOCAL-MAIL-RETRY",
+    "status": "running",
+    "type": "local_status_check",
+    "title": "Local worker mail retry",
+    "request": "Run the local mail smoke path again. If the worker has a previous successful local mail-test recipient available in its own local history or repo-visible prior status, reuse that same recipient without printing it. Do not write recipient values. Do not print local configuration. Update GPT_CODEX_CONVERSATION.md with LOCAL_WORKER_MAIL_SENT or LOCAL_WORKER_MAIL_FAILED. Keep PHASE_1_SIMULATION_ONLY.",
+    "result": "worker started",
+    "safety": "repository_status_only"
+  },
   "first_pending_task": null,
   "latest_completed_task": {
     "id": "TASK-021-LOCAL-MAIL-SMOKE",
     "status": "completed",
     "type": "local_status_check",
     "title": "Local worker visible smoke check",
-    "request": "Run the existing local mail smoke path from the Mac mini worker if it is available. Use only locally configured recipient data. Do not write recipient data into the repo. Do not print local configuration. Then update GPT_CODEX_CONVERSATION.md with one of these exact statuses: LOCAL_WORKER_MAIL_SENT, LOCAL_WORKER_MAIL_SKIPPED_NO_RECIPIENT, or LOCAL_WORKER_MAIL_FAILED. Also mark this task completed or decision_required.",
-    "result": "codex exec completed",
-    "safety": "repository_status_only"
+    "request": "",
+    "result": "LOCAL_WORKER_MAIL_SKIPPED_NO_RECIPIENT",
+    "safety": ""
   },
   "latest_failed_or_blocked_task": {
     "id": "TASK-020-GPT-INTERACTIVE-REPLY",
@@ -68,5 +84,5 @@
       "Task TASK-020-GPT-INTERACTIVE-REPLY contains a blocked trading/fund/secret/deletion/danger risk"
     ]
   },
-  "next_action": "人工处理 DECISION_REQUIRED.md 中未解决事项，然后重新刷新状态。"
+  "next_action": "等待当前任务完成；worker 会在完成、失败或阻塞后推送状态。"
 }

@@ -691,3 +691,18 @@ This file records safe worker runs and Codex execution events.
 
 - Event: local_review_trigger_dry_run
 - Detail: LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for Worker processed TASK-021-LOCAL-MAIL-SMOKE
+
+## 2026-06-29 19:31:24 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-06-29 19:32:07 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-06-29 19:32:48 +0800
+
+- Event: started
+- Detail: Task TASK-022-LOCAL-MAIL-RETRY started
