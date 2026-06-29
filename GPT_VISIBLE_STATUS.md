@@ -1,6 +1,6 @@
 # GPT Visible Status
 
-- Generated at: `2026-06-29T14:50:15+08:00`
+- Generated at: `2026-06-29T17:00:34+08:00`
 - Status: `IDLE`
 - Visible scaffold: `SCAFFOLD_READY`
 - Local review trigger: `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`
@@ -14,9 +14,9 @@
 - Current task: none
 - Latest completed task: TASK-019A (completed) - Verify local supervisor loop | GPT handshake completed by local worker
 - Decision required: none
-- Latest status marker: `PULL_RECOVERED_IDLE`
-- Last worker check: 2026-06-29T14:47:38+08:00 / idle
-- Latest commit: bc6b546 2026-06-29 Add silver quant software progress audit
+- Latest status marker: `GPT_INTERACTION_TEST_READY`
+- Last worker check: 2026-06-29T16:59:57+08:00 / idle
+- Latest commit: a897f55 2026-06-29 Record recovered idle worker status
 - Worker poll interval: active 30s, warm 60s, idle 600s
 - Next action: ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。
 

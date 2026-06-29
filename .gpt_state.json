@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T14:50:15+08:00",
+  "generated_at": "2026-06-29T17:00:34+08:00",
   "state": "IDLE",
   "visible_scaffold": {
     "state": "SCAFFOLD_READY",
@@ -25,12 +25,12 @@
       "idle_poll_seconds": 1800
     },
     "reason": "idle backoff after 6 checks",
-    "timestamp": "2026-06-29T14:41:35+08:00"
+    "timestamp": "2026-06-29T16:52:09+08:00"
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "PULL_RECOVERED_IDLE",
-  "latest_commit": "bc6b546 2026-06-29 Add silver quant software progress audit",
-  "last_worker_check": "2026-06-29T14:47:38+08:00 / idle",
+  "latest_status": "GPT_INTERACTION_TEST_READY",
+  "latest_commit": "a897f55 2026-06-29 Record recovered idle worker status",
+  "last_worker_check": "2026-06-29T16:59:57+08:00 / idle",
   "latest_report": "REPORTS/software_progress_audit.md",
   "worker_poll_intervals": {
     "idle_seconds": 600,

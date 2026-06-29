@@ -641,3 +641,23 @@ This file records safe worker runs and Codex execution events.
 
 - Event: pull_recovered
 - Detail: GitHub sync is recovered; local main matches origin/main and the worker is idle with no pending task.
+
+## 2026-06-29 16:34:24 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-06-29 16:35:36 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-06-29 16:36:48 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-06-29 16:59:57 +0800
+
+- Event: gpt_interaction_test_ready
+- Detail: Codex prepared a repository-only GPT participation test and asked GPT to append the specified handshake task to TASK_QUEUE.md.

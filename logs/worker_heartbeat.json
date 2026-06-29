@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-06-29T14:47:38+08:00",
+  "timestamp": "2026-06-29T16:59:57+08:00",
   "state": "idle",
-  "detail": "GitHub sync recovered; no pending safe task",
+  "detail": "GPT interaction test ready; waiting for GPT to append a safe handshake task",
   "task": "none",
   "interval_seconds": 600,
   "idle_poll_interval_seconds": 600,

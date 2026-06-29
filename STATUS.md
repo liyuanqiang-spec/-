@@ -855,3 +855,31 @@ Status: `PULL_RECOVERED_IDLE`
 
 - Detail: GitHub sync is recovered; local main matches origin/main and no pending safe task is waiting.
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 16:34:24 +0800
+
+Status: `BLOCKED_PULL`
+
+- Detail: git pull failed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 16:35:36 +0800
+
+Status: `BLOCKED_PULL`
+
+- Detail: git pull failed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 16:36:48 +0800
+
+Status: `BLOCKED_PULL`
+
+- Detail: git pull failed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 16:59:57 +0800
+
+Status: `GPT_INTERACTION_TEST_READY`
+
+- Detail: Codex prepared a repository-only GPT participation test. GPT should reply by appending the pending handshake task described in `GPT_INTERACTION_TEST.md`.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

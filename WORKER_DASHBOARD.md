@@ -1,6 +1,6 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-06-29 14:50:15 +0800`
+Last dashboard update: `2026-06-29 17:00:34 +0800`
 
 | Item | Result |
 |---|---|
@@ -18,10 +18,10 @@ Last dashboard update: `2026-06-29 14:50:15 +0800`
 | First pending task | None |
 | Latest completed task | TASK-019A (completed) - Verify local supervisor loop / GPT handshake completed by local worker |
 | Latest failed or blocked task | TASK-019 (decision_required) - Verify Mac mini GPT-Codex supervisor loop / blocked by risk control |
-| Latest status | PULL_RECOVERED_IDLE |
-| Last worker check | 2026-06-29T14:47:38+08:00 / idle |
+| Latest status | GPT_INTERACTION_TEST_READY |
+| Last worker check | 2026-06-29T16:59:57+08:00 / idle |
 | Latest report | REPORTS/software_progress_audit.md |
-| Latest push/commit | bc6b546 2026-06-29 Add silver quant software progress audit |
+| Latest push/commit | a897f55 2026-06-29 Record recovered idle worker status |
 | Worker poll interval | active 30s, warm 60s, idle 600s |
 | Decision required | No unresolved item |
 | Safety mode | PHASE_1_SIMULATION_ONLY |
