@@ -771,3 +771,23 @@ This file records safe worker runs and Codex execution events.
 
 - Event: started
 - Detail: Task TASK-025-DIRECT-QQ-MAIL-TEST started
+
+## 2026-06-29 20:30:35 +0800
+
+- Event: attempt
+- Detail: Task TASK-025-DIRECT-QQ-MAIL-TEST codex exec attempt 1/3
+
+## 2026-06-29 20:31:55 +0800
+
+- Event: TASK-025 completed
+- Detail: CODEX_QQ_MAIL_ACCEPTED_UNVERIFIED; subject marker `CODEX-QQ-DIRECT-TEST-20260629-2045`; local mail command accepted the direct QQ test attempt; final mailbox delivery was not independently verified; recipient value was not written to repository status files.
+
+## 2026-06-29 20:34:58 +0800
+
+- Event: completed
+- Detail: Task TASK-025-DIRECT-QQ-MAIL-TEST completed
+
+## 2026-06-29 20:34:58 +0800
+
+- Event: local_review_trigger_dry_run
+- Detail: LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for Worker processed TASK-025-DIRECT-QQ-MAIL-TEST

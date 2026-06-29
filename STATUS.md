@@ -1002,3 +1002,21 @@ Status: `WORKER_RUNNING`
 
 - Detail: Task TASK-025-DIRECT-QQ-MAIL-TEST started
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 20:31:55 +0800
+
+Status: `TASK_025_COMPLETED`
+
+- Detail: TASK-025-DIRECT-QQ-MAIL-TEST completed with `CODEX_QQ_MAIL_ACCEPTED_UNVERIFIED`; subject marker `CODEX-QQ-DIRECT-TEST-20260629-2045`; local mail command accepted the direct QQ test attempt.
+- Delivery checks: final QQ mailbox delivery was not independently verified in this execution environment.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no dangerous sandbox, and no git add/commit/push inside codex exec.
+- Recipient handling: converted the obfuscated task recipient locally for the send attempt; no normalized recipient value or local configuration was written into repository status files.
+- Confirmation required: no.
+
+## Worker Update 2026-06-29 20:34:58 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-025-DIRECT-QQ-MAIL-TEST completed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

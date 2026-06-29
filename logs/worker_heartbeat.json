@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-06-29T20:30:30+08:00",
-  "state": "running",
-  "detail": "Task TASK-025-DIRECT-QQ-MAIL-TEST started",
+  "timestamp": "2026-06-29T20:34:58+08:00",
+  "state": "completed",
+  "detail": "Task TASK-025-DIRECT-QQ-MAIL-TEST completed",
   "task": "TASK-025-DIRECT-QQ-MAIL-TEST",
   "interval_seconds": 600,
   "idle_poll_interval_seconds": 600,
