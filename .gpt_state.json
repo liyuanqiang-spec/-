@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-29T20:14:53+08:00",
-  "state": "IDLE",
+  "generated_at": "2026-06-29T20:28:23+08:00",
+  "state": "WAITING_FOR_WORKER",
   "visible_scaffold": {
     "state": "SCAFFOLD_READY",
     "reason": "visible scaffold artifacts are present"
@@ -11,11 +11,11 @@
     "reason": "local deterministic dry-run artifact is present"
   },
   "adaptive_polling": {
-    "mode": "IDLE",
-    "interval_seconds": 600,
-    "consecutive_idle_checks": 6,
+    "mode": "ACTIVE",
+    "interval_seconds": 60,
+    "consecutive_idle_checks": 0,
     "idle_backoff_after_checks": 5,
-    "warm_remaining_checks": 0,
+    "warm_remaining_checks": 3,
     "night_quiet_window": {
       "enabled": true,
       "active": false,
@@ -24,12 +24,12 @@
       "warm_poll_seconds": 600,
       "idle_poll_seconds": 1800
     },
-    "reason": "idle backoff after 6 checks",
-    "timestamp": "2026-06-29T20:01:14+08:00"
+    "reason": "unresolved blocker detected",
+    "timestamp": "2026-06-29T20:23:59+08:00"
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "WORKER_COMPLETED",
-  "latest_commit": "552580c 2026-06-29 Worker started TASK-023-LOCAL-MAIL-DELIVERY-VERIFY",
+  "latest_status": "TASK_023_SYNC_REPAIRED_WAITING_TASK_025",
+  "latest_commit": "9e23453 2026-06-29 Worker processed TASK-023-LOCAL-MAIL-DELIVERY-VERIFY",
   "last_worker_check": "2026-06-29T20:14:53+08:00 / completed / TASK-023-LOCAL-MAIL-DELIVERY-VERIFY",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {
@@ -41,9 +41,25 @@
     "night_warm_seconds": 600,
     "night_idle_seconds": 1800
   },
-  "current_task": null,
+  "current_task": {
+    "id": "TASK-025-DIRECT-QQ-MAIL-TEST",
+    "status": "pending",
+    "type": "local_status_check",
+    "title": "Direct QQ mail test",
+    "request": "Send one direct test email to recipient written as `541588613 [at] qq [dot] com`. Convert it locally to the normal mail address before sending. Use subject `CODEX-QQ-DIRECT-TEST-20260629-2045`. Body: `Codex direct QQ mail test`. After the attempt, update visible status with one of: CODEX_QQ_MAIL_SENT, CODEX_QQ_MAIL_ACCEPTED_UNVERIFIED, CODEX_QQ_MAIL_QUEUED, CODEX_QQ_MAIL_BOUNCED, CODEX_QQ_MAIL_FAILED.",
+    "result": "",
+    "safety": "repository_status_only"
+  },
   "first_running_task": null,
-  "first_pending_task": null,
+  "first_pending_task": {
+    "id": "TASK-025-DIRECT-QQ-MAIL-TEST",
+    "status": "pending",
+    "type": "local_status_check",
+    "title": "Direct QQ mail test",
+    "request": "Send one direct test email to recipient written as `541588613 [at] qq [dot] com`. Convert it locally to the normal mail address before sending. Use subject `CODEX-QQ-DIRECT-TEST-20260629-2045`. Body: `Codex direct QQ mail test`. After the attempt, update visible status with one of: CODEX_QQ_MAIL_SENT, CODEX_QQ_MAIL_ACCEPTED_UNVERIFIED, CODEX_QQ_MAIL_QUEUED, CODEX_QQ_MAIL_BOUNCED, CODEX_QQ_MAIL_FAILED.",
+    "result": "",
+    "safety": "repository_status_only"
+  },
   "latest_completed_task": {
     "id": "TASK-023-LOCAL-MAIL-DELIVERY-VERIFY",
     "status": "completed",
@@ -58,5 +74,5 @@
     "has_unresolved": false,
     "items": []
   },
-  "next_action": "ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。"
+  "next_action": "本机 worker 下一轮应执行第一个待处理安全任务。"
 }

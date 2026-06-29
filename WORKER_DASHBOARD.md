@@ -1,31 +1,31 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-06-29 20:14:53 +0800`
+Last dashboard update: `2026-06-29 20:28:23 +0800`
 
 | Item | Result |
 |---|---|
-| Worker state | IDLE |
+| Worker state | WAITING_FOR_WORKER |
 | Visible scaffold | SCAFFOLD_READY |
 | Local review trigger | LOCAL_REVIEW_TRIGGER_DRY_RUN_READY |
 | Local review input | GPT_LOCAL_REVIEW_INPUT.md |
-| Worker mode | IDLE |
-| Current poll interval | 600s |
-| Consecutive idle checks | 6 |
-| Polling reason | idle backoff after 6 checks |
+| Worker mode | ACTIVE |
+| Current poll interval | 60s |
+| Consecutive idle checks | 0 |
+| Polling reason | unresolved blocker detected |
 | Night quiet window | 22:00-08:00 active=False |
 | Night poll interval | warm 600s, idle 1800s |
-| Current task | None |
-| First pending task | None |
+| Current task | TASK-025-DIRECT-QQ-MAIL-TEST (pending) - Direct QQ mail test |
+| First pending task | TASK-025-DIRECT-QQ-MAIL-TEST (pending) - Direct QQ mail test |
 | Latest completed task | TASK-023-LOCAL-MAIL-DELIVERY-VERIFY (completed) - Local worker mail delivery verification / codex exec completed |
 | Latest failed or blocked task | None |
-| Latest status | WORKER_COMPLETED |
+| Latest status | TASK_023_SYNC_REPAIRED_WAITING_TASK_025 |
 | Last worker check | 2026-06-29T20:14:53+08:00 / completed / TASK-023-LOCAL-MAIL-DELIVERY-VERIFY |
 | Latest report | REPORTS/first_complete_simulation_report.md |
-| Latest push/commit | 552580c 2026-06-29 Worker started TASK-023-LOCAL-MAIL-DELIVERY-VERIFY |
+| Latest push/commit | 9e23453 2026-06-29 Worker processed TASK-023-LOCAL-MAIL-DELIVERY-VERIFY |
 | Worker poll interval | active 30s, warm 60s, idle 600s |
 | Decision required | No unresolved item |
 | Safety mode | PHASE_1_SIMULATION_ONLY |
-| Next action | ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。 |
+| Next action | 本机 worker 下一轮应执行第一个待处理安全任务。 |
 
 ## Links
 

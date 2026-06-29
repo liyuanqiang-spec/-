@@ -761,3 +761,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: local_review_trigger_dry_run
 - Detail: LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for Worker processed TASK-023-LOCAL-MAIL-DELIVERY-VERIFY
+
+## 2026-06-29 20:27:16 +0800
+
+- Event: task_023_sync_repaired
+- Detail: Rebasing over the latest GitHub queue updates succeeded; TASK-025-DIRECT-QQ-MAIL-TEST remains pending for the worker.
