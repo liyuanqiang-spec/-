@@ -1,35 +1,35 @@
 # GPT Local Review Input
 
 - Marker: `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`
-- Generated at: `2026-06-29T19:36:27+08:00`
+- Generated at: `2026-06-29T20:14:53+08:00`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Scope: repository-local deterministic dry run only.
 - Network calls: none.
 - Task creation: disabled; this file does not append or propose queue mutations.
-- Trigger: Worker processed TASK-022-LOCAL-MAIL-RETRY
+- Trigger: Worker processed TASK-023-LOCAL-MAIL-DELIVERY-VERIFY
 
 ## Compact Worker State
 
-- Worker state: `BLOCKED`
+- Worker state: `IDLE`
 - Visible scaffold: `SCAFFOLD_READY`
-- Worker mode: `ACTIVE`
+- Worker mode: `IDLE`
 - Current task: none
-- Latest completed task: TASK-022-LOCAL-MAIL-RETRY (completed) - Local worker mail retry | codex exec completed
-- Decision required: yes - Task TASK-020-GPT-INTERACTIVE-REPLY contains a blocked trading/fund/secret/deletion/danger risk
+- Latest completed task: TASK-023-LOCAL-MAIL-DELIVERY-VERIFY (completed) - Local worker mail delivery verification | codex exec completed
+- Decision required: none
 - Latest status marker: `WORKER_COMPLETED`
 
 ## Recent Run Events
 
-- 2026-06-29 19:32:07 +0800 / blocked / worker sync failed at pull stage
-- 2026-06-29 19:32:48 +0800 / started / Task TASK-022-LOCAL-MAIL-RETRY started
-- 2026-06-29 19:32:53 +0800 / attempt / Task TASK-022-LOCAL-MAIL-RETRY codex exec attempt 1/3
-- 2026-06-29 19:34:47 +0800 / TASK-022 completed / LOCAL_WORKER_MAIL_SENT; local mail retry was accepted by `/usr/bin/mail` using the prior repo-visible successful local mail-test recipient, without writing or printing recipient data or local configuration.
-- 2026-06-29 19:36:27 +0800 / completed / Task TASK-022-LOCAL-MAIL-RETRY completed
+- 2026-06-29 20:00:00 +0800 / default_mail_rule_configured / Added a private local default recipient file and a safe mail helper that reports only status markers without printing or committing the recipient value.
+- 2026-06-29 20:11:22 +0800 / started / Task TASK-023-LOCAL-MAIL-DELIVERY-VERIFY started
+- 2026-06-29 20:11:26 +0800 / attempt / Task TASK-023-LOCAL-MAIL-DELIVERY-VERIFY codex exec attempt 1/3
+- 2026-06-29 20:13:37 +0800 / TASK-023 completed / LOCAL_WORKER_MAIL_DELIVERY_SENT; subject marker `CODEX-DELIVERY-TEST-20260629-2030`; local default mail helper returned `LOCAL_DEFAULT_MAIL_SENT`; local queue report was attempted but blocked by sandbox permi...
+- 2026-06-29 20:14:53 +0800 / completed / Task TASK-023-LOCAL-MAIL-DELIVERY-VERIFY completed
 
 ## Review Packet Summary
 
-- Status: BLOCKED
-- Latest completed task: TASK-022-LOCAL-MAIL-RETRY (completed) - Local worker mail retry | codex exec completed
+- Status: IDLE
+- Latest completed task: TASK-023-LOCAL-MAIL-DELIVERY-VERIFY (completed) - Local worker mail delivery verification | codex exec completed
 
 ## Inputs Used
 

@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-06-29T20:11:22+08:00",
-  "state": "running",
-  "detail": "Task TASK-023-LOCAL-MAIL-DELIVERY-VERIFY started",
+  "timestamp": "2026-06-29T20:14:53+08:00",
+  "state": "completed",
+  "detail": "Task TASK-023-LOCAL-MAIL-DELIVERY-VERIFY completed",
   "task": "TASK-023-LOCAL-MAIL-DELIVERY-VERIFY",
   "interval_seconds": 600,
   "idle_poll_interval_seconds": 600,

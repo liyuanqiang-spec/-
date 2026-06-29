@@ -741,3 +741,23 @@ This file records safe worker runs and Codex execution events.
 
 - Event: started
 - Detail: Task TASK-023-LOCAL-MAIL-DELIVERY-VERIFY started
+
+## 2026-06-29 20:11:26 +0800
+
+- Event: attempt
+- Detail: Task TASK-023-LOCAL-MAIL-DELIVERY-VERIFY codex exec attempt 1/3
+
+## 2026-06-29 20:13:37 +0800
+
+- Event: TASK-023 completed
+- Detail: LOCAL_WORKER_MAIL_DELIVERY_SENT; subject marker `CODEX-DELIVERY-TEST-20260629-2030`; local default mail helper returned `LOCAL_DEFAULT_MAIL_SENT`; local queue report was attempted but blocked by sandbox permission for `/usr/sbin/postqueue`; no local bounce or failure signal was found; no recipient value or local configuration was written or printed.
+
+## 2026-06-29 20:14:53 +0800
+
+- Event: completed
+- Detail: Task TASK-023-LOCAL-MAIL-DELIVERY-VERIFY completed
+
+## 2026-06-29 20:14:53 +0800
+
+- Event: local_review_trigger_dry_run
+- Detail: LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for Worker processed TASK-023-LOCAL-MAIL-DELIVERY-VERIFY

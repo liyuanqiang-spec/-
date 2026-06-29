@@ -970,3 +970,21 @@ Status: `WORKER_RUNNING`
 
 - Detail: Task TASK-023-LOCAL-MAIL-DELIVERY-VERIFY started
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 20:13:37 +0800
+
+Status: `TASK_023_COMPLETED`
+
+- Detail: TASK-023-LOCAL-MAIL-DELIVERY-VERIFY completed with `LOCAL_WORKER_MAIL_DELIVERY_SENT`; subject marker `CODEX-DELIVERY-TEST-20260629-2030`; local default mail helper returned `LOCAL_DEFAULT_MAIL_SENT`.
+- Delivery checks: local queue report was attempted but blocked by sandbox permission for `/usr/sbin/postqueue`; no local bounce or failure signal was found in checked local mailbox paths.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no dangerous sandbox, and no git add/commit/push inside codex exec.
+- Recipient handling: no recipient value or local configuration was written or printed.
+- Confirmation required: no.
+
+## Worker Update 2026-06-29 20:14:53 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-023-LOCAL-MAIL-DELIVERY-VERIFY completed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
