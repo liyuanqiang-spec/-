@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T11:38:39+08:00",
+  "generated_at": "2026-06-29T11:44:04+08:00",
   "state": "IDLE",
   "visible_scaffold": {
     "state": "SCAFFOLD_READY",
@@ -13,16 +13,16 @@
   "adaptive_polling": {
     "mode": "WARM",
     "interval_seconds": 60,
-    "consecutive_idle_checks": 1,
+    "consecutive_idle_checks": 0,
     "idle_backoff_after_checks": 5,
-    "warm_remaining_checks": 2,
-    "reason": "warm after activity (2 checks left)",
-    "timestamp": "2026-06-29T11:37:27+08:00"
+    "warm_remaining_checks": 3,
+    "reason": "unresolved blocker detected",
+    "timestamp": "2026-06-29T11:43:42+08:00"
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "GPT_HANDSHAKE_OK",
-  "latest_commit": "4bc35d7 2026-06-29 Block unsafe worker task TASK-019",
-  "last_worker_check": "2026-06-29T11:38:39+08:00 / completed / TASK-019A",
+  "latest_status": "LOCAL_SUPERVISOR_LOOP_VERIFIED",
+  "latest_commit": "54ee6e1 2026-06-29 Add safe local supervisor loop handshake",
+  "last_worker_check": "2026-06-29T11:38:44+08:00 / blocked",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {
     "idle_seconds": 600,

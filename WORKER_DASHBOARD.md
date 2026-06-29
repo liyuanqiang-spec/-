@@ -1,6 +1,6 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-06-29 11:38:39 +0800`
+Last dashboard update: `2026-06-29 11:44:04 +0800`
 
 | Item | Result |
 |---|---|
@@ -10,16 +10,16 @@ Last dashboard update: `2026-06-29 11:38:39 +0800`
 | Local review input | GPT_LOCAL_REVIEW_INPUT.md |
 | Worker mode | WARM |
 | Current poll interval | 60s |
-| Consecutive idle checks | 1 |
-| Polling reason | warm after activity (2 checks left) |
+| Consecutive idle checks | 0 |
+| Polling reason | unresolved blocker detected |
 | Current task | None |
 | First pending task | None |
 | Latest completed task | TASK-019A (completed) - Verify local supervisor loop / GPT handshake completed by local worker |
 | Latest failed or blocked task | TASK-019 (decision_required) - Verify Mac mini GPT-Codex supervisor loop / blocked by risk control |
-| Latest status | GPT_HANDSHAKE_OK |
-| Last worker check | 2026-06-29T11:38:39+08:00 / completed / TASK-019A |
+| Latest status | LOCAL_SUPERVISOR_LOOP_VERIFIED |
+| Last worker check | 2026-06-29T11:38:44+08:00 / blocked |
 | Latest report | REPORTS/first_complete_simulation_report.md |
-| Latest push/commit | 4bc35d7 2026-06-29 Block unsafe worker task TASK-019 |
+| Latest push/commit | 54ee6e1 2026-06-29 Add safe local supervisor loop handshake |
 | Worker poll interval | active 30s, warm 60s, idle 600s |
 | Decision required | No unresolved item |
 | Safety mode | PHASE_1_SIMULATION_ONLY |

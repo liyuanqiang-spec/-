@@ -621,3 +621,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: blocked
 - Detail: worker sync failed at push stage for Worker completed GPT handshake TASK-019A
+
+## 2026-06-29 11:42:00 +0800
+
+- Event: push_recovered
+- Detail: Worker output for TASK-019A is now on GitHub; local supervisor loop verified.
