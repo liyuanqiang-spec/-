@@ -1,0 +1,65 @@
+name: GPT Supervisor
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repo-agent-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  supervise:
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check OpenAI key
+        id: key
+        shell: bash
+        run: |
+          if [ -n "$OPENAI_API_KEY" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+            echo "OPENAI_API_KEY present: True"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "OPENAI_API_KEY present: False"
+          fi
+
+      - name: Run GPT supervisor
+        if: steps.key.outputs.present == 'true'
+        run: python scripts/gpt_supervisor.py
+
+      - name: Skip without key
+        if: steps.key.outputs.present != 'true'
+        run: echo "OPENAI_API_KEY present: False; add repository secret OPENAI_API_KEY to enable cloud supervision."
+
+      - name: Commit supervisor outputs
+        if: steps.key.outputs.present == 'true'
+        shell: bash
+        run: |
+          if ! git diff --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "Run GPT supervisor"
+            git pull --rebase
+            git push
+          else
+            echo "No supervisor changes to commit."
+          fi
