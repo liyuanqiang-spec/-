@@ -736,3 +736,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: default_mail_rule_configured
 - Detail: Added a private local default recipient file and a safe mail helper that reports only status markers without printing or committing the recipient value.
+
+## 2026-06-29 20:11:22 +0800
+
+- Event: started
+- Detail: Task TASK-023-LOCAL-MAIL-DELIVERY-VERIFY started

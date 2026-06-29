@@ -963,3 +963,10 @@ Status: `DEFAULT_MAIL_RULE_CONFIGURED`
 
 - Detail: The Mac mini now has a private default mail recipient file and a repository helper script for safe GPT-requested test/status emails. The recipient value is not written to the public repository.
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 20:11:22 +0800
+
+Status: `WORKER_RUNNING`
+
+- Detail: Task TASK-023-LOCAL-MAIL-DELIVERY-VERIFY started
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
