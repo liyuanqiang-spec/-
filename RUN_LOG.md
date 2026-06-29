@@ -731,3 +731,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: local_review_trigger_dry_run
 - Detail: LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for Worker processed TASK-022-LOCAL-MAIL-RETRY
+
+## 2026-06-29 20:00:00 +0800
+
+- Event: default_mail_rule_configured
+- Detail: Added a private local default recipient file and a safe mail helper that reports only status markers without printing or committing the recipient value.

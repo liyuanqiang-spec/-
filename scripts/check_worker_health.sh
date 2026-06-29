@@ -39,6 +39,7 @@ for path in \
   scripts/stop_health_guard.sh \
   scripts/worker_health_status.sh \
   scripts/render_supervisor_conversation.py \
+  scripts/send_default_mail.py \
   scripts/supervisor_conversation_monitor.sh \
   scripts/open_supervisor_conversation.sh; do
   if [ -e "$ROOT/$path" ]; then

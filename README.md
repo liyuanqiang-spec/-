@@ -45,6 +45,15 @@ scripts/codex_worker.sh --dry-run
 scripts/check_worker_health.sh
 ```
 
+Default safe mail helper:
+
+```bash
+python3 scripts/send_default_mail.py --subject "Codex status" --body "status text"
+```
+
+The recipient is stored locally outside the public repository. The helper must
+not print or commit the recipient value.
+
 Manual on-demand health check:
 
 ```bash

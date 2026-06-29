@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T19:53:27+08:00",
+  "generated_at": "2026-06-29T20:00:08+08:00",
   "state": "IDLE",
   "visible_scaffold": {
     "state": "SCAFFOLD_READY",
@@ -11,11 +11,11 @@
     "reason": "local deterministic dry-run artifact is present"
   },
   "adaptive_polling": {
-    "mode": "WARM",
-    "interval_seconds": 60,
-    "consecutive_idle_checks": 0,
+    "mode": "IDLE",
+    "interval_seconds": 600,
+    "consecutive_idle_checks": 5,
     "idle_backoff_after_checks": 5,
-    "warm_remaining_checks": 3,
+    "warm_remaining_checks": 0,
     "night_quiet_window": {
       "enabled": true,
       "active": false,
@@ -24,12 +24,12 @@
       "warm_poll_seconds": 600,
       "idle_poll_seconds": 1800
     },
-    "reason": "TASK-022 sync repaired; warm mode after activity",
-    "timestamp": "2026-06-29T19:53:24+08:00"
+    "reason": "idle backoff after 5 checks",
+    "timestamp": "2026-06-29T19:58:32+08:00"
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "WORKER_COMPLETED",
-  "latest_commit": "0df9a42 2026-06-29 Worker processed TASK-022-LOCAL-MAIL-RETRY",
+  "latest_status": "DEFAULT_MAIL_RULE_CONFIGURED",
+  "latest_commit": "be0ad09 2026-06-29 Sync TASK-022 completion and clear stale decisions",
   "last_worker_check": "2026-06-29T19:36:27+08:00 / completed / TASK-022-LOCAL-MAIL-RETRY",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {

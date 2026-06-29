@@ -42,6 +42,29 @@ Forbidden:
 9. Use `workspace-write` for Codex worker execution.
 10. Never use `danger-full-access` in worker execution.
 
+## Default Mail Rule
+
+If ChatGPT asks Codex to send a safe test or status email, use the local default
+mail recipient configured on this Mac mini. Do not ask the user again unless the
+local recipient file is missing or invalid.
+
+Use:
+
+```bash
+python3 scripts/send_default_mail.py --subject "<short subject>" --body "<short body>"
+```
+
+Rules:
+
+- The default recipient value lives outside this public repository.
+- Do not print, commit, or write the recipient value into repository files.
+- After sending, report only `LOCAL_DEFAULT_MAIL_SENT`, `LOCAL_DEFAULT_MAIL_FAILED`,
+  or `LOCAL_DEFAULT_MAIL_MISSING` back through `TASK_QUEUE.md`, `RUN_LOG.md`, and
+  `GPT_CODEX_CONVERSATION.md`.
+- This mail rule is only for safe status/test messages. It does not authorize
+  real trading, account access, order actions, fund movement, data deletion, or
+  secret exposure.
+
 ## GitHub Supervision Contract
 
 - ChatGPT writes or updates `TASK_QUEUE.md` on GitHub.
