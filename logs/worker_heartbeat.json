@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-06-29T06:21:21+08:00",
-  "state": "completed",
-  "detail": "Task TASK-018 completed",
-  "task": "TASK-018",
+  "timestamp": "2026-06-29T11:36:10+08:00",
+  "state": "blocked",
+  "detail": "Task TASK-019 blocked by risk control",
+  "task": "TASK-019",
   "interval_seconds": 600,
   "idle_poll_interval_seconds": 600,
   "active_poll_interval_seconds": 30,

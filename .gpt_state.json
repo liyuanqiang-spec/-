@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-29T11:29:12+08:00",
-  "state": "WAITING_FOR_WORKER",
+  "generated_at": "2026-06-29T11:36:10+08:00",
+  "state": "BLOCKED",
   "visible_scaffold": {
     "state": "SCAFFOLD_READY",
     "reason": "visible scaffold artifacts are present"
@@ -11,8 +11,8 @@
     "reason": "local deterministic dry-run artifact is present"
   },
   "adaptive_polling": {
-    "mode": "ACTIVE",
-    "interval_seconds": 30,
+    "mode": "WARM",
+    "interval_seconds": 60,
     "consecutive_idle_checks": 0,
     "idle_backoff_after_checks": 5,
     "warm_remaining_checks": 0,
@@ -20,34 +20,18 @@
     "timestamp": ""
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "WORKER_COMPLETED",
-  "latest_commit": "15c7bda 2026-06-29 Add one click fallback status",
-  "last_worker_check": "2026-06-29T06:21:21+08:00 / completed / TASK-018",
-  "latest_report": "REPORTS/tick_file_smoke_report.md",
+  "latest_status": "DECISION_REQUIRED",
+  "latest_commit": "1f6d09c 2026-06-29 Enable local GPT Codex supervisor loop",
+  "last_worker_check": "2026-06-29T11:36:10+08:00 / blocked / TASK-019",
+  "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {
     "idle_seconds": 600,
     "active_seconds": 30,
     "warm_seconds": 60
   },
-  "current_task": {
-    "id": "TASK-019",
-    "status": "pending",
-    "type": "status_check",
-    "title": "Verify Mac mini GPT-Codex supervisor loop",
-    "request": "Repository-status-only handshake. Verify that the Mac mini worker can receive a ChatGPT-created task from `TASK_QUEUE.md`, mark it completed, refresh visible status files, generate local GPT review handoff, and push the result. Do not call brokers, exchanges, trading accounts, paid APIs, or outside services except normal GitHub pull/commit/push already used by the worker. Do not expose secrets. Do not use `danger-full-access`.",
-    "result": "pending",
-    "safety": "repository_status_only"
-  },
+  "current_task": null,
   "first_running_task": null,
-  "first_pending_task": {
-    "id": "TASK-019",
-    "status": "pending",
-    "type": "status_check",
-    "title": "Verify Mac mini GPT-Codex supervisor loop",
-    "request": "Repository-status-only handshake. Verify that the Mac mini worker can receive a ChatGPT-created task from `TASK_QUEUE.md`, mark it completed, refresh visible status files, generate local GPT review handoff, and push the result. Do not call brokers, exchanges, trading accounts, paid APIs, or outside services except normal GitHub pull/commit/push already used by the worker. Do not expose secrets. Do not use `danger-full-access`.",
-    "result": "pending",
-    "safety": "repository_status_only"
-  },
+  "first_pending_task": null,
   "latest_completed_task": {
     "id": "TASK-018",
     "status": "completed",
@@ -58,17 +42,19 @@
     "safety": "repository_status_only"
   },
   "latest_failed_or_blocked_task": {
-    "id": "TASK-014",
+    "id": "TASK-019",
     "status": "decision_required",
-    "type": "visible_status_alignment",
-    "title": "Show scaffold readiness in GPT visible status",
-    "request": "Keep this repository-status-only. Update the visible review scaffold so `GPT_VISIBLE_STATUS.md` displays the scaffold state explicitly when the scaffold is ready. The file should show `SCAFFOLD_READY` when `GPT_REVIEW.md` has a successful visible-review scaffold block, `WORKER_BUSY` when a safe worker task is running, and `FAILED_WITH_REASON` when the local scaffold check fails. Do not call outside services. Do not read or print secrets. Do not edit strategy code, trading logic, data, or reports except the status/review files. Refresh `GPT_VISIBLE_STATUS.md`, `GPT_REVIEW.md`, `WORKER_DASHBOARD.md`, `STATUS.md`, and `RUN_LOG.md`.",
-    "result": "blocked by risk control.",
+    "type": "status_check",
+    "title": "Verify Mac mini GPT-Codex supervisor loop",
+    "request": "Repository-status-only handshake. Verify that the Mac mini worker can receive a ChatGPT-created task from `TASK_QUEUE.md`, mark it completed, refresh visible status files, generate local GPT review handoff, and push the result. Do not call brokers, exchanges, trading accounts, paid APIs, or outside services except normal GitHub pull/commit/push already used by the worker. Do not expose secrets. Do not use `danger-full-access`.",
+    "result": "blocked by risk control",
     "safety": "repository_status_only"
   },
   "decision_required": {
-    "has_unresolved": false,
-    "items": []
+    "has_unresolved": true,
+    "items": [
+      "Task TASK-019 contains a blocked trading/fund/secret/deletion/danger risk"
+    ]
   },
-  "next_action": "本机 worker 下一轮应执行第一个待处理安全任务。"
+  "next_action": "人工处理 DECISION_REQUIRED.md 中未解决事项，然后重新刷新状态。"
 }

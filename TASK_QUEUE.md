@@ -268,12 +268,12 @@ The task is complete only when:
 - Result: codex exec completed
 
 ### TASK-019
-- Status: pending
+- Status: decision_required
 - Type: status_check
 - Title: Verify Mac mini GPT-Codex supervisor loop
 - Request: Repository-status-only handshake. Verify that the Mac mini worker can receive a ChatGPT-created task from `TASK_QUEUE.md`, mark it completed, refresh visible status files, generate local GPT review handoff, and push the result. Do not call brokers, exchanges, trading accounts, paid APIs, or outside services except normal GitHub pull/commit/push already used by the worker. Do not expose secrets. Do not use `danger-full-access`.
 - Expected output: `TASK_QUEUE.md` marks TASK-019 completed, `STATUS.md` records `GPT_HANDSHAKE_OK`, `RUN_LOG.md` records the handshake, `GPT_VISIBLE_STATUS.md` and `WORKER_DASHBOARD.md` show the updated worker state, and `GPT_LOCAL_REVIEW_INPUT.md` remains visible.
 - Safety: repository_status_only
 - Created: 2026-06-29
-- Last update: pending
-- Result: pending
+- Last update: updated by worker
+- Result: blocked by risk control
