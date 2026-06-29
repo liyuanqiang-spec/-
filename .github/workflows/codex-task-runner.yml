@@ -1,0 +1,91 @@
+name: Codex Task Runner
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "37 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repo-agent-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  codex_task_runner:
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Check OpenAI key
+        id: key
+        shell: bash
+        run: |
+          if [ -n "$OPENAI_API_KEY" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+            echo "OPENAI_API_KEY present: True"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "OPENAI_API_KEY present: False"
+          fi
+
+      - name: Check task queue
+        id: queue
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import os
+          import re
+
+          text = Path("TASK_QUEUE.md").read_text(encoding="utf-8") if Path("TASK_QUEUE.md").exists() else ""
+          sections = re.findall(r"^###\s+(TASK-[A-Za-z0-9-]+)(.*?)(?=^###\s+TASK-|\Z)", text, flags=re.M | re.S)
+          pending = ""
+          for task_id, body in sections:
+              m = re.search(r"^- Status:\s*([^\n]+)", body, flags=re.M)
+              if m and m.group(1).strip().lower() == "pending":
+                  pending = task_id
+                  break
+          has_pending = "true" if pending else "false"
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
+              fh.write(f"has_pending={has_pending}\n")
+              fh.write(f"task_id={pending}\n")
+          print(f"first_pending_task={pending or 'none'}")
+          PY
+
+      - name: Run Codex on first pending task
+        id: run_codex
+        if: steps.key.outputs.present == 'true' && steps.queue.outputs.has_pending == 'true'
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt-file: .github/codex/prompts/execute-task.md
+          output-file: codex-output.md
+          sandbox: workspace-write
+          safety-strategy: drop-sudo
+
+      - name: Skip Codex run
+        if: steps.key.outputs.present != 'true' || steps.queue.outputs.has_pending != 'true'
+        run: |
+          echo "Codex skipped. key_present=${{ steps.key.outputs.present }} has_pending=${{ steps.queue.outputs.has_pending }} task=${{ steps.queue.outputs.task_id }}"
+
+      - name: Commit Codex outputs
+        if: steps.key.outputs.present == 'true' && steps.queue.outputs.has_pending == 'true'
+        shell: bash
+        run: |
+          if ! git diff --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "Run Codex task ${{ steps.queue.outputs.task_id }}"
+            git pull --rebase
+            git push
+          else
+            echo "No Codex changes to commit."
+          fi
