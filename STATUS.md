@@ -890,3 +890,10 @@ Status: `DECISION_REQUIRED`
 
 - Detail: Task TASK-020-GPT-INTERACTIVE-REPLY blocked by risk control
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 19:15:04 +0800
+
+Status: `WORKER_RUNNING`
+
+- Detail: Task TASK-021-LOCAL-MAIL-SMOKE started
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

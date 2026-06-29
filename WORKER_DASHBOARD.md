@@ -1,31 +1,31 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-06-29 17:11:58 +0800`
+Last dashboard update: `2026-06-29 19:15:04 +0800`
 
 | Item | Result |
 |---|---|
-| Worker state | BLOCKED |
-| Visible scaffold | SCAFFOLD_READY |
+| Worker state | WORKING |
+| Visible scaffold | WORKER_BUSY |
 | Local review trigger | LOCAL_REVIEW_TRIGGER_DRY_RUN_READY |
 | Local review input | GPT_LOCAL_REVIEW_INPUT.md |
-| Worker mode | WARM |
-| Current poll interval | 600s |
-| Consecutive idle checks | 7 |
-| Polling reason | idle backoff after 7 checks |
+| Worker mode | ACTIVE |
+| Current poll interval | 60s |
+| Consecutive idle checks | 0 |
+| Polling reason | unresolved blocker detected |
 | Night quiet window | 22:00-08:00 active=False |
 | Night poll interval | warm 600s, idle 1800s |
-| Current task | None |
+| Current task | TASK-021-LOCAL-MAIL-SMOKE (running) - Local worker visible smoke check / worker started |
 | First pending task | None |
 | Latest completed task | TASK-019A (completed) - Verify local supervisor loop / GPT handshake completed by local worker |
-| Latest failed or blocked task | TASK-020-GPT-INTERACTIVE-REPLY (decision_required) - GPT interactive reply to Codex / blocked by risk control |
-| Latest status | DECISION_REQUIRED |
-| Last worker check | 2026-06-29T17:11:58+08:00 / blocked / TASK-020-GPT-INTERACTIVE-REPLY |
+| Latest failed or blocked task | TASK-020-GPT-INTERACTIVE-REPLY (decision_required) - GPT interactive reply to local worker / blocked by local guard |
+| Latest status | WORKER_RUNNING |
+| Last worker check | 2026-06-29T19:15:04+08:00 / running / TASK-021-LOCAL-MAIL-SMOKE |
 | Latest report | REPORTS/software_progress_audit.md |
-| Latest push/commit | ec7cb73 2026-06-29 Append GPT interactive reply task |
+| Latest push/commit | d88bd2f 2026-06-29 Queue local worker mail smoke test |
 | Worker poll interval | active 30s, warm 60s, idle 600s |
 | Decision required | Yes - Task TASK-020-GPT-INTERACTIVE-REPLY contains a blocked trading/fund/secret/deletion/danger risk |
 | Safety mode | PHASE_1_SIMULATION_ONLY |
-| Next action | 人工处理 DECISION_REQUIRED.md 中未解决事项，然后重新刷新状态。 |
+| Next action | 等待当前任务完成；worker 会在完成、失败或阻塞后推送状态。 |
 
 ## Links
 

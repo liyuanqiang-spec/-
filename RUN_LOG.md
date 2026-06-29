@@ -666,3 +666,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: blocked
 - Detail: Task TASK-020-GPT-INTERACTIVE-REPLY blocked by risk control
+
+## 2026-06-29 19:15:04 +0800
+
+- Event: started
+- Detail: Task TASK-021-LOCAL-MAIL-SMOKE started
