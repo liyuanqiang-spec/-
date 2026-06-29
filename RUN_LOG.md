@@ -766,3 +766,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: task_023_sync_repaired
 - Detail: Rebasing over the latest GitHub queue updates succeeded; TASK-025-DIRECT-QQ-MAIL-TEST remains pending for the worker.
+
+## 2026-06-29 20:30:30 +0800
+
+- Event: started
+- Detail: Task TASK-025-DIRECT-QQ-MAIL-TEST started

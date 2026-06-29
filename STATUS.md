@@ -995,3 +995,10 @@ Status: `TASK_023_SYNC_REPAIRED_WAITING_TASK_025`
 
 - Detail: TASK-023 completion was rebased over the latest GitHub queue updates. TASK-025-DIRECT-QQ-MAIL-TEST is now the next pending safe local status task.
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 20:30:30 +0800
+
+Status: `WORKER_RUNNING`
+
+- Detail: Task TASK-025-DIRECT-QQ-MAIL-TEST started
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
