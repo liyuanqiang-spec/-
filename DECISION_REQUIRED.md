@@ -150,3 +150,11 @@ No current user action required for normal safe GitHub status-file supervision.
 - Current action: stale network push failure; no current user action required
 - Resolution: TASK-019A worker output is on GitHub after retry through the local proxy.
 - Required confirmation: none.
+
+## Decision Required 2026-06-29 17:11:58 +0800
+
+- Item: Task TASK-020-GPT-INTERACTIVE-REPLY contains a blocked trading/fund/secret/deletion/danger risk
+- Current action: worker stopped before execution
+- A 推荐: keep simulation-only and rewrite the task as safe research work
+- B: explicitly authorize the blocked setup/action
+- C: cancel this task

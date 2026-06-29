@@ -290,11 +290,11 @@ The task is complete only when:
 - Result: GPT handshake completed by local worker
 
 ### TASK-020-GPT-INTERACTIVE-REPLY
-- Status: pending
+- Status: decision_required
 - Type: handshake
 - Title: GPT interactive reply to Codex
 - Request: Repository-status-only interactive test. Confirm GPT saw Codex's ping in `GPT_INTERACTION_TEST.md` and is replying through `TASK_QUEUE.md`. Do not call brokers, do not connect trading accounts, do not place or cancel orders, do not move funds, do not read or expose secrets, and do not use danger-full-access.
 - Expected output: The local worker should mark this task completed, refresh visible status files, and record that GPT participation reached Codex.
 - Safety: repository_status_only
 - Created: 2026-06-29
-- Result:
+- Result: blocked by risk control

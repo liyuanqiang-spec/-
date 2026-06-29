@@ -883,3 +883,10 @@ Status: `GPT_INTERACTION_TEST_READY`
 
 - Detail: Codex prepared a repository-only GPT participation test. GPT should reply by appending the pending handshake task described in `GPT_INTERACTION_TEST.md`.
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 17:11:58 +0800
+
+Status: `DECISION_REQUIRED`
+
+- Detail: Task TASK-020-GPT-INTERACTIVE-REPLY blocked by risk control
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

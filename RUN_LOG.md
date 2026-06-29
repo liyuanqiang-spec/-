@@ -661,3 +661,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: gpt_interaction_test_ready
 - Detail: Codex prepared a repository-only GPT participation test and asked GPT to append the specified handshake task to TASK_QUEUE.md.
+
+## 2026-06-29 17:11:58 +0800
+
+- Event: blocked
+- Detail: Task TASK-020-GPT-INTERACTIVE-REPLY blocked by risk control

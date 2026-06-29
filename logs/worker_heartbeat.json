@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-06-29T16:59:57+08:00",
-  "state": "idle",
-  "detail": "GPT interaction test ready; waiting for GPT to append a safe handshake task",
-  "task": "none",
+  "timestamp": "2026-06-29T17:11:58+08:00",
+  "state": "blocked",
+  "detail": "Task TASK-020-GPT-INTERACTIVE-REPLY blocked by risk control",
+  "task": "TASK-020-GPT-INTERACTIVE-REPLY",
   "interval_seconds": 600,
   "idle_poll_interval_seconds": 600,
   "active_poll_interval_seconds": 30,
