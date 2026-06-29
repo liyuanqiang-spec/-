@@ -932,3 +932,19 @@ Status: `WORKER_RUNNING`
 
 - Detail: Task TASK-022-LOCAL-MAIL-RETRY started
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 19:34:47 +0800
+
+Status: `TASK_022_COMPLETED`
+
+- Detail: TASK-022-LOCAL-MAIL-RETRY completed with `LOCAL_WORKER_MAIL_SENT`; `/usr/bin/mail` accepted the retry using the prior repo-visible successful local mail-test recipient. No recipient value or local configuration was written or printed.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no dangerous sandbox, and no git add/commit/push inside codex exec.
+- Confirmation required: no.
+
+## Worker Update 2026-06-29 19:36:27 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-022-LOCAL-MAIL-RETRY completed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

@@ -142,14 +142,14 @@ Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
 ## Local Review Trigger Dry Run
 
 - Marker: `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`
-- Generated at: `2026-06-29T19:25:53+08:00`
+- Generated at: `2026-06-29T19:36:27+08:00`
 - Input file: `GPT_LOCAL_REVIEW_INPUT.md`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Default state: disabled unless `LOCAL_REVIEW_TRIGGER_DRY_RUN_ENABLED=1` is set for the worker before the final commit.
 - Network calls: none.
 - Task append: none.
-- Trigger: Worker processed TASK-021-LOCAL-MAIL-SMOKE
+- Trigger: Worker processed TASK-022-LOCAL-MAIL-RETRY
 - Worker state: `BLOCKED`
-- Latest completed task: TASK-021-LOCAL-MAIL-SMOKE (completed) - Local worker visible smoke check | codex exec completed
+- Latest completed task: TASK-022-LOCAL-MAIL-RETRY (completed) - Local worker mail retry | codex exec completed
 - Decision required: yes - Task TASK-020-GPT-INTERACTIVE-REPLY contains a blocked trading/fund/secret/deletion/danger risk
 <!-- local-review-trigger-dry-run:end -->

@@ -1,35 +1,35 @@
 # GPT Local Review Input
 
 - Marker: `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`
-- Generated at: `2026-06-29T19:25:53+08:00`
+- Generated at: `2026-06-29T19:36:27+08:00`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Scope: repository-local deterministic dry run only.
 - Network calls: none.
 - Task creation: disabled; this file does not append or propose queue mutations.
-- Trigger: Worker processed TASK-021-LOCAL-MAIL-SMOKE
+- Trigger: Worker processed TASK-022-LOCAL-MAIL-RETRY
 
 ## Compact Worker State
 
 - Worker state: `BLOCKED`
 - Visible scaffold: `SCAFFOLD_READY`
-- Worker mode: `WARM`
+- Worker mode: `ACTIVE`
 - Current task: none
-- Latest completed task: TASK-021-LOCAL-MAIL-SMOKE (completed) - Local worker visible smoke check | codex exec completed
+- Latest completed task: TASK-022-LOCAL-MAIL-RETRY (completed) - Local worker mail retry | codex exec completed
 - Decision required: yes - Task TASK-020-GPT-INTERACTIVE-REPLY contains a blocked trading/fund/secret/deletion/danger risk
 - Latest status marker: `WORKER_COMPLETED`
 
 ## Recent Run Events
 
-- 2026-06-29 17:11:58 +0800 / blocked / Task TASK-020-GPT-INTERACTIVE-REPLY blocked by risk control
-- 2026-06-29 19:15:04 +0800 / started / Task TASK-021-LOCAL-MAIL-SMOKE started
-- 2026-06-29 19:15:07 +0800 / attempt / Task TASK-021-LOCAL-MAIL-SMOKE codex exec attempt 1/3
-- 2026-06-29 19:23:04 +0800 / TASK-021 completed / LOCAL_WORKER_MAIL_SKIPPED_NO_RECIPIENT; local mail binary is present, but no explicit locally readable recipient configuration was available, so the worker skipped sending without writing or printing recipien...
-- 2026-06-29 19:25:53 +0800 / completed / Task TASK-021-LOCAL-MAIL-SMOKE completed
+- 2026-06-29 19:32:07 +0800 / blocked / worker sync failed at pull stage
+- 2026-06-29 19:32:48 +0800 / started / Task TASK-022-LOCAL-MAIL-RETRY started
+- 2026-06-29 19:32:53 +0800 / attempt / Task TASK-022-LOCAL-MAIL-RETRY codex exec attempt 1/3
+- 2026-06-29 19:34:47 +0800 / TASK-022 completed / LOCAL_WORKER_MAIL_SENT; local mail retry was accepted by `/usr/bin/mail` using the prior repo-visible successful local mail-test recipient, without writing or printing recipient data or local configuration.
+- 2026-06-29 19:36:27 +0800 / completed / Task TASK-022-LOCAL-MAIL-RETRY completed
 
 ## Review Packet Summary
 
 - Status: BLOCKED
-- Latest completed task: TASK-021-LOCAL-MAIL-SMOKE (completed) - Local worker visible smoke check | codex exec completed
+- Latest completed task: TASK-022-LOCAL-MAIL-RETRY (completed) - Local worker mail retry | codex exec completed
 
 ## Inputs Used
 

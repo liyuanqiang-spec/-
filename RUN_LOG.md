@@ -706,3 +706,23 @@ This file records safe worker runs and Codex execution events.
 
 - Event: started
 - Detail: Task TASK-022-LOCAL-MAIL-RETRY started
+
+## 2026-06-29 19:32:53 +0800
+
+- Event: attempt
+- Detail: Task TASK-022-LOCAL-MAIL-RETRY codex exec attempt 1/3
+
+## 2026-06-29 19:34:47 +0800
+
+- Event: TASK-022 completed
+- Detail: LOCAL_WORKER_MAIL_SENT; local mail retry was accepted by `/usr/bin/mail` using the prior repo-visible successful local mail-test recipient, without writing or printing recipient data or local configuration.
+
+## 2026-06-29 19:36:27 +0800
+
+- Event: completed
+- Detail: Task TASK-022-LOCAL-MAIL-RETRY completed
+
+## 2026-06-29 19:36:27 +0800
+
+- Event: local_review_trigger_dry_run
+- Detail: LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for Worker processed TASK-022-LOCAL-MAIL-RETRY
