@@ -27,12 +27,17 @@ print_status_summary() {
   git -C "$ROOT" log -1 --format='%h %cs %s' 2>/dev/null || printf 'unknown\n'
 }
 
+print_live_conversation() {
+  printf '\n## GPT/Codex 对话\n'
+  python3 "$ROOT/scripts/render_supervisor_conversation.py" --root "$ROOT" --stdout 2>/dev/null \
+    || printf '对话视图暂时无法刷新，请查看 %s\n' "$ROOT/GPT_CODEX_CONVERSATION.md"
+}
+
 while true; do
   clear
-  python3 "$ROOT/scripts/render_supervisor_conversation.py" --root "$ROOT" --output "$ROOT/GPT_CODEX_CONVERSATION.md" >/dev/null 2>&1 || true
   print_status_summary
   print_file_section "GPT_VISIBLE_STATUS.md" "$ROOT/GPT_VISIBLE_STATUS.md" 80
-  print_file_section "GPT/Codex 对话" "$ROOT/GPT_CODEX_CONVERSATION.md" 90
+  print_live_conversation
   print_file_section "WORKER_DASHBOARD.md" "$ROOT/WORKER_DASHBOARD.md" 80
   print_file_section "TASK_QUEUE.md 最新任务" "$ROOT/TASK_QUEUE.md" 90
   print_file_section "本机 worker 日志" "$SUPPORT_LOG" 60

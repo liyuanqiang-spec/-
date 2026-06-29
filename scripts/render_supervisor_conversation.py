@@ -166,6 +166,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--root", default=str(Path(__file__).resolve().parents[1]))
     parser.add_argument("--output", default="GPT_CODEX_CONVERSATION.md")
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--stdout", action="store_true")
     args = parser.parse_args(argv)
 
     root = Path(args.root).resolve()
@@ -178,6 +179,9 @@ def main(argv: list[str] | None = None) -> int:
             print("FAIL: dialogue timeline missing")
             return 1
         print("PASS")
+        return 0
+    if args.stdout:
+        print(content, end="")
         return 0
     output.write_text(content, encoding="utf-8")
     print(f"rendered {output}")
