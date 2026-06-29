@@ -39,3 +39,13 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Safety: repository_status_only
 - Created: 2026-06-29
 - Result: worker started
+
+### TASK-024-ADOPT-GPT-CODEX-PROTOCOL
+- Status: pending
+- Type: repo_status_setup
+- Title: Adopt GPT Codex communication protocol
+- Request: Read `GPT_CODEX_PROTOCOL.md` and `CODEX_GROUP_CHAT.md`. Update the repository status layer so future worker results append concise role-tagged messages to `CODEX_GROUP_CHAT.md` and keep `GPT_CODEX_CONVERSATION.md` user-facing. Do not change quant strategy logic or data. Keep this to repository status files and lightweight reporting scripts. Preserve PHASE_1_SIMULATION_ONLY.
+- Expected output: `CODEX_GROUP_CHAT.md` has at least one Codex-Core reply confirming adoption, `GPT_CODEX_CONVERSATION.md` references the protocol, `STATUS.md` and `RUN_LOG.md` note protocol adoption, and TASK-024 is marked completed or decision_required.
+- Safety: repository_status_only
+- Created: 2026-06-29
+- Result:
