@@ -1,0 +1,55 @@
+name: Cloud Smoke Test
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/cloud-smoke-test.yml"
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cloud-smoke-test-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Write smoke result
+        shell: bash
+        run: |
+          cat > CLOUD_ACTIONS_SMOKE.md <<EOF
+          # Cloud Actions Smoke Test
+
+          - Result: GitHub Actions runner executed this smoke test.
+          - Trigger: ${{ github.event_name }}
+          - Actor: ${{ github.actor }}
+          - SHA: ${{ github.sha }}
+          - Generated at: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+          - Secret check: not used in this smoke test.
+          - Scope: repository_status_only
+          EOF
+
+      - name: Commit smoke result
+        shell: bash
+        run: |
+          if ! git diff --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add CLOUD_ACTIONS_SMOKE.md
+            git commit -m "Record cloud actions smoke test"
+            git pull --rebase
+            git push
+          else
+            echo "No smoke test changes to commit."
+          fi
