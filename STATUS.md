@@ -834,3 +834,24 @@ Status: `LOCAL_SUPERVISOR_LOOP_VERIFIED`
 
 - Detail: TASK-019A was completed by the Mac mini worker. The worker result was pushed to GitHub after retrying through the local network proxy.
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 14:33:04 +0800
+
+Status: `BLOCKED_PULL`
+
+- Detail: git pull failed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 14:34:17 +0800
+
+Status: `BLOCKED_PULL`
+
+- Detail: git pull failed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 14:47:38 +0800
+
+Status: `PULL_RECOVERED_IDLE`
+
+- Detail: GitHub sync is recovered; local main matches origin/main and no pending safe task is waiting.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

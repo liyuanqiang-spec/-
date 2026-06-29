@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T12:39:06+08:00",
+  "generated_at": "2026-06-29T14:50:15+08:00",
   "state": "IDLE",
   "visible_scaffold": {
     "state": "SCAFFOLD_READY",
@@ -13,7 +13,7 @@
   "adaptive_polling": {
     "mode": "IDLE",
     "interval_seconds": 600,
-    "consecutive_idle_checks": 8,
+    "consecutive_idle_checks": 6,
     "idle_backoff_after_checks": 5,
     "warm_remaining_checks": 0,
     "night_quiet_window": {
@@ -24,14 +24,14 @@
       "warm_poll_seconds": 600,
       "idle_poll_seconds": 1800
     },
-    "reason": "idle backoff after 8 checks",
-    "timestamp": "2026-06-29T12:23:52+08:00"
+    "reason": "idle backoff after 6 checks",
+    "timestamp": "2026-06-29T14:41:35+08:00"
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "LOCAL_SUPERVISOR_LOOP_VERIFIED",
-  "latest_commit": "08ba194 2026-06-29 Refresh verified supervisor loop status",
-  "last_worker_check": "2026-06-29T11:45:00+08:00 / completed / TASK-019A",
-  "latest_report": "REPORTS/first_complete_simulation_report.md",
+  "latest_status": "PULL_RECOVERED_IDLE",
+  "latest_commit": "bc6b546 2026-06-29 Add silver quant software progress audit",
+  "last_worker_check": "2026-06-29T14:47:38+08:00 / idle",
+  "latest_report": "REPORTS/software_progress_audit.md",
   "worker_poll_intervals": {
     "idle_seconds": 600,
     "active_seconds": 30,

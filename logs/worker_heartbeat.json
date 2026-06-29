@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-06-29T11:45:00+08:00",
-  "state": "completed",
-  "detail": "TASK-019A pushed after retry; local supervisor loop verified",
-  "task": "TASK-019A",
+  "timestamp": "2026-06-29T14:47:38+08:00",
+  "state": "idle",
+  "detail": "GitHub sync recovered; no pending safe task",
+  "task": "none",
   "interval_seconds": 600,
   "idle_poll_interval_seconds": 600,
   "active_poll_interval_seconds": 30,

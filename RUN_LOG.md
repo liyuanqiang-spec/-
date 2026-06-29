@@ -626,3 +626,18 @@ This file records safe worker runs and Codex execution events.
 
 - Event: push_recovered
 - Detail: Worker output for TASK-019A is now on GitHub; local supervisor loop verified.
+
+## 2026-06-29 14:33:04 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-06-29 14:34:17 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-06-29 14:47:38 +0800
+
+- Event: pull_recovered
+- Detail: GitHub sync is recovered; local main matches origin/main and the worker is idle with no pending task.

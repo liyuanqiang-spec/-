@@ -1,6 +1,6 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-06-29 12:39:06 +0800`
+Last dashboard update: `2026-06-29 14:50:15 +0800`
 
 | Item | Result |
 |---|---|
@@ -10,18 +10,18 @@ Last dashboard update: `2026-06-29 12:39:06 +0800`
 | Local review input | GPT_LOCAL_REVIEW_INPUT.md |
 | Worker mode | IDLE |
 | Current poll interval | 600s |
-| Consecutive idle checks | 8 |
-| Polling reason | idle backoff after 8 checks |
+| Consecutive idle checks | 6 |
+| Polling reason | idle backoff after 6 checks |
 | Night quiet window | 22:00-08:00 active=False |
 | Night poll interval | warm 600s, idle 1800s |
 | Current task | None |
 | First pending task | None |
 | Latest completed task | TASK-019A (completed) - Verify local supervisor loop / GPT handshake completed by local worker |
 | Latest failed or blocked task | TASK-019 (decision_required) - Verify Mac mini GPT-Codex supervisor loop / blocked by risk control |
-| Latest status | LOCAL_SUPERVISOR_LOOP_VERIFIED |
-| Last worker check | 2026-06-29T11:45:00+08:00 / completed / TASK-019A |
-| Latest report | REPORTS/first_complete_simulation_report.md |
-| Latest push/commit | 08ba194 2026-06-29 Refresh verified supervisor loop status |
+| Latest status | PULL_RECOVERED_IDLE |
+| Last worker check | 2026-06-29T14:47:38+08:00 / idle |
+| Latest report | REPORTS/software_progress_audit.md |
+| Latest push/commit | bc6b546 2026-06-29 Add silver quant software progress audit |
 | Worker poll interval | active 30s, warm 60s, idle 600s |
 | Decision required | No unresolved item |
 | Safety mode | PHASE_1_SIMULATION_ONLY |
