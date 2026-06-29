@@ -671,3 +671,23 @@ This file records safe worker runs and Codex execution events.
 
 - Event: started
 - Detail: Task TASK-021-LOCAL-MAIL-SMOKE started
+
+## 2026-06-29 19:15:07 +0800
+
+- Event: attempt
+- Detail: Task TASK-021-LOCAL-MAIL-SMOKE codex exec attempt 1/3
+
+## 2026-06-29 19:23:04 +0800
+
+- Event: TASK-021 completed
+- Detail: LOCAL_WORKER_MAIL_SKIPPED_NO_RECIPIENT; local mail binary is present, but no explicit locally readable recipient configuration was available, so the worker skipped sending without writing or printing recipient data.
+
+## 2026-06-29 19:25:53 +0800
+
+- Event: completed
+- Detail: Task TASK-021-LOCAL-MAIL-SMOKE completed
+
+## 2026-06-29 19:25:53 +0800
+
+- Event: local_review_trigger_dry_run
+- Detail: LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for Worker processed TASK-021-LOCAL-MAIL-SMOKE

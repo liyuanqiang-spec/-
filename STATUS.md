@@ -897,3 +897,17 @@ Status: `WORKER_RUNNING`
 
 - Detail: Task TASK-021-LOCAL-MAIL-SMOKE started
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 19:23:04 +0800
+
+Status: `TASK_021_COMPLETED`
+
+- Detail: TASK-021-LOCAL-MAIL-SMOKE completed with `LOCAL_WORKER_MAIL_SKIPPED_NO_RECIPIENT`; local mail binary is present, but no explicit locally readable recipient configuration was available, so no email was sent and no recipient data was written or printed.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 19:25:53 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-021-LOCAL-MAIL-SMOKE completed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

@@ -19,11 +19,11 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Result: blocked by local guard
 
 ### TASK-021-LOCAL-MAIL-SMOKE
-- Status: running
+- Status: completed
 - Type: local_status_check
 - Title: Local worker visible smoke check
 - Request: Run the existing local mail smoke path from the Mac mini worker if it is available. Use only locally configured recipient data. Do not write recipient data into the repo. Do not print local configuration. Then update GPT_CODEX_CONVERSATION.md with one of these exact statuses: LOCAL_WORKER_MAIL_SENT, LOCAL_WORKER_MAIL_SKIPPED_NO_RECIPIENT, or LOCAL_WORKER_MAIL_FAILED. Also mark this task completed or decision_required.
 - Expected output: GPT_CODEX_CONVERSATION.md clearly shows GPT requested the local worker check and the local worker replied with SENT, SKIPPED, or FAILED.
 - Safety: repository_status_only
 - Created: 2026-06-29
-- Result: worker started
+- Result: codex exec completed

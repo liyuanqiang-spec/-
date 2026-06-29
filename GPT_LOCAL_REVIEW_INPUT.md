@@ -1,35 +1,35 @@
 # GPT Local Review Input
 
 - Marker: `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`
-- Generated at: `2026-06-29T11:44:04+08:00`
+- Generated at: `2026-06-29T19:25:53+08:00`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Scope: repository-local deterministic dry run only.
 - Network calls: none.
 - Task creation: disabled; this file does not append or propose queue mutations.
-- Trigger: Local supervisor loop verified and push blocker resolved
+- Trigger: Worker processed TASK-021-LOCAL-MAIL-SMOKE
 
 ## Compact Worker State
 
-- Worker state: `IDLE`
+- Worker state: `BLOCKED`
 - Visible scaffold: `SCAFFOLD_READY`
 - Worker mode: `WARM`
 - Current task: none
-- Latest completed task: TASK-019A (completed) - Verify local supervisor loop | GPT handshake completed by local worker
-- Decision required: none
-- Latest status marker: `LOCAL_SUPERVISOR_LOOP_VERIFIED`
+- Latest completed task: TASK-021-LOCAL-MAIL-SMOKE (completed) - Local worker visible smoke check | codex exec completed
+- Decision required: yes - Task TASK-020-GPT-INTERACTIVE-REPLY contains a blocked trading/fund/secret/deletion/danger risk
+- Latest status marker: `WORKER_COMPLETED`
 
 ## Recent Run Events
 
-- 2026-06-29 11:39:00 +0800 / task_rewrite / TASK-019A created as a narrower repository-status-only local supervisor loop handshake.
-- 2026-06-29 11:38:39 +0800 / gpt_handshake / Task TASK-019A completed by local worker without codex exec; safety mode remained PHASE_1_SIMULATION_ONLY
-- 2026-06-29 11:38:39 +0800 / local_review_trigger_dry_run / LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for Worker completed GPT handshake TASK-019A
-- 2026-06-29 11:38:44 +0800 / blocked / worker sync failed at push stage for Worker completed GPT handshake TASK-019A
-- 2026-06-29 11:42:00 +0800 / push_recovered / Worker output for TASK-019A is now on GitHub; local supervisor loop verified.
+- 2026-06-29 17:11:58 +0800 / blocked / Task TASK-020-GPT-INTERACTIVE-REPLY blocked by risk control
+- 2026-06-29 19:15:04 +0800 / started / Task TASK-021-LOCAL-MAIL-SMOKE started
+- 2026-06-29 19:15:07 +0800 / attempt / Task TASK-021-LOCAL-MAIL-SMOKE codex exec attempt 1/3
+- 2026-06-29 19:23:04 +0800 / TASK-021 completed / LOCAL_WORKER_MAIL_SKIPPED_NO_RECIPIENT; local mail binary is present, but no explicit locally readable recipient configuration was available, so the worker skipped sending without writing or printing recipien...
+- 2026-06-29 19:25:53 +0800 / completed / Task TASK-021-LOCAL-MAIL-SMOKE completed
 
 ## Review Packet Summary
 
-- Status: IDLE
-- Latest completed task: TASK-019A (completed) - Verify local supervisor loop | GPT handshake completed by local worker
+- Status: BLOCKED
+- Latest completed task: TASK-021-LOCAL-MAIL-SMOKE (completed) - Local worker visible smoke check | codex exec completed
 
 ## Inputs Used
 
