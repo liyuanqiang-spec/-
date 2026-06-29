@@ -616,3 +616,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: local_review_trigger_dry_run
 - Detail: LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for Worker completed GPT handshake TASK-019A
+
+## 2026-06-29 11:38:44 +0800
+
+- Event: blocked
+- Detail: worker sync failed at push stage for Worker completed GPT handshake TASK-019A

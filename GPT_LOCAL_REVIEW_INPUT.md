@@ -1,35 +1,35 @@
 # GPT Local Review Input
 
 - Marker: `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`
-- Generated at: `2026-06-29T11:29:12+08:00`
+- Generated at: `2026-06-29T11:38:39+08:00`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Scope: repository-local deterministic dry run only.
 - Network calls: none.
 - Task creation: disabled; this file does not append or propose queue mutations.
-- Trigger: Supervisor loop setup pending TASK-019
+- Trigger: Worker completed GPT handshake TASK-019A
 
 ## Compact Worker State
 
-- Worker state: `WAITING_FOR_WORKER`
+- Worker state: `IDLE`
 - Visible scaffold: `SCAFFOLD_READY`
-- Worker mode: `ACTIVE`
-- Current task: TASK-019 (pending) - Verify Mac mini GPT-Codex supervisor loop | pending
-- Latest completed task: TASK-018 (completed) - Make local review input visible in GitHub | codex exec completed
+- Worker mode: `WARM`
+- Current task: none
+- Latest completed task: TASK-019A (completed) - Verify local supervisor loop | GPT handshake completed by local worker
 - Decision required: none
-- Latest status marker: `WORKER_COMPLETED`
+- Latest status marker: `GPT_HANDSHAKE_OK`
 
 ## Recent Run Events
 
-- 2026-06-29 00:07:13 +0800 / completed / Task TASK-017 completed
-- 2026-06-29 06:16:46 +0800 / started / Task TASK-018 started
-- 2026-06-29 06:16:55 +0800 / attempt / Task TASK-018 codex exec attempt 1/3
 - 2026-06-29 06:19:47 +0800 / TASK-018 completed / Fixed local review artifact visibility by generating the review input before the final worker commit.
 - 2026-06-29 06:21:21 +0800 / completed / Task TASK-018 completed
+- 2026-06-29 11:36:10 +0800 / blocked / Task TASK-019 blocked by risk control
+- 2026-06-29 11:39:00 +0800 / task_rewrite / TASK-019A created as a narrower repository-status-only local supervisor loop handshake.
+- 2026-06-29 11:38:39 +0800 / gpt_handshake / Task TASK-019A completed by local worker without codex exec; safety mode remained PHASE_1_SIMULATION_ONLY
 
 ## Review Packet Summary
 
-- Status: WAITING_FOR_WORKER
-- Latest completed task: TASK-018 (completed) - Make local review input visible in GitHub | codex exec completed
+- Status: IDLE
+- Latest completed task: TASK-019A (completed) - Verify local supervisor loop | GPT handshake completed by local worker
 
 ## Inputs Used
 
