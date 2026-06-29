@@ -49,7 +49,7 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Safety: repository_status_only
 - Created: 2026-06-29
 - Last update: updated by worker
-- Result: codex exec completed
+- Result: CODEX_QQ_MAIL_ACCEPTED_UNVERIFIED; subject marker `CODEX-QQ-DIRECT-TEST-20260629-2045`; local mail command accepted the direct QQ test attempt, but final mailbox delivery was not independently verified.
 
 ### TASK-024-ADOPT-GPT-CODEX-PROTOCOL
 - Status: paused
