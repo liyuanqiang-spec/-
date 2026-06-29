@@ -30,6 +30,15 @@ ChatGPT and Codex do not directly chat with each other in real time. The working
 5. Codex writes results back to `STATUS.md`, `RUN_LOG.md`, `REPORTS/`, and `DECISION_REQUIRED.md`.
 6. ChatGPT reads the updated files and continues supervision.
 
+Current recommended mode: `MAC_MINI_LOCAL_WORKER`.
+
+Do not depend on `openai/codex-action@v1` unless the user intentionally enables
+separate OpenAI API billing/quota. The user's ChatGPT membership is enough for
+this local-worker loop, but it is not the same as OpenAI API quota.
+
+For the current loop contract, also read `GPT_CODEX_SUPERVISOR_LOOP.md` and the
+project skill `.codex/skills/gpt-codex-supervisor-loop/SKILL.md`.
+
 ## Confirmed Status From Previous Setup
 
 As of the setup check on 2026-06-27:
