@@ -58,7 +58,7 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Result: paused while direct QQ mail test is prioritized
 
 ### TASK-026-LOCAL-WORKER-PRIMARY-ROUTE
-- Status: pending
+- Status: decision_required
 - Type: repo_status_setup
 - Title: Adopt local worker as the primary route and park cloud API path
 - Request: Repository-only update. Treat the GitHub-hosted OpenAI API / cloud Codex Action path as intentionally abandoned for now because it requires separate API billing/quota. Keep existing workflow files installed but parked. Do not run `openai/codex-action@v1`; do not require `OPENAI_API_KEY`; do not read, print, log, commit, or expose secrets, tokens, passwords, API keys, environment dumps, recipient configuration, or private local paths. Make the local Mac mini / Codex desktop worker the documented primary route. Update visible repository status files as needed, especially `GPT_VISIBLE_STATUS.md`, `WORKER_DASHBOARD.md`, `GPT_CODEX_CONVERSATION.md`, `RUN_LOG.md`, `CLOUD_AUTOMATION_DASHBOARD.md`, and `ONE_CLICK_STATUS.md`, so the owner can see: cloud path parked, local worker primary, current task completed, and next safe action.

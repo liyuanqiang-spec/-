@@ -791,3 +791,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: local_review_trigger_dry_run
 - Detail: LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for Worker processed TASK-025-DIRECT-QQ-MAIL-TEST
+
+## 2026-06-29 21:11:10 +0800
+
+- Event: blocked
+- Detail: Task TASK-026-LOCAL-WORKER-PRIMARY-ROUTE blocked by risk control

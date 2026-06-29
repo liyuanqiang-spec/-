@@ -1020,3 +1020,10 @@ Status: `WORKER_COMPLETED`
 
 - Detail: Task TASK-025-DIRECT-QQ-MAIL-TEST completed
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 21:11:10 +0800
+
+Status: `DECISION_REQUIRED`
+
+- Detail: Task TASK-026-LOCAL-WORKER-PRIMARY-ROUTE blocked by risk control
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
