@@ -1,0 +1,160 @@
+name: One Click Setup
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: one-click-setup-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Check OpenAI key
+        id: key
+        shell: bash
+        run: |
+          if [ -n "$OPENAI_API_KEY" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+            echo "OPENAI_API_KEY present: True"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "OPENAI_API_KEY present: False"
+          fi
+
+      - name: Generate cloud dashboard
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import datetime as dt
+          import os
+          import re
+          
+          def exists(path: str) -> str:
+              return "installed" if Path(path).exists() else "missing"
+          
+          def first_pending() -> str:
+              p = Path("TASK_QUEUE.md")
+              if not p.exists():
+                  return "TASK_QUEUE.md missing"
+              text = p.read_text(encoding="utf-8", errors="replace")
+              sections = re.findall(r"^###\s+(TASK-[A-Za-z0-9-]+)(.*?)(?=^###\s+TASK-|\Z)", text, flags=re.M | re.S)
+              for task_id, body in sections:
+                  m = re.search(r"^- Status:\s*([^\n]+)", body, flags=re.M)
+                  title = re.search(r"^- Title:\s*([^\n]+)", body, flags=re.M)
+                  if m and m.group(1).strip().lower() == "pending":
+                      return f"{task_id} - {title.group(1).strip() if title else ''}".strip()
+              return "none"
+          
+          def latest_completed() -> str:
+              p = Path("TASK_QUEUE.md")
+              if not p.exists():
+                  return "TASK_QUEUE.md missing"
+              text = p.read_text(encoding="utf-8", errors="replace")
+              sections = re.findall(r"^###\s+(TASK-[A-Za-z0-9-]+)(.*?)(?=^###\s+TASK-|\Z)", text, flags=re.M | re.S)
+              completed = []
+              for task_id, body in sections:
+                  m = re.search(r"^- Status:\s*([^\n]+)", body, flags=re.M)
+                  title = re.search(r"^- Title:\s*([^\n]+)", body, flags=re.M)
+                  if m and m.group(1).strip().lower() == "completed":
+                      completed.append(f"{task_id} - {title.group(1).strip() if title else ''}".strip())
+              return completed[-1] if completed else "none"
+          
+          def short_file(path: str, max_lines: int = 30) -> str:
+              p = Path(path)
+              if not p.exists():
+                  return f"`{path}` missing"
+              lines = p.read_text(encoding="utf-8", errors="replace").splitlines()
+              return "\n".join(lines[:max_lines])
+          
+          key_present = bool(os.getenv("OPENAI_API_KEY", "").strip())
+          status = "verified_ready_for_openai" if key_present else "installed_blocked_by_missing_key"
+          now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+          
+          content = f"""# Cloud Automation Dashboard
+
+- Generated at: `{now}`
+- Overall status: `{status}`
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- OpenAI key check: `OPENAI_API_KEY present: {str(key_present)}`
+
+## Installed components
+
+| Component | Status |
+|---|---|
+| GPT Supervisor workflow | `{exists('.github/workflows/gpt-supervisor.yml')}` |
+| Codex Task Runner workflow | `{exists('.github/workflows/codex-task-runner.yml')}` |
+| One Click Setup workflow | `{exists('.github/workflows/one-click-setup.yml')}` |
+| Codex prompt | `{exists('.github/codex/prompts/execute-task.md')}` |
+| GPT supervisor script | `{exists('scripts/gpt_supervisor.py')}` |
+| Setup note | `{exists('AUTOMATION_SETUP.md')}` |
+
+## Current task queue
+
+- First pending task: `{first_pending()}`
+- Latest completed task: `{latest_completed()}`
+
+## Manual controls
+
+1. Open repository `Actions`.
+2. Run `One Click Setup` to refresh this dashboard.
+3. After `OPENAI_API_KEY` is configured, run `GPT Supervisor`.
+4. Run `Codex Task Runner` only when there is a safe pending task or an owner-created issue task.
+
+## Latest visible status snapshot
+
+```text
+{short_file('GPT_VISIBLE_STATUS.md')}
+```
+
+## Notes
+
+- This dashboard never reads or prints the API key value.
+- If key presence is false, add `OPENAI_API_KEY` under repository Settings -> Secrets and variables -> Actions.
+- Mac mini is not required for this cloud path.
+"""
+          Path("CLOUD_AUTOMATION_DASHBOARD.md").write_text(content, encoding="utf-8")
+          PY
+
+      - name: Run GPT supervisor when key exists
+        if: steps.key.outputs.present == 'true'
+        run: python scripts/gpt_supervisor.py
+
+      - name: Record one click setup status
+        shell: bash
+        run: |
+          cat > ONE_CLICK_STATUS.md <<EOF
+          # One Click Setup Status
+
+          - Workflow executed: true
+          - OPENAI_API_KEY present: ${{ steps.key.outputs.present }}
+          - Generated at: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+          - Dashboard: CLOUD_AUTOMATION_DASHBOARD.md
+          EOF
+
+      - name: Commit setup outputs
+        shell: bash
+        run: |
+          if ! git diff --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add CLOUD_AUTOMATION_DASHBOARD.md ONE_CLICK_STATUS.md GPT_REVIEW.md GPT_VISIBLE_STATUS.md .gpt_state.json TASK_QUEUE.md || true
+            git commit -m "Run one click cloud setup"
+            git pull --rebase
+            git push
+          else
+            echo "No one click setup changes to commit."
+          fi
