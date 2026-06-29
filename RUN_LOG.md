@@ -601,3 +601,18 @@ This file records safe worker runs and Codex execution events.
 
 - Event: blocked
 - Detail: Task TASK-019 blocked by risk control
+
+## 2026-06-29 11:39:00 +0800
+
+- Event: task_rewrite
+- Detail: TASK-019A created as a narrower repository-status-only local supervisor loop handshake.
+
+## 2026-06-29 11:38:39 +0800
+
+- Event: gpt_handshake
+- Detail: Task TASK-019A completed by local worker without codex exec; safety mode remained PHASE_1_SIMULATION_ONLY
+
+## 2026-06-29 11:38:39 +0800
+
+- Event: local_review_trigger_dry_run
+- Detail: LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for Worker completed GPT handshake TASK-019A

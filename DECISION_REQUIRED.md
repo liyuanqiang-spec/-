@@ -137,8 +137,8 @@ No current user action required for normal safe GitHub status-file supervision.
 
 ## Decision Required 2026-06-29 11:36:10 +0800
 
+- Status: resolved
 - Item: Task TASK-019 contains a blocked trading/fund/secret/deletion/danger risk
-- Current action: worker stopped before execution
-- A 推荐: keep simulation-only and rewrite the task as safe research work
-- B: explicitly authorize the blocked setup/action
-- C: cancel this task
+- Current action: stale wording block; no current user action required
+- Resolution: TASK-019 proved the safety scanner is active. TASK-019A replaces it with narrower repository-status-only wording.
+- Required confirmation: none.

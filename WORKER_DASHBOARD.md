@@ -1,29 +1,29 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-06-29 11:36:10 +0800`
+Last dashboard update: `2026-06-29 11:38:39 +0800`
 
 | Item | Result |
 |---|---|
-| Worker state | BLOCKED |
+| Worker state | IDLE |
 | Visible scaffold | SCAFFOLD_READY |
 | Local review trigger | LOCAL_REVIEW_TRIGGER_DRY_RUN_READY |
 | Local review input | GPT_LOCAL_REVIEW_INPUT.md |
 | Worker mode | WARM |
 | Current poll interval | 60s |
-| Consecutive idle checks | 0 |
-| Polling reason | not yet recorded |
+| Consecutive idle checks | 1 |
+| Polling reason | warm after activity (2 checks left) |
 | Current task | None |
 | First pending task | None |
-| Latest completed task | TASK-018 (completed) - Make local review input visible in GitHub / codex exec completed |
+| Latest completed task | TASK-019A (completed) - Verify local supervisor loop / GPT handshake completed by local worker |
 | Latest failed or blocked task | TASK-019 (decision_required) - Verify Mac mini GPT-Codex supervisor loop / blocked by risk control |
-| Latest status | DECISION_REQUIRED |
-| Last worker check | 2026-06-29T11:36:10+08:00 / blocked / TASK-019 |
+| Latest status | GPT_HANDSHAKE_OK |
+| Last worker check | 2026-06-29T11:38:39+08:00 / completed / TASK-019A |
 | Latest report | REPORTS/first_complete_simulation_report.md |
-| Latest push/commit | 1f6d09c 2026-06-29 Enable local GPT Codex supervisor loop |
+| Latest push/commit | 4bc35d7 2026-06-29 Block unsafe worker task TASK-019 |
 | Worker poll interval | active 30s, warm 60s, idle 600s |
-| Decision required | Yes - Task TASK-019 contains a blocked trading/fund/secret/deletion/danger risk |
+| Decision required | No unresolved item |
 | Safety mode | PHASE_1_SIMULATION_ONLY |
-| Next action | 人工处理 DECISION_REQUIRED.md 中未解决事项，然后重新刷新状态。 |
+| Next action | ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。 |
 
 ## Links
 

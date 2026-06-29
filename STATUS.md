@@ -806,3 +806,17 @@ Status: `DECISION_REQUIRED`
 
 - Detail: Task TASK-019 blocked by risk control
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 11:39:00 +0800
+
+Status: `TASK_019A_CREATED`
+
+- Detail: TASK-019 wording block resolved by adding narrower repository-status-only handshake TASK-019A.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 11:38:39 +0800
+
+Status: `GPT_HANDSHAKE_OK`
+
+- Detail: Task TASK-019A completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
