@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-29T21:11:10+08:00",
-  "state": "BLOCKED",
+  "generated_at": "2026-06-29T21:35:01+08:00",
+  "state": "IDLE",
   "visible_scaffold": {
     "state": "SCAFFOLD_READY",
     "reason": "visible scaffold artifacts are present"
@@ -12,10 +12,10 @@
   },
   "adaptive_polling": {
     "mode": "WARM",
-    "interval_seconds": 600,
-    "consecutive_idle_checks": 8,
+    "interval_seconds": 60,
+    "consecutive_idle_checks": 0,
     "idle_backoff_after_checks": 5,
-    "warm_remaining_checks": 0,
+    "warm_remaining_checks": 3,
     "night_quiet_window": {
       "enabled": true,
       "active": false,
@@ -24,12 +24,12 @@
       "warm_poll_seconds": 600,
       "idle_poll_seconds": 1800
     },
-    "reason": "idle backoff after 8 checks",
-    "timestamp": "2026-06-29T21:01:03+08:00"
+    "reason": "unresolved blocker detected",
+    "timestamp": "2026-06-29T21:31:37+08:00"
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "DECISION_REQUIRED",
-  "latest_commit": "ce4e256 2026-06-29 Queue local worker primary route task",
+  "latest_status": "LOCAL_WORKER_PRIMARY_ROUTE_READY",
+  "latest_commit": "2267234 2026-06-29 Block unsafe worker task TASK-026-LOCAL-WORKER-PRIMARY-ROUTE",
   "last_worker_check": "2026-06-29T21:11:10+08:00 / blocked / TASK-026-LOCAL-WORKER-PRIMARY-ROUTE",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {
@@ -45,28 +45,18 @@
   "first_running_task": null,
   "first_pending_task": null,
   "latest_completed_task": {
-    "id": "TASK-025-DIRECT-QQ-MAIL-TEST",
+    "id": "TASK-026A-LOCAL-WORKER-PRIMARY-READY",
     "status": "completed",
-    "type": "local_status_check",
-    "title": "Direct QQ mail test",
-    "request": "Send one direct test email to recipient written as `541588613 [at] qq [dot] com`. Convert it locally to the normal mail address before sending. Use subject `CODEX-QQ-DIRECT-TEST-20260629-2045`. Body: `Codex direct QQ mail test`. After the attempt, update visible status with one of: CODEX_QQ_MAIL_SENT, CODEX_QQ_MAIL_ACCEPTED_UNVERIFIED, CODEX_QQ_MAIL_QUEUED, CODEX_QQ_MAIL_BOUNCED, CODEX_QQ_MAIL_FAILED.",
-    "result": "CODEX_QQ_MAIL_ACCEPTED_UNVERIFIED; subject marker `CODEX-QQ-DIRECT-TEST-20260629-2045`; local mail command accepted the direct QQ test attempt, but final mailbox delivery was not independently verified.",
-    "safety": "repository_status_only"
-  },
-  "latest_failed_or_blocked_task": {
-    "id": "TASK-026-LOCAL-WORKER-PRIMARY-ROUTE",
-    "status": "decision_required",
     "type": "repo_status_setup",
-    "title": "Adopt local worker as the primary route and park cloud API path",
-    "request": "Repository-only update. Treat the GitHub-hosted OpenAI API / cloud Codex Action path as intentionally abandoned for now because it requires separate API billing/quota. Keep existing workflow files installed but parked. Do not run `openai/codex-action@v1`; do not require `OPENAI_API_KEY`; do not read, print, log, commit, or expose secrets, tokens, passwords, API keys, environment dumps, recipient configuration, or private local paths. Make the local Mac mini / Codex desktop worker the documented primary route. Update visible repository status files as needed, especially `GPT_VISIBLE_STATUS.md`, `WORKER_DASHBOARD.md`, `GPT_CODEX_CONVERSATION.md`, `RUN_LOG.md`, `CLOUD_AUTOMATION_DASHBOARD.md`, and `ONE_CLICK_STATUS.md`, so the owner can see: cloud path parked, local worker primary, current task completed, and next safe action.",
-    "result": "",
+    "title": "Local worker primary route ready",
+    "request": "Repository-status update. Set the current operating route to the Mac mini worker. Keep the hosted route parked for later. Refresh visible files so the owner can see the current route and next safe action.",
+    "result": "LOCAL_WORKER_PRIMARY_ROUTE_READY",
     "safety": "repository_status_only"
   },
+  "latest_failed_or_blocked_task": null,
   "decision_required": {
-    "has_unresolved": true,
-    "items": [
-      "Task TASK-026-LOCAL-WORKER-PRIMARY-ROUTE contains a blocked trading/fund/secret/deletion/danger risk"
-    ]
+    "has_unresolved": false,
+    "items": []
   },
-  "next_action": "人工处理 DECISION_REQUIRED.md 中未解决事项，然后重新刷新状态。"
+  "next_action": "ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。"
 }

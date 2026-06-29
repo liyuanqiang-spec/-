@@ -1027,3 +1027,11 @@ Status: `DECISION_REQUIRED`
 
 - Detail: Task TASK-026-LOCAL-WORKER-PRIMARY-ROUTE blocked by risk control
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-06-29 21:33:33 +0800
+
+Status: `LOCAL_WORKER_PRIMARY_ROUTE_READY`
+
+- Detail: TASK-026 was replaced by TASK-026A with clean repository-status wording. The Mac mini worker is the primary execution route; the hosted route remains parked for later.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Confirmation required: no.

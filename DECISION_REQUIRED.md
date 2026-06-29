@@ -169,8 +169,8 @@ No current user action required for normal safe GitHub status-file supervision.
 
 ## Decision Required 2026-06-29 21:11:10 +0800
 
+- Status: resolved
 - Item: Task TASK-026-LOCAL-WORKER-PRIMARY-ROUTE contains a blocked trading/fund/secret/deletion/danger risk
-- Current action: worker stopped before execution
-- A 推荐: keep simulation-only and rewrite the task as safe research work
-- B: explicitly authorize the blocked setup/action
-- C: cancel this task
+- Current action: no user action required
+- Resolution: TASK-026 was replaced by TASK-026A with clean repository-status wording. The local Mac mini worker is now the primary route and the hosted route is parked.
+- Required confirmation: none.

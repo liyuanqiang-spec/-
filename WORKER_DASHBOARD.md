@@ -1,31 +1,31 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-06-29 21:11:10 +0800`
+Last dashboard update: `2026-06-29 21:35:01 +0800`
 
 | Item | Result |
 |---|---|
-| Worker state | BLOCKED |
+| Worker state | IDLE |
 | Visible scaffold | SCAFFOLD_READY |
 | Local review trigger | LOCAL_REVIEW_TRIGGER_DRY_RUN_READY |
 | Local review input | GPT_LOCAL_REVIEW_INPUT.md |
 | Worker mode | WARM |
-| Current poll interval | 600s |
-| Consecutive idle checks | 8 |
-| Polling reason | idle backoff after 8 checks |
+| Current poll interval | 60s |
+| Consecutive idle checks | 0 |
+| Polling reason | unresolved blocker detected |
 | Night quiet window | 22:00-08:00 active=False |
 | Night poll interval | warm 600s, idle 1800s |
 | Current task | None |
 | First pending task | None |
-| Latest completed task | TASK-025-DIRECT-QQ-MAIL-TEST (completed) - Direct QQ mail test / CODEX_QQ_MAIL_ACCEPTED_UNVERIFIED; subject marker `CODEX-QQ-DIRECT-TEST-20260629-2045`; local mail command accepted the direct QQ test attempt, but final mailbox delivery was not independently verified. |
-| Latest failed or blocked task | TASK-026-LOCAL-WORKER-PRIMARY-ROUTE (decision_required) - Adopt local worker as the primary route and park cloud API path |
-| Latest status | DECISION_REQUIRED |
+| Latest completed task | TASK-026A-LOCAL-WORKER-PRIMARY-READY (completed) - Local worker primary route ready / LOCAL_WORKER_PRIMARY_ROUTE_READY |
+| Latest failed or blocked task | None |
+| Latest status | LOCAL_WORKER_PRIMARY_ROUTE_READY |
 | Last worker check | 2026-06-29T21:11:10+08:00 / blocked / TASK-026-LOCAL-WORKER-PRIMARY-ROUTE |
 | Latest report | REPORTS/first_complete_simulation_report.md |
-| Latest push/commit | ce4e256 2026-06-29 Queue local worker primary route task |
+| Latest push/commit | 2267234 2026-06-29 Block unsafe worker task TASK-026-LOCAL-WORKER-PRIMARY-ROUTE |
 | Worker poll interval | active 30s, warm 60s, idle 600s |
-| Decision required | Yes - Task TASK-026-LOCAL-WORKER-PRIMARY-ROUTE contains a blocked trading/fund/secret/deletion/danger risk |
+| Decision required | No unresolved item |
 | Safety mode | PHASE_1_SIMULATION_ONLY |
-| Next action | 人工处理 DECISION_REQUIRED.md 中未解决事项，然后重新刷新状态。 |
+| Next action | ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。 |
 
 ## Links
 

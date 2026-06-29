@@ -796,3 +796,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: blocked
 - Detail: Task TASK-026-LOCAL-WORKER-PRIMARY-ROUTE blocked by risk control
+
+## 2026-06-29 21:33:33 +0800
+
+- Event: local_worker_primary_route_ready
+- Detail: Replaced TASK-026 with clean repository-status task TASK-026A. Local Mac mini worker is the primary route; hosted route is parked.

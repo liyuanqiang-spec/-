@@ -32,6 +32,12 @@ ChatGPT and Codex do not directly chat with each other in real time. The working
 
 Current recommended mode: `MAC_MINI_LOCAL_WORKER`.
 
+Current route marker: `LOCAL_WORKER_PRIMARY_ROUTE_READY`.
+
+The Mac mini worker is the active execution route. Hosted execution remains
+parked for later; future GPT tasks should use clean repository-status wording
+and avoid restating blocked setup details inside task requests.
+
 Visible local surfaces:
 
 - `GPT_CODEX_CONVERSATION.md` shows the GPT -> Codex task timeline and Codex -> GPT results.

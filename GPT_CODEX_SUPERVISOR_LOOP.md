@@ -2,6 +2,8 @@
 
 Current mode: `MAC_MINI_LOCAL_WORKER`
 
+Current marker: `LOCAL_WORKER_PRIMARY_ROUTE_READY`
+
 This project uses the Mac mini as the execution agent. ChatGPT supervises by
 reading and writing GitHub repository files.
 
@@ -66,5 +68,5 @@ or make large paid API/cloud calls.
 
 ## Current Recommendation
 
-Keep the Mac mini on. Do not use `openai/codex-action@v1` until a separate
-OpenAI API quota is intentionally enabled.
+Keep the Mac mini on. Use the local worker as the primary route. The hosted
+route remains parked for later.
