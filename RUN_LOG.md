@@ -717,6 +717,11 @@ This file records safe worker runs and Codex execution events.
 - Event: TASK-022 completed
 - Detail: LOCAL_WORKER_MAIL_SENT; local mail retry was accepted by `/usr/bin/mail` using the prior repo-visible successful local mail-test recipient, without writing or printing recipient data or local configuration.
 
+## 2026-06-29 19:51:51 +0800
+
+- Event: task_022_sync_repaired
+- Detail: Rebased TASK-022 completion over remote skill commits, resolved stale TASK-020 and TASK-022 push decision entries, and prepared clean GitHub push.
+
 ## 2026-06-29 19:36:27 +0800
 
 - Event: completed

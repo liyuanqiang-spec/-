@@ -53,25 +53,25 @@ Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
 <!-- visible-review-scaffold:start -->
 ## Visible Review Scaffold
 
-- Generated at: `2026-06-29T06:20:30+08:00`
+- Generated at: `2026-06-29T19:52:40+08:00`
 - State: `SCAFFOLD_READY`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
-- Worker mode: `IDLE`
-- Current poll interval: `600s`
-- Consecutive idle checks: `40`
+- Worker mode: `WARM`
+- Current poll interval: `60s`
+- Consecutive idle checks: `0`
 - Current task: None
 - First pending task: None
-- Latest completed task: TASK-018 (completed) - Make local review input visible in GitHub | completed; local review dry-run generation now runs before the final worker commit, `GPT_LOCAL_REVIEW_INPUT.md` is generated before the outer worker add/commit/push step, review...
+- Latest completed task: TASK-022-LOCAL-MAIL-RETRY (completed) - Local worker mail retry | codex exec completed
 - Decision required: none
 - Failure reason: none
-- Latest status marker: `TASK_018_COMPLETED`
-- Latest run event: 2026-06-29 06:19:47 +0800 / TASK-018 completed / Fixed local review artifact visibility by generating the review input before the final worker commit.
-- Previous dashboard state: `WORKING`
+- Latest status marker: `WORKER_COMPLETED`
+- Latest run event: 2026-06-29 19:36:27 +0800 / local_review_trigger_dry_run / LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for Worker processed TASK-022-LOCAL-MAIL-RETRY
+- Previous dashboard state: `BLOCKED`
 - Previous visible status: `UNKNOWN`
 - Project memory headings reviewed: PROJECT_MEMORY.md, Project, Core strategy, Current architecture, Software roles, Must build, Core KPI, Safety boundaries
-- Reports summary: 10 files; latest markdown `REPORTS/first_complete_simulation_report.md`; headings: TASK-007 First Complete Simulation Report, Run Command, Dashboard Entry, Reproducible Backtest Configuration, Candidate Simulation Table, Accepted Candidates
+- Reports summary: 11 files; latest markdown `REPORTS/software_progress_audit.md`; headings: Silver Quant Software Progress Audit, 1. Current overall state, 2. GitHub / worker supervision state, 3. Latest known task status, 4. Existing simulation result, 5. Module progress judgment
 - Source summary: 16 Python files; sample: src/__init__.py, src/codex_quant/__init__.py, src/codex_quant/backtester.py, src/codex_quant/config.py, src/codex_quant/contract_scanner.py, src/codex_quant/dashboard.py, src/codex_quant/low_liquidity_scanner.py, src/codex_quant/quant_baseline.py, src/codex_quant/quote_replay.py, src/codex_quant/report_writer.py, src/codex_quant/risk_control.py, src/codex_quant/run_pipeline.py
-- Test summary: 13 Python files; sample: tests/test_backtester.py, tests/test_dashboard.py, tests/test_local_review_trigger_dry_run.py, tests/test_low_liquidity_scanner.py, tests/test_model_review_packet.py, tests/test_pipeline.py, tests/test_quant_baseline.py, tests/test_quote_replay.py, tests/test_risk_control.py, tests/test_spread_calculator.py, tests/test_tick_replay_adapter.py, tests/test_visible_review_scaffold.py
+- Test summary: 14 Python files; sample: tests/test_backtester.py, tests/test_dashboard.py, tests/test_local_review_trigger_dry_run.py, tests/test_low_liquidity_scanner.py, tests/test_model_review_packet.py, tests/test_pipeline.py, tests/test_quant_baseline.py, tests/test_quote_replay.py, tests/test_risk_control.py, tests/test_spread_calculator.py, tests/test_supervisor_conversation.py, tests/test_tick_replay_adapter.py
 - Next safe human-supervision action: ChatGPT can review GPT_REVIEW.md and add the next safe simulation-only task to TASK_QUEUE.md.
 
 ## Scaffold Guarantees
@@ -153,3 +153,24 @@ Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
 - Latest completed task: TASK-022-LOCAL-MAIL-RETRY (completed) - Local worker mail retry | codex exec completed
 - Decision required: yes - Task TASK-020-GPT-INTERACTIVE-REPLY contains a blocked trading/fund/secret/deletion/danger risk
 <!-- local-review-trigger-dry-run:end -->
+
+## 2026-06-29 19:52:40 +0800
+
+- TASK-022 sync repaired; no current user authorization required.
+- Visible state: `IDLE`
+- Current task: None
+- Decision required: none
+
+## 2026-06-29 19:52:47 +0800
+
+- Visible status refreshed after scaffold output; authorization queue is clear.
+- Visible state: `IDLE`
+- Current task: None
+- Decision required: none
+
+## 2026-06-29 19:53:27 +0800
+
+- Worker authorization queue clear; TASK-022 sync repair ready for push.
+- Visible state: `IDLE`
+- Current task: None
+- Decision required: none

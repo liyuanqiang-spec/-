@@ -153,8 +153,16 @@ No current user action required for normal safe GitHub status-file supervision.
 
 ## Decision Required 2026-06-29 17:11:58 +0800
 
+- Status: resolved
 - Item: Task TASK-020-GPT-INTERACTIVE-REPLY contains a blocked trading/fund/secret/deletion/danger risk
-- Current action: worker stopped before execution
-- A 推荐: keep simulation-only and rewrite the task as safe research work
-- B: explicitly authorize the blocked setup/action
-- C: cancel this task
+- Current action: stale local guard block; no current user action required
+- Resolution: TASK-020 was superseded by TASK-021 and TASK-022. TASK-022 completed the local worker reply path with `LOCAL_WORKER_MAIL_SENT` while staying inside `PHASE_1_SIMULATION_ONLY` and without printing or writing recipient configuration.
+- Required confirmation: none.
+
+## Decision Required 2026-06-29 19:36:29 +0800
+
+- Status: resolved
+- Item: worker sync failed at push stage: git push failed for Worker processed TASK-022-LOCAL-MAIL-RETRY
+- Current action: stale push rejection; no current user action required
+- Resolution: support clone was rebased onto origin/main after remote skill commits and will be pushed by the current sync repair.
+- Required confirmation: none.

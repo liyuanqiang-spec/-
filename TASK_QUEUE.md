@@ -13,10 +13,10 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Result: GPT handshake completed by local worker
 
 ### TASK-020-GPT-INTERACTIVE-REPLY
-- Status: decision_required
+- Status: superseded
 - Type: handshake
 - Title: GPT interactive reply to local worker
-- Result: blocked by local guard
+- Result: superseded by TASK-021 and TASK-022 local visible/mail smoke checks
 
 ### TASK-021-LOCAL-MAIL-SMOKE
 - Status: completed

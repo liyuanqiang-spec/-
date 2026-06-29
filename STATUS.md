@@ -942,6 +942,14 @@ Status: `TASK_022_COMPLETED`
 - Blocked actions avoided: no real trading account connection, no real order placement/cancellation, no fund transfer, no original-data deletion, no secret exposure, no dangerous sandbox, and no git add/commit/push inside codex exec.
 - Confirmation required: no.
 
+## Worker Update 2026-06-29 19:51:51 +0800
+
+Status: `TASK_022_SYNC_REPAIRED`
+
+- Detail: Rebased the local TASK-022 completion result over the remote skill-registry commits and resolved stale decision entries for TASK-020 and the TASK-022 push rejection.
+- Result: no user authorization is currently required for normal safe GitHub status-file supervision.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
 ## Worker Update 2026-06-29 19:36:27 +0800
 
 Status: `WORKER_COMPLETED`

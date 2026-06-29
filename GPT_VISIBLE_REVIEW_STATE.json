@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-28T22:33:43+08:00",
+  "generated_at": "2026-06-29T19:52:40+08:00",
   "state": "SCAFFOLD_READY",
   "failure_reasons": [],
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
@@ -7,31 +7,30 @@
     "mode": "WARM",
     "interval_seconds": 60,
     "consecutive_idle_checks": 0,
-    "reason": "TASK-015 completed; warm mode after activity"
+    "reason": "unresolved blocker detected"
   },
   "current_task": null,
   "first_pending_task": null,
   "latest_completed_task": {
-    "id": "TASK-015",
+    "id": "TASK-022-LOCAL-MAIL-RETRY",
     "status": "completed",
-    "type": "adaptive_worker_polling",
-    "title": "Add adaptive polling frequency for local GitHub worker",
-    "request": "",
-    "result": "completed; added adaptive ACTIVE/WARM/IDLE polling, visible polling state, health checks, and a local Terminal monitor window入口.",
+    "type": "local_status_check",
+    "title": "Local worker mail retry",
+    "request": "Run the local mail smoke path again. If the worker has a previous successful local mail-test recipient available in its own local history or repo-visible prior status, reuse that same recipient without printing it. Do...",
+    "result": "codex exec completed",
     "safety": "repository_status_only"
   },
   "task_counts": {
-    "completed": 16,
-    "decision_required": 2,
-    "superseded": 2
+    "completed": 3,
+    "superseded": 1
   },
   "decision_required": {
     "has_unresolved": false,
     "items": []
   },
-  "latest_status_marker": "TASK_015_COMPLETED",
-  "latest_run_event": "2026-06-28 22:29:16 +0800 / github-network-proxy-repair / Direct HTTPS GitHub access from the interactive shell timed out; the local proxy path succeeded.",
-  "dashboard_state": "IDLE",
+  "latest_status_marker": "WORKER_COMPLETED",
+  "latest_run_event": "2026-06-29 19:36:27 +0800 / local_review_trigger_dry_run / LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for Worker processed TASK-022-LOCAL-MAIL-RETRY",
+  "dashboard_state": "BLOCKED",
   "dashboard_current_task": "None",
   "previous_visible_status": "UNKNOWN",
   "project_memory_headings": [
@@ -45,7 +44,7 @@
     "Safety boundaries"
   ],
   "reports": {
-    "count": 9,
+    "count": 11,
     "sample": [
       "REPORTS/Codex项目初始化报告.md",
       "REPORTS/backtest_baseline_report.md",
@@ -53,18 +52,20 @@
       "REPORTS/first_complete_simulation_summary.json",
       "REPORTS/latest_report.md",
       "REPORTS/low_liquidity_candidates.md",
+      "REPORTS/model_review_packet.md",
       "REPORTS/quant_baseline_replay.csv",
       "REPORTS/quant_system_gap_report.md",
+      "REPORTS/software_progress_audit.md",
       "REPORTS/tick_file_smoke_report.md"
     ],
-    "latest_markdown": "REPORTS/first_complete_simulation_report.md",
+    "latest_markdown": "REPORTS/software_progress_audit.md",
     "latest_headings": [
-      "TASK-007 First Complete Simulation Report",
-      "Run Command",
-      "Dashboard Entry",
-      "Reproducible Backtest Configuration",
-      "Candidate Simulation Table",
-      "Accepted Candidates"
+      "Silver Quant Software Progress Audit",
+      "1. Current overall state",
+      "2. GitHub / worker supervision state",
+      "3. Latest known task status",
+      "4. Existing simulation result",
+      "5. Module progress judgment"
     ]
   },
   "src_summary": {
@@ -85,19 +86,20 @@
     ]
   },
   "tests_summary": {
-    "python_file_count": 11,
+    "python_file_count": 14,
     "sample": [
       "tests/test_backtester.py",
       "tests/test_dashboard.py",
+      "tests/test_local_review_trigger_dry_run.py",
       "tests/test_low_liquidity_scanner.py",
+      "tests/test_model_review_packet.py",
       "tests/test_pipeline.py",
       "tests/test_quant_baseline.py",
       "tests/test_quote_replay.py",
       "tests/test_risk_control.py",
       "tests/test_spread_calculator.py",
-      "tests/test_tick_replay_adapter.py",
-      "tests/test_visible_review_scaffold.py",
-      "tests/test_worker.py"
+      "tests/test_supervisor_conversation.py",
+      "tests/test_tick_replay_adapter.py"
     ]
   },
   "path_presence": {
