@@ -23,6 +23,7 @@ The system must always expose one of four states:
 4. `DECISION_REQUIRED.md` tells only unresolved human blockers.
 5. `WORKER_DASHBOARD.md` is the user-facing summary.
 6. `GPT_VISIBLE_STATUS.md` is the GPT-facing summary page.
+7. `GPT_CODEX_CONVERSATION.md` is the read-only local conversation timeline.
 
 ## Reliability rules
 
@@ -32,6 +33,8 @@ The system must always expose one of four states:
 4. ChatGPT hourly status checks must read the six status files and report exact unavailable files, not infer missing data.
 5. Repository-maintenance tasks must remain inside the repository and must not require machine-level configuration changes.
 6. If a Git sync problem occurs, the worker should record the exact command stage: `pull`, `push`, `commit`, or `status refresh`.
+7. Night quiet window is `22:00-08:00`; when no pending safe task is detected, the worker should use lower-frequency checks.
+8. The local health guard may restart the worker if it is stopped or fails the repository health check. It must not call a model or mutate trading/data state.
 
 ## Standard recovery flow
 
@@ -73,3 +76,12 @@ Every hourly status check should output five fields:
 5. Next recommended action.
 
 The next recommended action should be executable by Codex whenever possible, not pushed back to the user.
+
+## Local visibility and recovery commands
+
+- Open the conversation window: `/Users/zhoujiali/Library/Mobile Documents/com~apple~CloudDocs/Desktop/查看GPT和Codex对话.command`.
+- Start worker: `scripts/start_worker.sh`.
+- Stop worker: `scripts/stop_worker.sh`.
+- Start health guard: `scripts/start_health_guard.sh`.
+- Stop health guard: `scripts/stop_health_guard.sh`.
+- Check health status: `scripts/worker_health_status.sh`.

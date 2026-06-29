@@ -22,6 +22,10 @@ WARM_POLL_INTERVAL_SECONDS="${WORKER_WARM_POLL_SECONDS:-${WORKER_WARM_POLL_INTER
 IDLE_POLL_INTERVAL_SECONDS="${WORKER_IDLE_POLL_SECONDS:-${WORKER_IDLE_POLL_INTERVAL_SECONDS:-600}}"
 IDLE_BACKOFF_AFTER_CHECKS="${WORKER_IDLE_BACKOFF_AFTER_CHECKS:-5}"
 WARM_CHECKS_AFTER_ACTIVITY="${WORKER_WARM_CHECKS_AFTER_ACTIVITY:-3}"
+NIGHT_START_HOUR="${WORKER_NIGHT_START_HOUR:-22}"
+NIGHT_END_HOUR="${WORKER_NIGHT_END_HOUR:-8}"
+NIGHT_WARM_POLL_INTERVAL_SECONDS="${WORKER_NIGHT_WARM_POLL_SECONDS:-${WORKER_NIGHT_WARM_POLL_INTERVAL_SECONDS:-600}}"
+NIGHT_IDLE_POLL_INTERVAL_SECONDS="${WORKER_NIGHT_IDLE_POLL_SECONDS:-${WORKER_NIGHT_IDLE_POLL_INTERVAL_SECONDS:-1800}}"
 EXPECTED_REMOTE="https://github.com/liyuanqiang-spec/-.git"
 GIT_TIMEOUT_SECONDS="${GIT_TIMEOUT_SECONDS:-120}"
 CODEX_EXEC_TIMEOUT_SECONDS="${CODEX_EXEC_TIMEOUT_SECONDS:-1800}"
@@ -379,7 +383,8 @@ adaptive_poll_after_round() {
   result="$(
     python3 - "$POLL_STATE" "$HEARTBEAT" "$pending" "$decisions" \
       "$ACTIVE_POLL_INTERVAL_SECONDS" "$WARM_POLL_INTERVAL_SECONDS" "$IDLE_POLL_INTERVAL_SECONDS" \
-      "$IDLE_BACKOFF_AFTER_CHECKS" "$WARM_CHECKS_AFTER_ACTIVITY" <<'PY'
+      "$IDLE_BACKOFF_AFTER_CHECKS" "$WARM_CHECKS_AFTER_ACTIVITY" \
+      "$NIGHT_START_HOUR" "$NIGHT_END_HOUR" "$NIGHT_WARM_POLL_INTERVAL_SECONDS" "$NIGHT_IDLE_POLL_INTERVAL_SECONDS" <<'PY'
 from __future__ import annotations
 
 import json
@@ -396,6 +401,10 @@ warm_interval = int(sys.argv[6])
 idle_interval = int(sys.argv[7])
 idle_after = int(sys.argv[8])
 warm_checks = int(sys.argv[9])
+night_start = int(sys.argv[10])
+night_end = int(sys.argv[11])
+night_warm_interval = int(sys.argv[12])
+night_idle_interval = int(sys.argv[13])
 
 def read_json(path: Path) -> dict:
     if not path.exists():
@@ -407,6 +416,14 @@ def read_json(path: Path) -> dict:
 
 previous = read_json(poll_path)
 heartbeat = read_json(heartbeat_path)
+now = datetime.now().astimezone()
+hour = now.hour
+if night_start == night_end:
+    night_active = False
+elif night_start < night_end:
+    night_active = night_start <= hour < night_end
+else:
+    night_active = hour >= night_start or hour < night_end
 previous_mode = str(previous.get("mode", ""))
 previous_heartbeat = str(previous.get("last_heartbeat_timestamp", ""))
 heartbeat_timestamp = str(heartbeat.get("timestamp", ""))
@@ -453,13 +470,29 @@ else:
         interval = warm_interval
         reason = f"idle check {idle_count}/{idle_after}"
 
+if night_active and not pending:
+    if mode == "IDLE":
+        interval = max(interval, night_idle_interval)
+        reason = f"{reason}; night quiet window {night_start:02d}:00-{night_end:02d}:00"
+    elif mode == "WARM":
+        interval = max(interval, night_warm_interval)
+        reason = f"{reason}; night quiet window {night_start:02d}:00-{night_end:02d}:00"
+
 payload = {
-    "timestamp": datetime.now().astimezone().isoformat(timespec="seconds"),
+    "timestamp": now.isoformat(timespec="seconds"),
     "mode": mode,
     "interval_seconds": interval,
     "active_poll_seconds": active_interval,
     "warm_poll_seconds": warm_interval,
     "idle_poll_seconds": idle_interval,
+    "night_quiet_window": {
+        "enabled": True,
+        "active": night_active,
+        "start_hour": night_start,
+        "end_hour": night_end,
+        "warm_poll_seconds": night_warm_interval,
+        "idle_poll_seconds": night_idle_interval,
+    },
     "consecutive_idle_checks": idle_count,
     "idle_backoff_after_checks": idle_after,
     "warm_remaining_checks": warm_remaining,

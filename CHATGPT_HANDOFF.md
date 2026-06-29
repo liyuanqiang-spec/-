@@ -21,7 +21,7 @@ This file is the persistent handoff note for future ChatGPT conversations. It re
 
 ## Current Communication Model
 
-ChatGPT and Codex do not directly chat with each other in real time. The working bridge is GitHub:
+ChatGPT and Codex do not directly chat with each other in real time. The working bridge is GitHub, with a local read-only conversation window for visibility:
 
 1. User tells ChatGPT what to do.
 2. ChatGPT reads current repo state, especially `STATUS.md`, `TASK_QUEUE.md`, `RUN_LOG.md`, `DECISION_REQUIRED.md`, and reports under `REPORTS/`.
@@ -31,6 +31,18 @@ ChatGPT and Codex do not directly chat with each other in real time. The working
 6. ChatGPT reads the updated files and continues supervision.
 
 Current recommended mode: `MAC_MINI_LOCAL_WORKER`.
+
+Visible local surfaces:
+
+- `GPT_CODEX_CONVERSATION.md` shows the GPT -> Codex task timeline and Codex -> GPT results.
+- Desktop command: `/Users/zhoujiali/Library/Mobile Documents/com~apple~CloudDocs/Desktop/查看GPT和Codex对话.command`.
+- `WORKER_DASHBOARD.md` and `GPT_VISIBLE_STATUS.md` show the worker state, polling mode, and night quiet window.
+
+Current polling policy:
+
+- Daytime normal path: `ACTIVE=30s`, `WARM=60s`, `IDLE=600s`.
+- Night quiet window: `22:00-08:00`; no-pending `WARM=600s`, no-pending `IDLE=1800s`.
+- Health guard label: `com.codex.github-worker-health-guard`; it checks locally every `900s` and restarts the worker if needed. This does not spend model tokens.
 
 Do not depend on `openai/codex-action@v1` unless the user intentionally enables
 separate OpenAI API billing/quota. The user's ChatGPT membership is enough for
@@ -50,7 +62,7 @@ As of the setup check on 2026-06-27:
 - Worker start command: `scripts/start_worker.sh`.
 - Worker stop command: `scripts/stop_worker.sh`.
 - Worker launchd label: `com.codex.github-supervised-worker`.
-- Worker runs every 300 seconds.
+- Worker uses adaptive polling: active 30 seconds, warm 60 seconds, idle 600 seconds, with a 22:00-08:00 night quiet window.
 - Worker sandbox: `workspace-write`.
 - `danger-full-access` is disabled / not used.
 - Python check passed.

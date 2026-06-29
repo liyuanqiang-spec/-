@@ -27,12 +27,20 @@ for path in \
   RELIABILITY_RUNBOOK.md \
   WORKER_DASHBOARD.md \
   GPT_VISIBLE_STATUS.md \
+  GPT_CODEX_CONVERSATION.md \
   GPT_REVIEW.md \
   .gpt_state.json \
   scripts/refresh_visible_status.py \
   scripts/codex_worker.sh \
   scripts/start_worker.sh \
-  scripts/stop_worker.sh; do
+  scripts/stop_worker.sh \
+  scripts/worker_health_guard.sh \
+  scripts/start_health_guard.sh \
+  scripts/stop_health_guard.sh \
+  scripts/worker_health_status.sh \
+  scripts/render_supervisor_conversation.py \
+  scripts/supervisor_conversation_monitor.sh \
+  scripts/open_supervisor_conversation.sh; do
   if [ -e "$ROOT/$path" ]; then
     line "file_ok=$path"
   else
@@ -40,7 +48,7 @@ for path in \
   fi
 done
 
-for script in scripts/codex_worker.sh scripts/start_worker.sh scripts/stop_worker.sh scripts/worker_launchd_entry.sh scripts/check_worker_health.sh; do
+for script in scripts/codex_worker.sh scripts/start_worker.sh scripts/stop_worker.sh scripts/worker_launchd_entry.sh scripts/check_worker_health.sh scripts/worker_health_guard.sh scripts/start_health_guard.sh scripts/stop_health_guard.sh scripts/worker_health_status.sh scripts/supervisor_conversation_monitor.sh scripts/open_supervisor_conversation.sh; do
   if [ -f "$ROOT/$script" ]; then
     if bash -n "$ROOT/$script"; then
       line "bash_syntax_ok=$script"
@@ -119,6 +127,17 @@ if grep -q 'WORKER_IDLE_POLL_INTERVAL_SECONDS:-600' "$ROOT/scripts/codex_worker.
   line "worker_poll_intervals=active_30s_warm_60s_idle_600s"
 else
   fail "worker polling defaults are not active=30 seconds, warm=60 seconds, and idle=600 seconds"
+fi
+
+if grep -q 'WORKER_NIGHT_START_HOUR:-22' "$ROOT/scripts/codex_worker.sh" \
+  && grep -q 'WORKER_NIGHT_END_HOUR:-8' "$ROOT/scripts/codex_worker.sh" \
+  && grep -q 'WORKER_NIGHT_WARM_POLL_INTERVAL_SECONDS:-600' "$ROOT/scripts/codex_worker.sh" \
+  && grep -q 'WORKER_NIGHT_IDLE_POLL_INTERVAL_SECONDS:-1800' "$ROOT/scripts/codex_worker.sh" \
+  && grep -q 'WORKER_NIGHT_START_HOUR:-22' "$ROOT/scripts/start_worker.sh" \
+  && grep -q 'WORKER_NIGHT_END_HOUR:-8' "$ROOT/scripts/start_worker.sh"; then
+  line "worker_night_window=22_08_warm_600s_idle_1800s"
+else
+  fail "worker night window defaults are not 22:00-08:00 with warm=600 seconds and idle=1800 seconds"
 fi
 
 if grep -q 'codex_worker.sh" --loop' "$ROOT/scripts/start_worker.sh"; then

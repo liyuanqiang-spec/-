@@ -200,14 +200,22 @@ def latest_report(root: Path) -> str:
     return latest.relative_to(root).as_posix()
 
 
-def worker_poll_intervals(root: Path) -> dict[str, int | str]:
+def worker_poll_intervals(root: Path) -> dict[str, Any]:
     worker_script = read_text(root / "scripts" / "codex_worker.sh")
     idle_match = re.search(r"WORKER_IDLE_POLL(?:_INTERVAL)?_SECONDS:-(\d+)", worker_script)
     active_match = re.search(r"WORKER_ACTIVE_POLL(?:_INTERVAL)?_SECONDS:-(\d+)", worker_script)
     warm_match = re.search(r"WORKER_WARM_POLL(?:_INTERVAL)?_SECONDS:-(\d+)", worker_script)
+    night_start_match = re.search(r"WORKER_NIGHT_START_HOUR:-(\d+)", worker_script)
+    night_end_match = re.search(r"WORKER_NIGHT_END_HOUR:-(\d+)", worker_script)
+    night_warm_match = re.search(r"WORKER_NIGHT_WARM_POLL(?:_INTERVAL)?_SECONDS:-(\d+)", worker_script)
+    night_idle_match = re.search(r"WORKER_NIGHT_IDLE_POLL(?:_INTERVAL)?_SECONDS:-(\d+)", worker_script)
     idle: int | None = int(idle_match.group(1)) if idle_match else None
     active: int | None = int(active_match.group(1)) if active_match else None
     warm: int | None = int(warm_match.group(1)) if warm_match else None
+    night_start: int | None = int(night_start_match.group(1)) if night_start_match else None
+    night_end: int | None = int(night_end_match.group(1)) if night_end_match else None
+    night_warm: int | None = int(night_warm_match.group(1)) if night_warm_match else None
+    night_idle: int | None = int(night_idle_match.group(1)) if night_idle_match else None
 
     heartbeat = root / "logs" / "worker_heartbeat.json"
     if heartbeat.exists():
@@ -224,6 +232,10 @@ def worker_poll_intervals(root: Path) -> dict[str, int | str]:
         "idle_seconds": idle if idle is not None else "unknown",
         "active_seconds": active if active is not None else "unknown",
         "warm_seconds": warm if warm is not None else "unknown",
+        "night_start_hour": night_start if night_start is not None else "unknown",
+        "night_end_hour": night_end if night_end is not None else "unknown",
+        "night_warm_seconds": night_warm if night_warm is not None else "unknown",
+        "night_idle_seconds": night_idle if night_idle is not None else "unknown",
     }
 
 
@@ -265,12 +277,25 @@ def adaptive_polling_state(
     if not isinstance(interval, int):
         interval = default_interval
 
+    night_window = payload.get("night_quiet_window", {})
+    if not isinstance(night_window, dict):
+        night_window = {}
+    night_window = {
+        "enabled": bool(night_window.get("enabled", True)),
+        "active": bool(night_window.get("active", False)),
+        "start_hour": night_window.get("start_hour", intervals["night_start_hour"]),
+        "end_hour": night_window.get("end_hour", intervals["night_end_hour"]),
+        "warm_poll_seconds": night_window.get("warm_poll_seconds", intervals["night_warm_seconds"]),
+        "idle_poll_seconds": night_window.get("idle_poll_seconds", intervals["night_idle_seconds"]),
+    }
+
     return {
         "mode": mode,
         "interval_seconds": interval,
         "consecutive_idle_checks": int(payload.get("consecutive_idle_checks", 0) or 0),
         "idle_backoff_after_checks": int(payload.get("idle_backoff_after_checks", 5) or 5),
         "warm_remaining_checks": int(payload.get("warm_remaining_checks", 0) or 0),
+        "night_quiet_window": night_window,
         "reason": str(payload.get("reason", "not yet recorded")),
         "timestamp": str(payload.get("timestamp", "")),
     }
@@ -379,6 +404,17 @@ def cell(value: str) -> str:
     return value.replace("\n", " ").replace("|", "/").strip()
 
 
+def format_hour(value: Any) -> str:
+    try:
+        return f"{int(value):02d}:00"
+    except (TypeError, ValueError):
+        return f"{value}:00"
+
+
+def night_window_label(night: dict[str, Any]) -> str:
+    return f"{format_hour(night['start_hour'])}-{format_hour(night['end_hour'])}"
+
+
 def build_state(root: Path) -> dict[str, Any]:
     tasks = parse_queue_tasks(read_text(root / "TASK_QUEUE.md"))
     running = next((task for task in tasks if task.status in RUNNING_STATUSES), None)
@@ -438,6 +474,7 @@ def build_dashboard(state: dict[str, Any]) -> str:
     completed = state["latest_completed_task"]
     failed = state["latest_failed_or_blocked_task"]
     decision = state["decision_required"]
+    night = state["adaptive_polling"]["night_quiet_window"]
     decision_text = (
         "Yes - " + "; ".join(decision["items"])
         if decision["has_unresolved"]
@@ -452,6 +489,14 @@ def build_dashboard(state: dict[str, Any]) -> str:
         ("Current poll interval", f"{state['adaptive_polling']['interval_seconds']}s"),
         ("Consecutive idle checks", str(state["adaptive_polling"]["consecutive_idle_checks"])),
         ("Polling reason", state["adaptive_polling"]["reason"]),
+        (
+            "Night quiet window",
+            f"{night_window_label(night)} active={night['active']}",
+        ),
+        (
+            "Night poll interval",
+            f"warm {night['warm_poll_seconds']}s, idle {night['idle_poll_seconds']}s",
+        ),
         ("Current task", task_summary_from_state(current)),
         ("First pending task", task_summary_from_state(state["first_pending_task"])),
         ("Latest completed task", task_summary_from_state(completed)),
@@ -499,6 +544,7 @@ def task_summary_from_state(task: dict[str, str] | None) -> str:
 def build_gpt_visible_status(state: dict[str, Any]) -> str:
     decision = state["decision_required"]
     current = state["current_task"]
+    night = state["adaptive_polling"]["night_quiet_window"]
     if decision["has_unresolved"]:
         decision_text = "yes - " + "; ".join(decision["items"])
     else:
@@ -521,6 +567,7 @@ def build_gpt_visible_status(state: dict[str, Any]) -> str:
         f"- Current poll interval: `{state['adaptive_polling']['interval_seconds']}s`\n"
         f"- Consecutive idle checks: `{state['adaptive_polling']['consecutive_idle_checks']}`\n"
         f"- Polling reason: {state['adaptive_polling']['reason']}\n"
+        f"- Night quiet window: `{night_window_label(night)}`, active `{night['active']}`, warm `{night['warm_poll_seconds']}s`, idle `{night['idle_poll_seconds']}s`\n"
         f"- Safety mode: `{state['safety_mode']}`\n"
         f"- Current task: {task_text}\n"
         f"- Latest completed task: {task_summary_from_state(state['latest_completed_task'])}\n"

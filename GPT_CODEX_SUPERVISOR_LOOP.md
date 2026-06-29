@@ -25,18 +25,36 @@ ChatGPT writes safe task
 | `WARM` | 60s | Recent activity or blocker exists. |
 | `IDLE` | 600s | No pending safe task. |
 
+Night quiet window is `22:00-08:00`. During that window, if no pending task is
+detected, the local worker stretches to `WARM=600s` and `IDLE=1800s` to reduce
+Mac mini work. Once a pending safe task is detected, execution still uses the
+normal active path.
+
 ## Visual Surfaces
 
 | File | Reader | Purpose |
 |---|---|---|
 | `TASK_QUEUE.md` | ChatGPT + Codex | Next task channel. |
 | `GPT_VISIBLE_STATUS.md` | ChatGPT + user | Current state summary. |
+| `GPT_CODEX_CONVERSATION.md` | user + ChatGPT | Read-only GPT/Codex task and feedback timeline. |
 | `WORKER_DASHBOARD.md` | user | Worker health and polling state. |
 | `RUN_LOG.md` | ChatGPT + Codex | Execution log. |
 | `STATUS.md` | everyone | Durable status history. |
 | `GPT_REVIEW.md` | ChatGPT | Codex feedback for review. |
 | `GPT_LOCAL_REVIEW_INPUT.md` | ChatGPT | Compact latest handoff packet. |
 | `DECISION_REQUIRED.md` | user | Human-only blockers. |
+
+Desktop entry:
+
+- `/Users/zhoujiali/Library/Mobile Documents/com~apple~CloudDocs/Desktop/查看GPT和Codex对话.command`
+- It opens a local read-only monitor window and does not execute tasks.
+
+Local health guard:
+
+- Launchd label: `com.codex.github-worker-health-guard`
+- Default interval: `900s`
+- It checks the worker and restarts it if needed. It does not call models, spend
+  tokens, connect trading accounts, or delete data.
 
 ## Boundary
 

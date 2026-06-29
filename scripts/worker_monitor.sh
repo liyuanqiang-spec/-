@@ -29,8 +29,10 @@ print_status_summary() {
 
 while true; do
   clear
+  python3 "$ROOT/scripts/render_supervisor_conversation.py" --root "$ROOT" --output "$ROOT/GPT_CODEX_CONVERSATION.md" >/dev/null 2>&1 || true
   print_status_summary
   print_file_section "GPT_VISIBLE_STATUS.md" "$ROOT/GPT_VISIBLE_STATUS.md" 80
+  print_file_section "GPT/Codex 对话" "$ROOT/GPT_CODEX_CONVERSATION.md" 90
   print_file_section "WORKER_DASHBOARD.md" "$ROOT/WORKER_DASHBOARD.md" 80
   print_file_section "TASK_QUEUE.md 最新任务" "$ROOT/TASK_QUEUE.md" 90
   print_file_section "本机 worker 日志" "$SUPPORT_LOG" 60

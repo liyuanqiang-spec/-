@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T11:46:44+08:00",
+  "generated_at": "2026-06-29T12:39:06+08:00",
   "state": "IDLE",
   "visible_scaffold": {
     "state": "SCAFFOLD_READY",
@@ -11,23 +11,35 @@
     "reason": "local deterministic dry-run artifact is present"
   },
   "adaptive_polling": {
-    "mode": "WARM",
-    "interval_seconds": 60,
-    "consecutive_idle_checks": 2,
+    "mode": "IDLE",
+    "interval_seconds": 600,
+    "consecutive_idle_checks": 8,
     "idle_backoff_after_checks": 5,
-    "warm_remaining_checks": 1,
-    "reason": "warm after activity (1 checks left)",
-    "timestamp": "2026-06-29T11:46:04+08:00"
+    "warm_remaining_checks": 0,
+    "night_quiet_window": {
+      "enabled": true,
+      "active": false,
+      "start_hour": 22,
+      "end_hour": 8,
+      "warm_poll_seconds": 600,
+      "idle_poll_seconds": 1800
+    },
+    "reason": "idle backoff after 8 checks",
+    "timestamp": "2026-06-29T12:23:52+08:00"
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
   "latest_status": "LOCAL_SUPERVISOR_LOOP_VERIFIED",
-  "latest_commit": "974a330 2026-06-29 Mark local supervisor loop verified",
+  "latest_commit": "08ba194 2026-06-29 Refresh verified supervisor loop status",
   "last_worker_check": "2026-06-29T11:45:00+08:00 / completed / TASK-019A",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {
     "idle_seconds": 600,
     "active_seconds": 30,
-    "warm_seconds": 60
+    "warm_seconds": 60,
+    "night_start_hour": 22,
+    "night_end_hour": 8,
+    "night_warm_seconds": 600,
+    "night_idle_seconds": 1800
   },
   "current_task": null,
   "first_running_task": null,
