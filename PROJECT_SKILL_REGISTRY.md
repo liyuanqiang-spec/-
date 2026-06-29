@@ -16,6 +16,7 @@ Installed project skills for GPT plus local worker.
 - quant-backtest
 - market-data-loader
 - report-builder
+- strategy-miner
 
 ## Documents and product
 
