@@ -108,11 +108,11 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Result: GPT_REPLY_RECEIVED_20260702_OK; GPT handshake completed by local worker
 
 ### TASK-030-GPT-CODEX-RETEST
-- Status: pending
+- Status: completed
 - Type: handshake
 - Title: GPT Codex channel retest after scanner fix
 - Request: Repository-status-only retest. Confirm that a fresh safe queue task can still be pulled, completed, and reflected in visible status after the risk scanner false-positive fix. Include marker `GPT_CODEX_RETEST_20260702_OK`. Keep PHASE_1_SIMULATION_ONLY.
 - Expected output: TASK_QUEUE.md marks this task completed, preserves marker `GPT_CODEX_RETEST_20260702_OK`, and visible status files show no decision required.
 - Safety: repository_status_only
 - Created: 2026-07-02
-- Result: pending
+- Result: GPT_CODEX_RETEST_20260702_OK; GPT handshake completed by local worker
