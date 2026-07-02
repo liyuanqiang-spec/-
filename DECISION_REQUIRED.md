@@ -183,3 +183,11 @@ No current user action required for normal safe GitHub status-file supervision.
 - Current action: false-positive fixed; task restored to pending for retry.
 - Resolution: GPT reply was repository-status-only. The blocked words appeared inside negative safety restrictions. Worker risk scanner now strips common negative English restrictions before matching.
 - Required confirmation: none.
+
+## Decision Required 2026-07-02 15:09:35 +0800
+
+- Item: Task TASK-032-IWENCAI-SKILLHUB-VOLATILITY contains a blocked trading/fund/secret/deletion/danger risk
+- Current action: worker stopped before execution
+- A 推荐: keep simulation-only and rewrite the task as safe research work
+- B: explicitly authorize the blocked setup/action
+- C: cancel this task

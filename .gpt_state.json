@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-02T09:09:31+08:00",
-  "state": "IDLE",
+  "generated_at": "2026-07-02T15:09:35+08:00",
+  "state": "BLOCKED",
   "visible_scaffold": {
     "state": "SCAFFOLD_READY",
     "reason": "visible scaffold artifacts are present"
@@ -12,10 +12,10 @@
   },
   "adaptive_polling": {
     "mode": "WARM",
-    "interval_seconds": 60,
-    "consecutive_idle_checks": 0,
+    "interval_seconds": 600,
+    "consecutive_idle_checks": 51,
     "idle_backoff_after_checks": 5,
-    "warm_remaining_checks": 3,
+    "warm_remaining_checks": 0,
     "night_quiet_window": {
       "enabled": true,
       "active": false,
@@ -24,13 +24,13 @@
       "warm_poll_seconds": 600,
       "idle_poll_seconds": 1800
     },
-    "reason": "recent worker activity: completed",
-    "timestamp": "2026-07-02T09:01:30+08:00"
+    "reason": "idle backoff after 51 checks",
+    "timestamp": "2026-07-02T14:59:31+08:00"
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "WORKER_COMPLETED",
-  "latest_commit": "c60bdf0 2026-07-02 Worker started TASK-031-ASK-SOFTWARE-ITERATION-STATUS",
-  "last_worker_check": "2026-07-02T09:09:31+08:00 / completed / TASK-031-ASK-SOFTWARE-ITERATION-STATUS",
+  "latest_status": "DECISION_REQUIRED",
+  "latest_commit": "ddab9bf 2026-07-02 Queue Codex task for Iwencai volatility skill export",
+  "last_worker_check": "2026-07-02T15:09:35+08:00 / blocked / TASK-032-IWENCAI-SKILLHUB-VOLATILITY",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {
     "idle_seconds": 600,
@@ -53,10 +53,20 @@
     "result": "codex exec completed",
     "safety": "repository_status_only"
   },
-  "latest_failed_or_blocked_task": null,
-  "decision_required": {
-    "has_unresolved": false,
-    "items": []
+  "latest_failed_or_blocked_task": {
+    "id": "TASK-032-IWENCAI-SKILLHUB-VOLATILITY",
+    "status": "decision_required",
+    "type": "local_tool_install_export",
+    "title": "Install and export Iwencai SkillHub volatility strategy skill",
+    "request": "Execute the detailed task file `TASK_QUEUE/CODEX_TASK_iwencai_skillhub_volatility.md`. Install Iwencai SkillHub CLI-only if missing, install the SkillHub skill named `波动率策略`, export the installed skills directory to `skillhub_export/iwencai_skillhub_skills_export.tar.gz`, and write `skillhub_export/iwencai_skillhub_install_report.md`. Keep PHASE_1_SIMULATION_ONLY. Do not call brokers, do not connect trading accounts, do not place or cancel orders, do not move funds, do not read or expose secrets, do not log in to 同花顺/问财, and do not use danger-full-access. If network access is blocked, write a clear blocker marker instead of retrying indefinitely.",
+    "result": "",
+    "safety": "safe_local_cli_install_no_trading_no_secrets"
   },
-  "next_action": "ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。"
+  "decision_required": {
+    "has_unresolved": true,
+    "items": [
+      "Task TASK-032-IWENCAI-SKILLHUB-VOLATILITY contains a blocked trading/fund/secret/deletion/danger risk"
+    ]
+  },
+  "next_action": "人工处理 DECISION_REQUIRED.md 中未解决事项，然后重新刷新状态。"
 }

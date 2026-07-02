@@ -1786,3 +1786,10 @@ Status: `WORKER_COMPLETED`
 
 - Detail: Task TASK-031-ASK-SOFTWARE-ITERATION-STATUS completed
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-07-02 15:09:35 +0800
+
+Status: `DECISION_REQUIRED`
+
+- Detail: Task TASK-032-IWENCAI-SKILLHUB-VOLATILITY blocked by risk control
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

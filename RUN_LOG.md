@@ -1341,3 +1341,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: local_review_trigger_dry_run
 - Detail: LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for Worker processed TASK-031-ASK-SOFTWARE-ITERATION-STATUS
+
+## 2026-07-02 15:09:35 +0800
+
+- Event: blocked
+- Detail: Task TASK-032-IWENCAI-SKILLHUB-VOLATILITY blocked by risk control

@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-07-02T09:09:31+08:00",
-  "state": "completed",
-  "detail": "Task TASK-031-ASK-SOFTWARE-ITERATION-STATUS completed",
-  "task": "TASK-031-ASK-SOFTWARE-ITERATION-STATUS",
+  "timestamp": "2026-07-02T15:09:35+08:00",
+  "state": "blocked",
+  "detail": "Task TASK-032-IWENCAI-SKILLHUB-VOLATILITY blocked by risk control",
+  "task": "TASK-032-IWENCAI-SKILLHUB-VOLATILITY",
   "interval_seconds": 600,
   "idle_poll_interval_seconds": 600,
   "active_poll_interval_seconds": 30,
