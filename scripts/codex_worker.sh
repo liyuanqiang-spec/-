@@ -532,6 +532,26 @@ for line in path.read_text(encoding="utf-8").splitlines():
 PY
 }
 
+task_requested_marker() {
+  python3 - "$TASK_FILE" <<'PY'
+from pathlib import Path
+import re
+import sys
+
+path = Path(sys.argv[1])
+if not path.exists():
+    raise SystemExit(0)
+text = path.read_text(encoding="utf-8")
+markers = re.findall(r"`([A-Z][A-Z0-9_]{5,})`", text)
+for marker in markers:
+    if marker.endswith(("_OK", "_READY", "_PASSED", "_COMPLETED")):
+        print(marker)
+        raise SystemExit(0)
+if markers:
+    print(markers[0])
+PY
+}
+
 update_task_status() {
   local task_id="$1"
   local new_status="$2"
@@ -637,10 +657,18 @@ run_once_body() {
 
   current_type="$(task_type || true)"
   if [ "$current_type" = "status_check" ] || [ "$current_type" = "handshake" ]; then
-    update_task_status "$task_id" "completed" "GPT handshake completed by local worker"
-    append_status "GPT_HANDSHAKE_OK" "Task $task_id completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working"
-    append_run_log "gpt_handshake" "Task $task_id completed by local worker without codex exec; safety mode remained PHASE_1_SIMULATION_ONLY"
-    write_heartbeat "completed" "Task $task_id completed by local worker" "$task_id"
+    requested_marker="$(task_requested_marker || true)"
+    if [ -n "$requested_marker" ]; then
+      handshake_result="$requested_marker; GPT handshake completed by local worker"
+      handshake_detail="Task $task_id completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working; marker \`$requested_marker\`"
+    else
+      handshake_result="GPT handshake completed by local worker"
+      handshake_detail="Task $task_id completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working"
+    fi
+    update_task_status "$task_id" "completed" "$handshake_result"
+    append_status "GPT_HANDSHAKE_OK" "$handshake_detail"
+    append_run_log "gpt_handshake" "$handshake_detail; safety mode remained PHASE_1_SIMULATION_ONLY"
+    write_heartbeat "completed" "$handshake_detail" "$task_id"
     update_dashboard
     run_local_review_trigger_dry_run "Worker completed GPT handshake $task_id"
     commit_and_push "Worker completed GPT handshake $task_id" TASK_QUEUE.md STATUS.md RUN_LOG.md DECISION_REQUIRED.md "$DASHBOARD_FILE" GPT_VISIBLE_STATUS.md .gpt_state.json GPT_REVIEW.md logs/worker_heartbeat.json >> "$LOG" 2>&1 || return 1
