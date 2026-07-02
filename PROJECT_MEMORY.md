@@ -16,6 +16,29 @@ Use passive posting on low-liquidity option legs and active hedging on the liqui
 - GPT orchestrator reviews worker output and appends the next safe task.
 - User wants both worker feedback and GPT review feedback visible in repository files and available for ChatGPT summaries.
 
+## GPT-Codex GitHub handoff memory
+
+Status: established and reusable.
+
+- Shared repository: `liyuanqiang-spec/-`
+- Default branch: `main`
+- Git remote: `https://github.com/liyuanqiang-spec/-.git`
+- Primary queue: `TASK_QUEUE.md`
+- Detailed task directory: `TASK_QUEUE/`
+- Main status surfaces: `STATUS.md`, `RUN_LOG.md`, `GPT_VISIBLE_STATUS.md`, `GPT_CODEX_CONVERSATION.md`
+- Human decision queue: `DECISION_REQUIRED.md`
+- Risk boundary: `RISK_CONTROL.md`
+- Reusable skill: `.codex/skills/gpt-codex-github-handoff/SKILL.md`
+
+Operational rule: when the owner asks ChatGPT to instruct Codex, do not ask for the repository again unless GitHub access fails. Use the GitHub connector, append a safe pending task to `TASK_QUEUE.md`, create a detailed task file under `TASK_QUEUE/` when needed, and later read Codex's pushed result files.
+
+Known successful route markers:
+
+- `GPT_CODEX_INTERACTION_TEST_OK`
+- `GPT_CODEX_MARKER_ROUNDTRIP_OK`
+- `GPT_REPLY_RECEIVED_20260702_OK`
+- `GPT_CODEX_RETEST_20260702_OK`
+
 ## Software roles
 
 - InfiniTrader: candidate execution endpoint, custom spread, priority-leg mode, PythonGo protection layer.
