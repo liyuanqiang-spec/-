@@ -1,24 +1,24 @@
 # GPT Visible Status
 
-- Generated at: `2026-07-02T09:01:18+08:00`
-- Status: `IDLE`
-- Visible scaffold: `SCAFFOLD_READY`
+- Generated at: `2026-07-02T09:02:35+08:00`
+- Status: `WORKING`
+- Visible scaffold: `WORKER_BUSY`
 - Local review trigger: `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`
 - Local review input: `GPT_LOCAL_REVIEW_INPUT.md`
-- Worker mode: `WARM`
+- Worker mode: `ACTIVE`
 - Current poll interval: `60s`
-- Consecutive idle checks: `1`
-- Polling reason: warm after activity (2 checks left)
+- Consecutive idle checks: `0`
+- Polling reason: recent worker activity: completed
 - Night quiet window: `22:00-08:00`, active `False`, warm `600s`, idle `1800s`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
-- Current task: none
+- Current task: TASK-031-ASK-SOFTWARE-ITERATION-STATUS / running / Ask Codex for software iteration progress
 - Latest completed task: TASK-030-GPT-CODEX-RETEST (completed) - GPT Codex channel retest after scanner fix | GPT_CODEX_RETEST_20260702_OK; GPT handshake completed by local worker
 - Decision required: none
-- Latest status marker: `GPT_HANDSHAKE_OK`
-- Last worker check: 2026-07-02T09:01:04+08:00 / completed / TASK-030-GPT-CODEX-RETEST
-- Latest commit: 9837049 2026-07-02 Worker completed GPT handshake TASK-030-GPT-CODEX-RETEST
+- Latest status marker: `WORKER_RUNNING`
+- Last worker check: 2026-07-02T09:02:35+08:00 / running / TASK-031-ASK-SOFTWARE-ITERATION-STATUS
+- Latest commit: 90855c1 2026-07-02 Ask Codex for software iteration status
 - Worker poll interval: active 30s, warm 60s, idle 600s
-- Next action: ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。
+- Next action: 等待当前任务完成；worker 会在完成、失败或阻塞后推送状态。
 
 ## ChatGPT Supervision Contract
 

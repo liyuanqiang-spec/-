@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-07-02T09:01:04+08:00",
-  "state": "completed",
-  "detail": "Task TASK-030-GPT-CODEX-RETEST completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working; marker `GPT_CODEX_RETEST_20260702_OK`",
-  "task": "TASK-030-GPT-CODEX-RETEST",
+  "timestamp": "2026-07-02T09:02:35+08:00",
+  "state": "running",
+  "detail": "Task TASK-031-ASK-SOFTWARE-ITERATION-STATUS started",
+  "task": "TASK-031-ASK-SOFTWARE-ITERATION-STATUS",
   "interval_seconds": 600,
   "idle_poll_interval_seconds": 600,
   "active_poll_interval_seconds": 30,

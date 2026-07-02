@@ -1316,3 +1316,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: gpt_handshake
 - Detail: Task TASK-030-GPT-CODEX-RETEST completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working; marker `GPT_CODEX_RETEST_20260702_OK`; safety mode remained PHASE_1_SIMULATION_ONLY
+
+## 2026-07-02 09:02:35 +0800
+
+- Event: started
+- Detail: Task TASK-031-ASK-SOFTWARE-ITERATION-STATUS started
