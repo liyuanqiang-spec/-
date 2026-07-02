@@ -88,11 +88,11 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Result: GPT handshake completed by local worker
 
 ### TASK-028-GPT-MARKER-ROUNDTRIP-TEST
-- Status: pending
+- Status: completed
 - Type: status_check
 - Title: GPT marker roundtrip smoke test
 - Request: Confirm that the local Mac mini Codex worker preserves GPT-authored custom completion markers. Write marker `GPT_CODEX_MARKER_ROUNDTRIP_OK` into the completed task result and visible status updates. Keep PHASE_1_SIMULATION_ONLY.
 - Expected output: TASK_QUEUE.md, STATUS.md, RUN_LOG.md, and GPT_VISIBLE_STATUS.md include `GPT_CODEX_MARKER_ROUNDTRIP_OK`, and no decision is required.
 - Safety: repository_status_only
 - Created: 2026-07-02
-- Result: waiting for local worker
+- Result: GPT_CODEX_MARKER_ROUNDTRIP_OK; GPT handshake completed by local worker

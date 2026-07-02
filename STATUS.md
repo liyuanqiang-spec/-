@@ -1707,3 +1707,10 @@ Status: `GPT_HANDSHAKE_OK`
 
 - Detail: Task TASK-027-GPT-CODEX-HANDSHAKE-TEST completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-07-02 08:47:43 +0800
+
+Status: `GPT_HANDSHAKE_OK`
+
+- Detail: Task TASK-028-GPT-MARKER-ROUNDTRIP-TEST completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working; marker `GPT_CODEX_MARKER_ROUNDTRIP_OK`
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

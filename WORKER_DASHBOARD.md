@@ -1,6 +1,6 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-07-02 08:46:07 +0800`
+Last dashboard update: `2026-07-02 08:47:43 +0800`
 
 | Item | Result |
 |---|---|
@@ -16,12 +16,12 @@ Last dashboard update: `2026-07-02 08:46:07 +0800`
 | Night poll interval | warm 600s, idle 1800s |
 | Current task | None |
 | First pending task | None |
-| Latest completed task | TASK-027-GPT-CODEX-HANDSHAKE-TEST (completed) - GPT to Codex interaction smoke test / GPT handshake completed by local worker |
+| Latest completed task | TASK-028-GPT-MARKER-ROUNDTRIP-TEST (completed) - GPT marker roundtrip smoke test / GPT_CODEX_MARKER_ROUNDTRIP_OK; GPT handshake completed by local worker |
 | Latest failed or blocked task | None |
 | Latest status | GPT_HANDSHAKE_OK |
-| Last worker check | 2026-07-02T08:46:07+08:00 / completed / TASK-027-GPT-CODEX-HANDSHAKE-TEST |
+| Last worker check | 2026-07-02T08:47:43+08:00 / completed / TASK-028-GPT-MARKER-ROUNDTRIP-TEST |
 | Latest report | REPORTS/first_complete_simulation_report.md |
-| Latest push/commit | ea58b19 2026-07-02 Queue GPT Codex handshake test |
+| Latest push/commit | cb9754a 2026-07-02 Queue GPT marker roundtrip test |
 | Worker poll interval | active 30s, warm 60s, idle 600s |
 | Decision required | No unresolved item |
 | Safety mode | PHASE_1_SIMULATION_ONLY |

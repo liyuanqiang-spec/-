@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-07-02T08:46:07+08:00",
+  "timestamp": "2026-07-02T08:47:43+08:00",
   "state": "completed",
-  "detail": "Task TASK-027-GPT-CODEX-HANDSHAKE-TEST completed by local worker",
-  "task": "TASK-027-GPT-CODEX-HANDSHAKE-TEST",
+  "detail": "Task TASK-028-GPT-MARKER-ROUNDTRIP-TEST completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working; marker `GPT_CODEX_MARKER_ROUNDTRIP_OK`",
+  "task": "TASK-028-GPT-MARKER-ROUNDTRIP-TEST",
   "interval_seconds": 600,
   "idle_poll_interval_seconds": 600,
   "active_poll_interval_seconds": 30,

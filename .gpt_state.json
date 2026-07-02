@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-02T08:46:07+08:00",
+  "generated_at": "2026-07-02T08:47:43+08:00",
   "state": "IDLE",
   "visible_scaffold": {
     "state": "SCAFFOLD_READY",
@@ -29,8 +29,8 @@
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
   "latest_status": "GPT_HANDSHAKE_OK",
-  "latest_commit": "ea58b19 2026-07-02 Queue GPT Codex handshake test",
-  "last_worker_check": "2026-07-02T08:46:07+08:00 / completed / TASK-027-GPT-CODEX-HANDSHAKE-TEST",
+  "latest_commit": "cb9754a 2026-07-02 Queue GPT marker roundtrip test",
+  "last_worker_check": "2026-07-02T08:47:43+08:00 / completed / TASK-028-GPT-MARKER-ROUNDTRIP-TEST",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {
     "idle_seconds": 600,
@@ -45,12 +45,12 @@
   "first_running_task": null,
   "first_pending_task": null,
   "latest_completed_task": {
-    "id": "TASK-027-GPT-CODEX-HANDSHAKE-TEST",
+    "id": "TASK-028-GPT-MARKER-ROUNDTRIP-TEST",
     "status": "completed",
     "type": "status_check",
-    "title": "GPT to Codex interaction smoke test",
-    "request": "Confirm that a GPT-authored repository task can be pulled and completed by the local Mac mini Codex worker. Update visible status files with marker `GPT_CODEX_INTERACTION_TEST_OK`. Keep PHASE_1_SIMULATION_ONLY.",
-    "result": "GPT handshake completed by local worker",
+    "title": "GPT marker roundtrip smoke test",
+    "request": "Confirm that the local Mac mini Codex worker preserves GPT-authored custom completion markers. Write marker `GPT_CODEX_MARKER_ROUNDTRIP_OK` into the completed task result and visible status updates. Keep PHASE_1_SIMULATION_ONLY.",
+    "result": "GPT_CODEX_MARKER_ROUNDTRIP_OK; GPT handshake completed by local worker",
     "safety": "repository_status_only"
   },
   "latest_failed_or_blocked_task": null,
