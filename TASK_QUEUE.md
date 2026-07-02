@@ -127,3 +127,12 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Created: 2026-07-02
 - Last update: updated by worker
 - Result: codex exec completed
+
+### TASK-032-IWENCAI-SKILLHUB-VOLATILITY
+- Status: pending
+- Type: local_tool_install_export
+- Title: Install and export Iwencai SkillHub volatility strategy skill
+- Request: Execute the detailed task file `TASK_QUEUE/CODEX_TASK_iwencai_skillhub_volatility.md`. Install Iwencai SkillHub CLI-only if missing, install the SkillHub skill named `波动率策略`, export the installed skills directory to `skillhub_export/iwencai_skillhub_skills_export.tar.gz`, and write `skillhub_export/iwencai_skillhub_install_report.md`. Keep PHASE_1_SIMULATION_ONLY. Do not call brokers, do not connect trading accounts, do not place or cancel orders, do not move funds, do not read or expose secrets, do not log in to 同花顺/问财, and do not use danger-full-access. If network access is blocked, write a clear blocker marker instead of retrying indefinitely.
+- Expected output: On success, commit and push `skillhub_export/iwencai_skillhub_skills_export.tar.gz` and `skillhub_export/iwencai_skillhub_install_report.md`, update visible status files, and include marker `IWENCAI_SKILLHUB_VOLATILITY_SKILL_EXPORTED_20260702`. On failure, include one of `IWENCAI_SKILLHUB_CLI_INSTALL_BLOCKED`, `IWENCAI_SKILLHUB_CLI_NOT_FOUND`, or `IWENCAI_VOLATILITY_SKILL_INSTALL_BLOCKED` with concise reason.
+- Safety: safe_local_cli_install_no_trading_no_secrets
+- Created: 2026-07-02
