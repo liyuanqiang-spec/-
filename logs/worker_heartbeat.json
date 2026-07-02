@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-07-02T08:56:55+08:00",
-  "state": "blocked",
-  "detail": "Task TASK-029-GPT-REPLY-ROUNDTRIP blocked by risk control",
-  "task": "TASK-029-GPT-REPLY-ROUNDTRIP",
+  "timestamp": "2026-07-02T08:56:57+08:00",
+  "state": "locked",
+  "detail": "another worker run is active pid=43603",
+  "task": "none",
   "interval_seconds": 600,
   "idle_poll_interval_seconds": 600,
   "active_poll_interval_seconds": 30,
