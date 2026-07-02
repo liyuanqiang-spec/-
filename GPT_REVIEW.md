@@ -142,15 +142,15 @@ Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
 ## Local Review Trigger Dry Run
 
 - Marker: `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`
-- Generated at: `2026-06-29T20:34:58+08:00`
+- Generated at: `2026-07-02T09:09:31+08:00`
 - Input file: `GPT_LOCAL_REVIEW_INPUT.md`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Default state: disabled unless `LOCAL_REVIEW_TRIGGER_DRY_RUN_ENABLED=1` is set for the worker before the final commit.
 - Network calls: none.
 - Task append: none.
-- Trigger: Worker processed TASK-025-DIRECT-QQ-MAIL-TEST
+- Trigger: Worker processed TASK-031-ASK-SOFTWARE-ITERATION-STATUS
 - Worker state: `IDLE`
-- Latest completed task: TASK-025-DIRECT-QQ-MAIL-TEST (completed) - Direct QQ mail test | codex exec completed
+- Latest completed task: TASK-031-ASK-SOFTWARE-ITERATION-STATUS (completed) - Ask Codex for software iteration progress [SOFTWARE_ITERATION_STATUS_20260702] | codex exec completed
 - Decision required: none
 <!-- local-review-trigger-dry-run:end -->
 

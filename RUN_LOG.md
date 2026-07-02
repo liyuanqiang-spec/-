@@ -1321,3 +1321,23 @@ This file records safe worker runs and Codex execution events.
 
 - Event: started
 - Detail: Task TASK-031-ASK-SOFTWARE-ITERATION-STATUS started
+
+## 2026-07-02 09:02:38 +0800
+
+- Event: attempt
+- Detail: Task TASK-031-ASK-SOFTWARE-ITERATION-STATUS codex exec attempt 1/3
+
+## 2026-07-02 09:04:13 +0800
+
+- Event: software_iteration_status
+- Detail: TASK-031 completed with marker `SOFTWARE_ITERATION_STATUS_20260702`; sample/offline-replay software is working, live trading remains blocked, 35 tests passed, compile check passed, worker health PASS, no unresolved decisions, next steps are data-needed pack, parameter sensitivity, and fill-event/dashboard upgrade.
+
+## 2026-07-02 09:09:31 +0800
+
+- Event: completed
+- Detail: Task TASK-031-ASK-SOFTWARE-ITERATION-STATUS completed
+
+## 2026-07-02 09:09:31 +0800
+
+- Event: local_review_trigger_dry_run
+- Detail: LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for Worker processed TASK-031-ASK-SOFTWARE-ITERATION-STATUS

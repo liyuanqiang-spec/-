@@ -1,12 +1,12 @@
 # GPT Local Review Input
 
 - Marker: `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`
-- Generated at: `2026-06-29T20:34:58+08:00`
+- Generated at: `2026-07-02T09:09:31+08:00`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Scope: repository-local deterministic dry run only.
 - Network calls: none.
 - Task creation: disabled; this file does not append or propose queue mutations.
-- Trigger: Worker processed TASK-025-DIRECT-QQ-MAIL-TEST
+- Trigger: Worker processed TASK-031-ASK-SOFTWARE-ITERATION-STATUS
 
 ## Compact Worker State
 
@@ -14,22 +14,22 @@
 - Visible scaffold: `SCAFFOLD_READY`
 - Worker mode: `WARM`
 - Current task: none
-- Latest completed task: TASK-025-DIRECT-QQ-MAIL-TEST (completed) - Direct QQ mail test | codex exec completed
+- Latest completed task: TASK-031-ASK-SOFTWARE-ITERATION-STATUS (completed) - Ask Codex for software iteration progress [SOFTWARE_ITERATION_STATUS_20260702] | codex exec completed
 - Decision required: none
 - Latest status marker: `WORKER_COMPLETED`
 
 ## Recent Run Events
 
-- 2026-06-29 20:27:16 +0800 / task_023_sync_repaired / Rebasing over the latest GitHub queue updates succeeded; TASK-025-DIRECT-QQ-MAIL-TEST remains pending for the worker.
-- 2026-06-29 20:30:30 +0800 / started / Task TASK-025-DIRECT-QQ-MAIL-TEST started
-- 2026-06-29 20:30:35 +0800 / attempt / Task TASK-025-DIRECT-QQ-MAIL-TEST codex exec attempt 1/3
-- 2026-06-29 20:31:55 +0800 / TASK-025 completed / CODEX_QQ_MAIL_ACCEPTED_UNVERIFIED; subject marker `CODEX-QQ-DIRECT-TEST-20260629-2045`; local mail command accepted the direct QQ test attempt; final mailbox delivery was not independently verified; recipient...
-- 2026-06-29 20:34:58 +0800 / completed / Task TASK-025-DIRECT-QQ-MAIL-TEST completed
+- 2026-07-02 09:01:04 +0800 / gpt_handshake / Task TASK-030-GPT-CODEX-RETEST completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working; marker `GPT_CODEX_RETEST_20260702_OK`; safety mode remained PHASE_1_SIMULATION_ONLY
+- 2026-07-02 09:02:35 +0800 / started / Task TASK-031-ASK-SOFTWARE-ITERATION-STATUS started
+- 2026-07-02 09:02:38 +0800 / attempt / Task TASK-031-ASK-SOFTWARE-ITERATION-STATUS codex exec attempt 1/3
+- 2026-07-02 09:04:13 +0800 / software_iteration_status / TASK-031 completed with marker `SOFTWARE_ITERATION_STATUS_20260702`; sample/offline-replay software is working, live trading remains blocked, 35 tests passed, compile check passed, worker health PASS,...
+- 2026-07-02 09:09:31 +0800 / completed / Task TASK-031-ASK-SOFTWARE-ITERATION-STATUS completed
 
 ## Review Packet Summary
 
 - Status: IDLE
-- Latest completed task: TASK-025-DIRECT-QQ-MAIL-TEST (completed) - Direct QQ mail test | codex exec completed
+- Latest completed task: TASK-031-ASK-SOFTWARE-ITERATION-STATUS (completed) - Ask Codex for software iteration progress [SOFTWARE_ITERATION_STATUS_20260702] | codex exec completed
 
 ## Inputs Used
 

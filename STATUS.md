@@ -1763,3 +1763,26 @@ Status: `WORKER_RUNNING`
 
 - Detail: Task TASK-031-ASK-SOFTWARE-ITERATION-STATUS started
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-07-02 09:04:13 +0800
+
+Status: `SOFTWARE_ITERATION_STATUS_20260702`
+
+- Task: `TASK-031-ASK-SOFTWARE-ITERATION-STATUS`
+- Owner result: 当前软件不是概念阶段，已经是样例数据和离线 replay 级可运行版本；还不是实盘版本。
+- Built modules: GitHub `TASK_QUEUE.md` -> local Mac mini Codex worker -> visible status files handoff, worker dashboard, silver option contract scanner, low-liquidity scanner, vertical spread generator, first-complete simulation/backtest, quant baseline, quote replay, tick replay adapter, risk-control gates, report writer.
+- Recent changes: GPT-Codex handoff was retested through `TASK-027` to `TASK-030`; the queue/visible-status path is currently executing fresh repository-status tasks; current task preserved marker `SOFTWARE_ITERATION_STATUS_20260702`.
+- Working now: `python3 -m unittest discover -s tests` passed 35 tests; `python3 -m compileall -q src tests scripts` passed; `bash scripts/check_worker_health.sh` returned `PASS`; unresolved decisions: none.
+- Quant result level: local sample scan has 7 scanned contracts, 4 vertical spread candidates, 3 accepted simulated spreads, average simulated edge 2.398, with `LOW_SAMPLE`, `LOW_PASSIVE_FILL`, and `WIDE_LEG_SPREAD` risk flags.
+- Replay result level: repository-local quote/tick smoke fixtures validate loader ordering, stale quotes, repricing, first-leg timeout/fill, second-leg adverse move, and incomplete-leg behavior; current replay is still fixture-only.
+- Blocked: no real historical silver option tick CSV, order-book depth, fill-event logs, venue fee schedule, margin schedule, or statistically meaningful sample under repository-local `DATA/raw/`; real trading, real account connection, real orders, cancellations, fund transfer, secret exposure, raw-data deletion, and `danger-full-access` remain forbidden.
+- Next three development steps: 1) write a data-needed/contract-whitelist pack for safe read-only silver option tick/order-book CSV intake; 2) add parameter sensitivity over passive-fill threshold, timeout, second-leg adverse move, fee, and slippage assumptions; 3) add repository-local fill-event fixture plus dashboard tables for time-value anomalies, spread ranking, and replay summary.
+- Worker loop judgment: stable for safe repository tasks today; current checks show workspace-write sandbox, no dangerous sandbox, health `PASS`, and no unresolved user action.
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-07-02 09:09:31 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-031-ASK-SOFTWARE-ITERATION-STATUS completed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

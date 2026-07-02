@@ -118,11 +118,12 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Result: GPT_CODEX_RETEST_20260702_OK; GPT handshake completed by local worker
 
 ### TASK-031-ASK-SOFTWARE-ITERATION-STATUS
-- Status: running
+- Status: completed
 - Type: status_report
-- Title: Ask Codex for software iteration progress
+- Title: Ask Codex for software iteration progress [SOFTWARE_ITERATION_STATUS_20260702]
 - Request: Repository-status-only progress inquiry. Please summarize the current software iteration status for the owner: what modules are already built, what was changed recently, what is currently working, what is blocked, what the next three development steps should be, and whether the local Mac mini worker loop is stable. Focus on the quant/silver option spread scanner and GPT-Codex handoff system. Do not call brokers, do not connect trading accounts, do not place or cancel orders, do not move funds, do not read or expose secrets, do not use danger-full-access, and do not perform live trading. Include marker `SOFTWARE_ITERATION_STATUS_20260702` in the result and visible status files.
 - Expected output: Update `TASK_QUEUE.md`, `GPT_VISIBLE_STATUS.md`, `GPT_CODEX_CONVERSATION.md`, `STATUS.md`, or `RUN_LOG.md` with a concise owner-readable progress report and marker `SOFTWARE_ITERATION_STATUS_20260702`.
 - Safety: repository_status_only
 - Created: 2026-07-02
-- Result: worker started
+- Last update: updated by worker
+- Result: codex exec completed
