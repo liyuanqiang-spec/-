@@ -1286,3 +1286,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: gpt_handshake
 - Detail: Task TASK-028-GPT-MARKER-ROUNDTRIP-TEST completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working; marker `GPT_CODEX_MARKER_ROUNDTRIP_OK`; safety mode remained PHASE_1_SIMULATION_ONLY
+
+## 2026-07-02 08:54:05 +0800
+
+- Event: blocked
+- Detail: Task TASK-029-GPT-REPLY-ROUNDTRIP blocked by risk control

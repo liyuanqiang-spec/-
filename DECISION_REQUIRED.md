@@ -174,3 +174,11 @@ No current user action required for normal safe GitHub status-file supervision.
 - Current action: no user action required
 - Resolution: TASK-026 was replaced by TASK-026A with clean repository-status wording. The local Mac mini worker is now the primary route and the hosted route is parked.
 - Required confirmation: none.
+
+## Decision Required 2026-07-02 08:54:05 +0800
+
+- Item: Task TASK-029-GPT-REPLY-ROUNDTRIP contains a blocked trading/fund/secret/deletion/danger risk
+- Current action: worker stopped before execution
+- A 推荐: keep simulation-only and rewrite the task as safe research work
+- B: explicitly authorize the blocked setup/action
+- C: cancel this task

@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-07-02T08:47:43+08:00",
-  "state": "completed",
-  "detail": "Task TASK-028-GPT-MARKER-ROUNDTRIP-TEST completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working; marker `GPT_CODEX_MARKER_ROUNDTRIP_OK`",
-  "task": "TASK-028-GPT-MARKER-ROUNDTRIP-TEST",
+  "timestamp": "2026-07-02T08:54:05+08:00",
+  "state": "blocked",
+  "detail": "Task TASK-029-GPT-REPLY-ROUNDTRIP blocked by risk control",
+  "task": "TASK-029-GPT-REPLY-ROUNDTRIP",
   "interval_seconds": 600,
   "idle_poll_interval_seconds": 600,
   "active_poll_interval_seconds": 30,

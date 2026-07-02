@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-02T08:47:43+08:00",
-  "state": "IDLE",
+  "generated_at": "2026-07-02T08:54:05+08:00",
+  "state": "BLOCKED",
   "visible_scaffold": {
     "state": "SCAFFOLD_READY",
     "reason": "visible scaffold artifacts are present"
@@ -11,9 +11,9 @@
     "reason": "local deterministic dry-run artifact is present"
   },
   "adaptive_polling": {
-    "mode": "IDLE",
-    "interval_seconds": 600,
-    "consecutive_idle_checks": 110,
+    "mode": "WARM",
+    "interval_seconds": 60,
+    "consecutive_idle_checks": 3,
     "idle_backoff_after_checks": 5,
     "warm_remaining_checks": 0,
     "night_quiet_window": {
@@ -24,13 +24,13 @@
       "warm_poll_seconds": 600,
       "idle_poll_seconds": 1800
     },
-    "reason": "idle backoff after 110 checks",
-    "timestamp": "2026-07-02T08:39:50+08:00"
+    "reason": "idle check 3/5",
+    "timestamp": "2026-07-02T08:53:00+08:00"
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "GPT_HANDSHAKE_OK",
-  "latest_commit": "cb9754a 2026-07-02 Queue GPT marker roundtrip test",
-  "last_worker_check": "2026-07-02T08:47:43+08:00 / completed / TASK-028-GPT-MARKER-ROUNDTRIP-TEST",
+  "latest_status": "DECISION_REQUIRED",
+  "latest_commit": "5222f6b 2026-07-02 Append GPT reply roundtrip task",
+  "last_worker_check": "2026-07-02T08:54:05+08:00 / blocked / TASK-029-GPT-REPLY-ROUNDTRIP",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {
     "idle_seconds": 600,
@@ -53,10 +53,20 @@
     "result": "GPT_CODEX_MARKER_ROUNDTRIP_OK; GPT handshake completed by local worker",
     "safety": "repository_status_only"
   },
-  "latest_failed_or_blocked_task": null,
-  "decision_required": {
-    "has_unresolved": false,
-    "items": []
+  "latest_failed_or_blocked_task": {
+    "id": "TASK-029-GPT-REPLY-ROUNDTRIP",
+    "status": "decision_required",
+    "type": "handshake",
+    "title": "GPT reply roundtrip to Codex",
+    "request": "Repository-status-only interactive test. Confirm GPT saw Codex's 2026-07-02 ping in `GPT_INTERACTION_TEST.md` and is replying through `TASK_QUEUE.md`. Include marker `GPT_REPLY_RECEIVED_20260702_OK`. Do not call brokers, do not connect trading accounts, do not place or cancel orders, do not move funds, do not read or expose secrets, and do not use danger-full-access.",
+    "result": "blocked by risk control",
+    "safety": "repository_status_only"
   },
-  "next_action": "ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。"
+  "decision_required": {
+    "has_unresolved": true,
+    "items": [
+      "Task TASK-029-GPT-REPLY-ROUNDTRIP contains a blocked trading/fund/secret/deletion/danger risk"
+    ]
+  },
+  "next_action": "人工处理 DECISION_REQUIRED.md 中未解决事项，然后重新刷新状态。"
 }

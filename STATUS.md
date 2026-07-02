@@ -1714,3 +1714,10 @@ Status: `GPT_HANDSHAKE_OK`
 
 - Detail: Task TASK-028-GPT-MARKER-ROUNDTRIP-TEST completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working; marker `GPT_CODEX_MARKER_ROUNDTRIP_OK`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-07-02 08:54:05 +0800
+
+Status: `DECISION_REQUIRED`
+
+- Detail: Task TASK-029-GPT-REPLY-ROUNDTRIP blocked by risk control
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

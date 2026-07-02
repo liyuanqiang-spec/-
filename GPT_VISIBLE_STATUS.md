@@ -1,24 +1,24 @@
 # GPT Visible Status
 
-- Generated at: `2026-07-02T08:47:43+08:00`
-- Status: `IDLE`
+- Generated at: `2026-07-02T08:54:05+08:00`
+- Status: `BLOCKED`
 - Visible scaffold: `SCAFFOLD_READY`
 - Local review trigger: `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`
 - Local review input: `GPT_LOCAL_REVIEW_INPUT.md`
-- Worker mode: `IDLE`
-- Current poll interval: `600s`
-- Consecutive idle checks: `110`
-- Polling reason: idle backoff after 110 checks
+- Worker mode: `WARM`
+- Current poll interval: `60s`
+- Consecutive idle checks: `3`
+- Polling reason: idle check 3/5
 - Night quiet window: `22:00-08:00`, active `False`, warm `600s`, idle `1800s`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Current task: none
 - Latest completed task: TASK-028-GPT-MARKER-ROUNDTRIP-TEST (completed) - GPT marker roundtrip smoke test | GPT_CODEX_MARKER_ROUNDTRIP_OK; GPT handshake completed by local worker
-- Decision required: none
-- Latest status marker: `GPT_HANDSHAKE_OK`
-- Last worker check: 2026-07-02T08:47:43+08:00 / completed / TASK-028-GPT-MARKER-ROUNDTRIP-TEST
-- Latest commit: cb9754a 2026-07-02 Queue GPT marker roundtrip test
+- Decision required: yes - Task TASK-029-GPT-REPLY-ROUNDTRIP contains a blocked trading/fund/secret/deletion/danger risk
+- Latest status marker: `DECISION_REQUIRED`
+- Last worker check: 2026-07-02T08:54:05+08:00 / blocked / TASK-029-GPT-REPLY-ROUNDTRIP
+- Latest commit: 5222f6b 2026-07-02 Append GPT reply roundtrip task
 - Worker poll interval: active 30s, warm 60s, idle 600s
-- Next action: ChatGPT 可以向 TASK_QUEUE.md 写入下一项安全任务。
+- Next action: 人工处理 DECISION_REQUIRED.md 中未解决事项，然后重新刷新状态。
 
 ## ChatGPT Supervision Contract
 
