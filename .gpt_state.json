@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-01T14:15:05+08:00",
+  "generated_at": "2026-07-02T08:46:07+08:00",
   "state": "IDLE",
   "visible_scaffold": {
     "state": "SCAFFOLD_READY",
@@ -11,11 +11,11 @@
     "reason": "local deterministic dry-run artifact is present"
   },
   "adaptive_polling": {
-    "mode": "WARM",
-    "interval_seconds": 60,
-    "consecutive_idle_checks": 0,
+    "mode": "IDLE",
+    "interval_seconds": 600,
+    "consecutive_idle_checks": 110,
     "idle_backoff_after_checks": 5,
-    "warm_remaining_checks": 3,
+    "warm_remaining_checks": 0,
     "night_quiet_window": {
       "enabled": true,
       "active": false,
@@ -24,13 +24,13 @@
       "warm_poll_seconds": 600,
       "idle_poll_seconds": 1800
     },
-    "reason": "recent worker activity: blocked",
-    "timestamp": "2026-07-01T14:13:54+08:00"
+    "reason": "idle backoff after 110 checks",
+    "timestamp": "2026-07-02T08:39:50+08:00"
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "BLOCKED_PULL",
-  "latest_commit": "70680e8 2026-06-29 Resolve local worker primary route status",
-  "last_worker_check": "2026-07-01T14:15:05+08:00 / blocked",
+  "latest_status": "GPT_HANDSHAKE_OK",
+  "latest_commit": "ea58b19 2026-07-02 Queue GPT Codex handshake test",
+  "last_worker_check": "2026-07-02T08:46:07+08:00 / completed / TASK-027-GPT-CODEX-HANDSHAKE-TEST",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {
     "idle_seconds": 600,
@@ -45,12 +45,12 @@
   "first_running_task": null,
   "first_pending_task": null,
   "latest_completed_task": {
-    "id": "TASK-026A-LOCAL-WORKER-PRIMARY-READY",
+    "id": "TASK-027-GPT-CODEX-HANDSHAKE-TEST",
     "status": "completed",
-    "type": "repo_status_setup",
-    "title": "Local worker primary route ready",
-    "request": "Repository-status update. Set the current operating route to the Mac mini worker. Keep the hosted route parked for later. Refresh visible files so the owner can see the current route and next safe action.",
-    "result": "LOCAL_WORKER_PRIMARY_ROUTE_READY",
+    "type": "status_check",
+    "title": "GPT to Codex interaction smoke test",
+    "request": "Confirm that a GPT-authored repository task can be pulled and completed by the local Mac mini Codex worker. Update visible status files with marker `GPT_CODEX_INTERACTION_TEST_OK`. Keep PHASE_1_SIMULATION_ONLY.",
+    "result": "GPT handshake completed by local worker",
     "safety": "repository_status_only"
   },
   "latest_failed_or_blocked_task": null,

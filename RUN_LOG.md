@@ -1276,3 +1276,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: blocked
 - Detail: worker sync failed at pull stage
+
+## 2026-07-02 08:46:07 +0800
+
+- Event: gpt_handshake
+- Detail: Task TASK-027-GPT-CODEX-HANDSHAKE-TEST completed by local worker without codex exec; safety mode remained PHASE_1_SIMULATION_ONLY

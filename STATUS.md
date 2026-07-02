@@ -1700,3 +1700,10 @@ Status: `BLOCKED_PULL`
 
 - Detail: git pull failed
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-07-02 08:46:07 +0800
+
+Status: `GPT_HANDSHAKE_OK`
+
+- Detail: Task TASK-027-GPT-CODEX-HANDSHAKE-TEST completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

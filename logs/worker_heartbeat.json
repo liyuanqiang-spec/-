@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-07-01T14:15:05+08:00",
-  "state": "blocked",
-  "detail": "git pull failed",
-  "task": "none",
+  "timestamp": "2026-07-02T08:46:07+08:00",
+  "state": "completed",
+  "detail": "Task TASK-027-GPT-CODEX-HANDSHAKE-TEST completed by local worker",
+  "task": "TASK-027-GPT-CODEX-HANDSHAKE-TEST",
   "interval_seconds": 600,
   "idle_poll_interval_seconds": 600,
   "active_poll_interval_seconds": 30,
