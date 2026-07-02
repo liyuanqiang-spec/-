@@ -1800,3 +1800,22 @@ Status: `WORKER_RUNNING`
 
 - Detail: Task TASK-032A-IWENCAI-SKILLHUB-PACKAGE started
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-07-02 15:18:42 +0800
+
+Status: `IWENCAI_SKILLHUB_SETUP_BLOCKED_20260702`
+
+- Task: `TASK-032A-IWENCAI-SKILLHUB-PACKAGE`
+- Result: SkillHub CLI was not available locally, and the CLI-only setup endpoint was not reachable from this worker session.
+- Output written: `skillhub_export/iwencai_skillhub_install_report.md`
+- Output not produced: `skillhub_export/iwencai_skillhub_skills_export.tar.gz`
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+- Blocked actions avoided: no real trading account connection, no real order placement or cancellation, no fund transfer, no original data deletion, no secret exposure, no danger-full-access.
+- Confirmation required: no.
+
+## Worker Update 2026-07-02 15:20:12 +0800
+
+Status: `WORKER_COMPLETED`
+
+- Detail: Task TASK-032A-IWENCAI-SKILLHUB-PACKAGE completed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`

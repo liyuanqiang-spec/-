@@ -139,10 +139,12 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Result: superseded by TASK-032A after local guard wording block.
 
 ### TASK-032A-IWENCAI-SKILLHUB-PACKAGE
-- Status: running
+- Status: completed
 - Type: local_package_setup
 - Title: Iwencai SkillHub package export
 - Request: Execute `TASK_QUEUE/CODEX_TASK_iwencai_skillhub_volatility_safe.md`. Prepare SkillHub CLI if missing, add the SkillHub skill named `波动率策略`, then create `skillhub_export/iwencai_skillhub_skills_export.tar.gz` and `skillhub_export/iwencai_skillhub_install_report.md`. Keep `PHASE_1_SIMULATION_ONLY`. Stop after one clear block marker if the endpoint cannot be reached.
 - Expected output: commit and push the package file, the report file, and visible status updates. Include `IWENCAI_SKILLHUB_EXPORT_OK_20260702` or `IWENCAI_SKILLHUB_SETUP_BLOCKED_20260702`.
 - Safety: local_package_setup_only
 - Created: 2026-07-02
+- Last update: updated by worker
+- Result: codex exec completed

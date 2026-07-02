@@ -1,12 +1,12 @@
 # GPT Local Review Input
 
 - Marker: `LOCAL_REVIEW_TRIGGER_DRY_RUN_READY`
-- Generated at: `2026-07-02T09:09:31+08:00`
+- Generated at: `2026-07-02T15:20:12+08:00`
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
 - Scope: repository-local deterministic dry run only.
 - Network calls: none.
 - Task creation: disabled; this file does not append or propose queue mutations.
-- Trigger: Worker processed TASK-031-ASK-SOFTWARE-ITERATION-STATUS
+- Trigger: Worker processed TASK-032A-IWENCAI-SKILLHUB-PACKAGE
 
 ## Compact Worker State
 
@@ -14,22 +14,22 @@
 - Visible scaffold: `SCAFFOLD_READY`
 - Worker mode: `WARM`
 - Current task: none
-- Latest completed task: TASK-031-ASK-SOFTWARE-ITERATION-STATUS (completed) - Ask Codex for software iteration progress [SOFTWARE_ITERATION_STATUS_20260702] | codex exec completed
+- Latest completed task: TASK-032A-IWENCAI-SKILLHUB-PACKAGE (completed) - Iwencai SkillHub package export | codex exec completed
 - Decision required: none
 - Latest status marker: `WORKER_COMPLETED`
 
 ## Recent Run Events
 
-- 2026-07-02 09:01:04 +0800 / gpt_handshake / Task TASK-030-GPT-CODEX-RETEST completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working; marker `GPT_CODEX_RETEST_20260702_OK`; safety mode remained PHASE_1_SIMULATION_ONLY
-- 2026-07-02 09:02:35 +0800 / started / Task TASK-031-ASK-SOFTWARE-ITERATION-STATUS started
-- 2026-07-02 09:02:38 +0800 / attempt / Task TASK-031-ASK-SOFTWARE-ITERATION-STATUS codex exec attempt 1/3
-- 2026-07-02 09:04:13 +0800 / software_iteration_status / TASK-031 completed with marker `SOFTWARE_ITERATION_STATUS_20260702`; sample/offline-replay software is working, live trading remains blocked, 35 tests passed, compile check passed, worker health PASS,...
-- 2026-07-02 09:09:31 +0800 / completed / Task TASK-031-ASK-SOFTWARE-ITERATION-STATUS completed
+- 2026-07-02 15:09:35 +0800 / blocked / Task TASK-032-IWENCAI-SKILLHUB-VOLATILITY blocked by risk control
+- 2026-07-02 15:17:00 +0800 / started / Task TASK-032A-IWENCAI-SKILLHUB-PACKAGE started
+- 2026-07-02 15:17:06 +0800 / attempt / Task TASK-032A-IWENCAI-SKILLHUB-PACKAGE codex exec attempt 1/3
+- 2026-07-02 15:18:42 +0800 / skillhub_setup_blocked / TASK-032A-IWENCAI-SKILLHUB-PACKAGE wrote `skillhub_export/iwencai_skillhub_install_report.md` with marker `IWENCAI_SKILLHUB_SETUP_BLOCKED_20260702`; skillhub CLI was missing and the CLI-only setup endpoin...
+- 2026-07-02 15:20:12 +0800 / completed / Task TASK-032A-IWENCAI-SKILLHUB-PACKAGE completed
 
 ## Review Packet Summary
 
 - Status: IDLE
-- Latest completed task: TASK-031-ASK-SOFTWARE-ITERATION-STATUS (completed) - Ask Codex for software iteration progress [SOFTWARE_ITERATION_STATUS_20260702] | codex exec completed
+- Latest completed task: TASK-032A-IWENCAI-SKILLHUB-PACKAGE (completed) - Iwencai SkillHub package export | codex exec completed
 
 ## Inputs Used
 

@@ -1351,3 +1351,23 @@ This file records safe worker runs and Codex execution events.
 
 - Event: started
 - Detail: Task TASK-032A-IWENCAI-SKILLHUB-PACKAGE started
+
+## 2026-07-02 15:17:06 +0800
+
+- Event: attempt
+- Detail: Task TASK-032A-IWENCAI-SKILLHUB-PACKAGE codex exec attempt 1/3
+
+## 2026-07-02 15:18:42 +0800
+
+- Event: skillhub_setup_blocked
+- Detail: TASK-032A-IWENCAI-SKILLHUB-PACKAGE wrote `skillhub_export/iwencai_skillhub_install_report.md` with marker `IWENCAI_SKILLHUB_SETUP_BLOCKED_20260702`; skillhub CLI was missing and the CLI-only setup endpoint was not reachable from this worker session. No tar.gz export was produced. Safety mode remained PHASE_1_SIMULATION_ONLY.
+
+## 2026-07-02 15:20:12 +0800
+
+- Event: completed
+- Detail: Task TASK-032A-IWENCAI-SKILLHUB-PACKAGE completed
+
+## 2026-07-02 15:20:12 +0800
+
+- Event: local_review_trigger_dry_run
+- Detail: LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for Worker processed TASK-032A-IWENCAI-SKILLHUB-PACKAGE
