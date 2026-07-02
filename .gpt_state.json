@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-07-02T15:09:35+08:00",
-  "state": "BLOCKED",
+  "generated_at": "2026-07-02T15:17:00+08:00",
+  "state": "WORKING",
   "visible_scaffold": {
-    "state": "SCAFFOLD_READY",
-    "reason": "visible scaffold artifacts are present"
+    "state": "WORKER_BUSY",
+    "reason": "current worker task is running"
   },
   "local_review_trigger": {
     "state": "LOCAL_REVIEW_TRIGGER_DRY_RUN_READY",
@@ -11,11 +11,11 @@
     "reason": "local deterministic dry-run artifact is present"
   },
   "adaptive_polling": {
-    "mode": "WARM",
-    "interval_seconds": 600,
-    "consecutive_idle_checks": 51,
+    "mode": "ACTIVE",
+    "interval_seconds": 60,
+    "consecutive_idle_checks": 0,
     "idle_backoff_after_checks": 5,
-    "warm_remaining_checks": 0,
+    "warm_remaining_checks": 3,
     "night_quiet_window": {
       "enabled": true,
       "active": false,
@@ -24,13 +24,13 @@
       "warm_poll_seconds": 600,
       "idle_poll_seconds": 1800
     },
-    "reason": "idle backoff after 51 checks",
-    "timestamp": "2026-07-02T14:59:31+08:00"
+    "reason": "unresolved blocker detected",
+    "timestamp": "2026-07-02T15:15:56+08:00"
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "DECISION_REQUIRED",
-  "latest_commit": "ddab9bf 2026-07-02 Queue Codex task for Iwencai volatility skill export",
-  "last_worker_check": "2026-07-02T15:09:35+08:00 / blocked / TASK-032-IWENCAI-SKILLHUB-VOLATILITY",
+  "latest_status": "WORKER_RUNNING",
+  "latest_commit": "1d20551 2026-07-02 Resolve TASK-032 wording decision after safe retry",
+  "last_worker_check": "2026-07-02T15:17:00+08:00 / running / TASK-032A-IWENCAI-SKILLHUB-PACKAGE",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {
     "idle_seconds": 600,
@@ -41,8 +41,24 @@
     "night_warm_seconds": 600,
     "night_idle_seconds": 1800
   },
-  "current_task": null,
-  "first_running_task": null,
+  "current_task": {
+    "id": "TASK-032A-IWENCAI-SKILLHUB-PACKAGE",
+    "status": "running",
+    "type": "local_package_setup",
+    "title": "Iwencai SkillHub package export",
+    "request": "Execute `TASK_QUEUE/CODEX_TASK_iwencai_skillhub_volatility_safe.md`. Prepare SkillHub CLI if missing, add the SkillHub skill named `波动率策略`, then create `skillhub_export/iwencai_skillhub_skills_export.tar.gz` and `skillhub_export/iwencai_skillhub_install_report.md`. Keep `PHASE_1_SIMULATION_ONLY`. Stop after one clear block marker if the endpoint cannot be reached.",
+    "result": "",
+    "safety": "local_package_setup_only"
+  },
+  "first_running_task": {
+    "id": "TASK-032A-IWENCAI-SKILLHUB-PACKAGE",
+    "status": "running",
+    "type": "local_package_setup",
+    "title": "Iwencai SkillHub package export",
+    "request": "Execute `TASK_QUEUE/CODEX_TASK_iwencai_skillhub_volatility_safe.md`. Prepare SkillHub CLI if missing, add the SkillHub skill named `波动率策略`, then create `skillhub_export/iwencai_skillhub_skills_export.tar.gz` and `skillhub_export/iwencai_skillhub_install_report.md`. Keep `PHASE_1_SIMULATION_ONLY`. Stop after one clear block marker if the endpoint cannot be reached.",
+    "result": "",
+    "safety": "local_package_setup_only"
+  },
   "first_pending_task": null,
   "latest_completed_task": {
     "id": "TASK-031-ASK-SOFTWARE-ITERATION-STATUS",
@@ -53,20 +69,10 @@
     "result": "codex exec completed",
     "safety": "repository_status_only"
   },
-  "latest_failed_or_blocked_task": {
-    "id": "TASK-032-IWENCAI-SKILLHUB-VOLATILITY",
-    "status": "decision_required",
-    "type": "local_tool_install_export",
-    "title": "Install and export Iwencai SkillHub volatility strategy skill",
-    "request": "Execute the detailed task file `TASK_QUEUE/CODEX_TASK_iwencai_skillhub_volatility.md`. Install Iwencai SkillHub CLI-only if missing, install the SkillHub skill named `波动率策略`, export the installed skills directory to `skillhub_export/iwencai_skillhub_skills_export.tar.gz`, and write `skillhub_export/iwencai_skillhub_install_report.md`. Keep PHASE_1_SIMULATION_ONLY. Do not call brokers, do not connect trading accounts, do not place or cancel orders, do not move funds, do not read or expose secrets, do not log in to 同花顺/问财, and do not use danger-full-access. If network access is blocked, write a clear blocker marker instead of retrying indefinitely.",
-    "result": "",
-    "safety": "safe_local_cli_install_no_trading_no_secrets"
-  },
+  "latest_failed_or_blocked_task": null,
   "decision_required": {
-    "has_unresolved": true,
-    "items": [
-      "Task TASK-032-IWENCAI-SKILLHUB-VOLATILITY contains a blocked trading/fund/secret/deletion/danger risk"
-    ]
+    "has_unresolved": false,
+    "items": []
   },
-  "next_action": "人工处理 DECISION_REQUIRED.md 中未解决事项，然后重新刷新状态。"
+  "next_action": "等待当前任务完成；worker 会在完成、失败或阻塞后推送状态。"
 }

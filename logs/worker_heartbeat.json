@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-07-02T15:09:35+08:00",
-  "state": "blocked",
-  "detail": "Task TASK-032-IWENCAI-SKILLHUB-VOLATILITY blocked by risk control",
-  "task": "TASK-032-IWENCAI-SKILLHUB-VOLATILITY",
+  "timestamp": "2026-07-02T15:17:00+08:00",
+  "state": "running",
+  "detail": "Task TASK-032A-IWENCAI-SKILLHUB-PACKAGE started",
+  "task": "TASK-032A-IWENCAI-SKILLHUB-PACKAGE",
   "interval_seconds": 600,
   "idle_poll_interval_seconds": 600,
   "active_poll_interval_seconds": 30,
