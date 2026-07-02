@@ -147,4 +147,4 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Safety: local_package_setup_only
 - Created: 2026-07-02
 - Last update: updated by worker
-- Result: codex exec completed
+- Result: IWENCAI_SKILLHUB_SETUP_BLOCKED_20260702; Codex replied to GPT that SkillHub CLI was not available locally, the CLI-only setup endpoint was not reachable from this worker session, `skillhub_export/iwencai_skillhub_install_report.md` was written, and no tar.gz export was produced.
