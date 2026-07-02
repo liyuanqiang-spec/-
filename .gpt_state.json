@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-02T09:01:04+08:00",
+  "generated_at": "2026-07-02T09:01:18+08:00",
   "state": "IDLE",
   "visible_scaffold": {
     "state": "SCAFFOLD_READY",
@@ -29,7 +29,7 @@
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
   "latest_status": "GPT_HANDSHAKE_OK",
-  "latest_commit": "faa8e40 2026-07-02 Queue GPT Codex retest TASK-030",
+  "latest_commit": "9837049 2026-07-02 Worker completed GPT handshake TASK-030-GPT-CODEX-RETEST",
   "last_worker_check": "2026-07-02T09:01:04+08:00 / completed / TASK-030-GPT-CODEX-RETEST",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {

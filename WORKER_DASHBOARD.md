@@ -1,6 +1,6 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-07-02 09:01:04 +0800`
+Last dashboard update: `2026-07-02 09:01:18 +0800`
 
 | Item | Result |
 |---|---|
@@ -21,7 +21,7 @@ Last dashboard update: `2026-07-02 09:01:04 +0800`
 | Latest status | GPT_HANDSHAKE_OK |
 | Last worker check | 2026-07-02T09:01:04+08:00 / completed / TASK-030-GPT-CODEX-RETEST |
 | Latest report | REPORTS/first_complete_simulation_report.md |
-| Latest push/commit | faa8e40 2026-07-02 Queue GPT Codex retest TASK-030 |
+| Latest push/commit | 9837049 2026-07-02 Worker completed GPT handshake TASK-030-GPT-CODEX-RETEST |
 | Worker poll interval | active 30s, warm 60s, idle 600s |
 | Decision required | No unresolved item |
 | Safety mode | PHASE_1_SIMULATION_ONLY |
