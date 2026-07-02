@@ -76,3 +76,13 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Safety: repository_status_only
 - Created: 2026-06-29
 - Result: LOCAL_WORKER_PRIMARY_ROUTE_READY
+
+### TASK-027-GPT-CODEX-HANDSHAKE-TEST
+- Status: pending
+- Type: status_check
+- Title: GPT to Codex interaction smoke test
+- Request: Confirm that a GPT-authored repository task can be pulled and completed by the local Mac mini Codex worker. Update visible status files with marker `GPT_CODEX_INTERACTION_TEST_OK`. Keep PHASE_1_SIMULATION_ONLY.
+- Expected output: TASK_QUEUE.md marks this task completed, STATUS.md and RUN_LOG.md include `GPT_CODEX_INTERACTION_TEST_OK`, and GPT_VISIBLE_STATUS.md shows no decision required.
+- Safety: repository_status_only
+- Created: 2026-07-02
+- Result: waiting for local worker
