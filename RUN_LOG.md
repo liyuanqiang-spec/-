@@ -1291,3 +1291,13 @@ This file records safe worker runs and Codex execution events.
 
 - Event: blocked
 - Detail: Task TASK-029-GPT-REPLY-ROUNDTRIP blocked by risk control
+
+## 2026-07-02 08:55:13 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-02 08:55:47 +0800
+
+- Event: blocked
+- Detail: Task TASK-029-GPT-REPLY-ROUNDTRIP blocked by risk control

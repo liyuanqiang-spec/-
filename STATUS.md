@@ -1721,3 +1721,17 @@ Status: `DECISION_REQUIRED`
 
 - Detail: Task TASK-029-GPT-REPLY-ROUNDTRIP blocked by risk control
 - Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-07-02 08:55:13 +0800
+
+Status: `BLOCKED_PULL`
+
+- Detail: git pull failed
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
+
+## Worker Update 2026-07-02 08:55:47 +0800
+
+Status: `DECISION_REQUIRED`
+
+- Detail: Task TASK-029-GPT-REPLY-ROUNDTRIP blocked by risk control
+- Safety mode: `PHASE_1_SIMULATION_ONLY`
