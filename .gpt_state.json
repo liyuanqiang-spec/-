@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-02T08:58:40+08:00",
+  "generated_at": "2026-07-02T08:59:34+08:00",
   "state": "IDLE",
   "visible_scaffold": {
     "state": "SCAFFOLD_READY",
@@ -13,9 +13,9 @@
   "adaptive_polling": {
     "mode": "WARM",
     "interval_seconds": 60,
-    "consecutive_idle_checks": 3,
+    "consecutive_idle_checks": 0,
     "idle_backoff_after_checks": 5,
-    "warm_remaining_checks": 0,
+    "warm_remaining_checks": 3,
     "night_quiet_window": {
       "enabled": true,
       "active": false,
@@ -24,12 +24,12 @@
       "warm_poll_seconds": 600,
       "idle_poll_seconds": 1800
     },
-    "reason": "idle check 3/5",
-    "timestamp": "2026-07-02T08:58:23+08:00"
+    "reason": "recent worker activity: completed",
+    "timestamp": "2026-07-02T08:59:26+08:00"
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
   "latest_status": "GPT_HANDSHAKE_OK",
-  "latest_commit": "7ec6567 2026-07-02 Retry GPT reply with refreshed worker",
+  "latest_commit": "ec48cf9 2026-07-02 Worker completed GPT handshake TASK-029-GPT-REPLY-ROUNDTRIP",
   "last_worker_check": "2026-07-02T08:58:40+08:00 / completed / TASK-029-GPT-REPLY-ROUNDTRIP",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {

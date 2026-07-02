@@ -1,6 +1,6 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-07-02 08:58:40 +0800`
+Last dashboard update: `2026-07-02 08:59:34 +0800`
 
 | Item | Result |
 |---|---|
@@ -10,8 +10,8 @@ Last dashboard update: `2026-07-02 08:58:40 +0800`
 | Local review input | GPT_LOCAL_REVIEW_INPUT.md |
 | Worker mode | WARM |
 | Current poll interval | 60s |
-| Consecutive idle checks | 3 |
-| Polling reason | idle check 3/5 |
+| Consecutive idle checks | 0 |
+| Polling reason | recent worker activity: completed |
 | Night quiet window | 22:00-08:00 active=False |
 | Night poll interval | warm 600s, idle 1800s |
 | Current task | None |
@@ -21,7 +21,7 @@ Last dashboard update: `2026-07-02 08:58:40 +0800`
 | Latest status | GPT_HANDSHAKE_OK |
 | Last worker check | 2026-07-02T08:58:40+08:00 / completed / TASK-029-GPT-REPLY-ROUNDTRIP |
 | Latest report | REPORTS/first_complete_simulation_report.md |
-| Latest push/commit | 7ec6567 2026-07-02 Retry GPT reply with refreshed worker |
+| Latest push/commit | ec48cf9 2026-07-02 Worker completed GPT handshake TASK-029-GPT-REPLY-ROUNDTRIP |
 | Worker poll interval | active 30s, warm 60s, idle 600s |
 | Decision required | No unresolved item |
 | Safety mode | PHASE_1_SIMULATION_ONLY |
