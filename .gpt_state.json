@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-02T08:56:55+08:00",
+  "generated_at": "2026-07-02T08:58:40+08:00",
   "state": "IDLE",
   "visible_scaffold": {
     "state": "SCAFFOLD_READY",
@@ -13,9 +13,9 @@
   "adaptive_polling": {
     "mode": "WARM",
     "interval_seconds": 60,
-    "consecutive_idle_checks": 0,
+    "consecutive_idle_checks": 3,
     "idle_backoff_after_checks": 5,
-    "warm_remaining_checks": 3,
+    "warm_remaining_checks": 0,
     "night_quiet_window": {
       "enabled": true,
       "active": false,
@@ -24,13 +24,13 @@
       "warm_poll_seconds": 600,
       "idle_poll_seconds": 1800
     },
-    "reason": "unresolved blocker detected",
-    "timestamp": "2026-07-02T08:55:51+08:00"
+    "reason": "idle check 3/5",
+    "timestamp": "2026-07-02T08:58:23+08:00"
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "DECISION_REQUIRED",
-  "latest_commit": "0b13485 2026-07-02 Retry GPT reply task after false positive",
-  "last_worker_check": "2026-07-02T08:56:55+08:00 / blocked / TASK-029-GPT-REPLY-ROUNDTRIP",
+  "latest_status": "GPT_HANDSHAKE_OK",
+  "latest_commit": "7ec6567 2026-07-02 Retry GPT reply with refreshed worker",
+  "last_worker_check": "2026-07-02T08:58:40+08:00 / completed / TASK-029-GPT-REPLY-ROUNDTRIP",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {
     "idle_seconds": 600,
@@ -45,23 +45,15 @@
   "first_running_task": null,
   "first_pending_task": null,
   "latest_completed_task": {
-    "id": "TASK-028-GPT-MARKER-ROUNDTRIP-TEST",
-    "status": "completed",
-    "type": "status_check",
-    "title": "GPT marker roundtrip smoke test",
-    "request": "Confirm that the local Mac mini Codex worker preserves GPT-authored custom completion markers. Write marker `GPT_CODEX_MARKER_ROUNDTRIP_OK` into the completed task result and visible status updates. Keep PHASE_1_SIMULATION_ONLY.",
-    "result": "GPT_CODEX_MARKER_ROUNDTRIP_OK; GPT handshake completed by local worker",
-    "safety": "repository_status_only"
-  },
-  "latest_failed_or_blocked_task": {
     "id": "TASK-029-GPT-REPLY-ROUNDTRIP",
-    "status": "decision_required",
+    "status": "completed",
     "type": "handshake",
     "title": "GPT reply roundtrip to Codex",
     "request": "Repository-status-only interactive test. Confirm GPT saw Codex's 2026-07-02 ping in `GPT_INTERACTION_TEST.md` and is replying through `TASK_QUEUE.md`. Include marker `GPT_REPLY_RECEIVED_20260702_OK`. Do not call brokers, do not connect trading accounts, do not place or cancel orders, do not move funds, do not read or expose secrets, and do not use danger-full-access.",
-    "result": "blocked by risk control",
+    "result": "GPT_REPLY_RECEIVED_20260702_OK; GPT handshake completed by local worker",
     "safety": "repository_status_only"
   },
+  "latest_failed_or_blocked_task": null,
   "decision_required": {
     "has_unresolved": false,
     "items": []

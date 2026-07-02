@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-07-02T08:56:57+08:00",
-  "state": "locked",
-  "detail": "another worker run is active pid=43603",
-  "task": "none",
+  "timestamp": "2026-07-02T08:58:40+08:00",
+  "state": "completed",
+  "detail": "Task TASK-029-GPT-REPLY-ROUNDTRIP completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working; marker `GPT_REPLY_RECEIVED_20260702_OK`",
+  "task": "TASK-029-GPT-REPLY-ROUNDTRIP",
   "interval_seconds": 600,
   "idle_poll_interval_seconds": 600,
   "active_poll_interval_seconds": 30,

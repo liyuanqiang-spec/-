@@ -1,6 +1,6 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-07-02 08:56:55 +0800`
+Last dashboard update: `2026-07-02 08:58:40 +0800`
 
 | Item | Result |
 |---|---|
@@ -10,18 +10,18 @@ Last dashboard update: `2026-07-02 08:56:55 +0800`
 | Local review input | GPT_LOCAL_REVIEW_INPUT.md |
 | Worker mode | WARM |
 | Current poll interval | 60s |
-| Consecutive idle checks | 0 |
-| Polling reason | unresolved blocker detected |
+| Consecutive idle checks | 3 |
+| Polling reason | idle check 3/5 |
 | Night quiet window | 22:00-08:00 active=False |
 | Night poll interval | warm 600s, idle 1800s |
 | Current task | None |
 | First pending task | None |
-| Latest completed task | TASK-028-GPT-MARKER-ROUNDTRIP-TEST (completed) - GPT marker roundtrip smoke test / GPT_CODEX_MARKER_ROUNDTRIP_OK; GPT handshake completed by local worker |
-| Latest failed or blocked task | TASK-029-GPT-REPLY-ROUNDTRIP (decision_required) - GPT reply roundtrip to Codex / blocked by risk control |
-| Latest status | DECISION_REQUIRED |
-| Last worker check | 2026-07-02T08:56:55+08:00 / blocked / TASK-029-GPT-REPLY-ROUNDTRIP |
+| Latest completed task | TASK-029-GPT-REPLY-ROUNDTRIP (completed) - GPT reply roundtrip to Codex / GPT_REPLY_RECEIVED_20260702_OK; GPT handshake completed by local worker |
+| Latest failed or blocked task | None |
+| Latest status | GPT_HANDSHAKE_OK |
+| Last worker check | 2026-07-02T08:58:40+08:00 / completed / TASK-029-GPT-REPLY-ROUNDTRIP |
 | Latest report | REPORTS/first_complete_simulation_report.md |
-| Latest push/commit | 0b13485 2026-07-02 Retry GPT reply task after false positive |
+| Latest push/commit | 7ec6567 2026-07-02 Retry GPT reply with refreshed worker |
 | Worker poll interval | active 30s, warm 60s, idle 600s |
 | Decision required | No unresolved item |
 | Safety mode | PHASE_1_SIMULATION_ONLY |

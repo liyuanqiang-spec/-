@@ -1306,3 +1306,8 @@ This file records safe worker runs and Codex execution events.
 
 - Event: blocked
 - Detail: Task TASK-029-GPT-REPLY-ROUNDTRIP blocked by risk control
+
+## 2026-07-02 08:58:40 +0800
+
+- Event: gpt_handshake
+- Detail: Task TASK-029-GPT-REPLY-ROUNDTRIP completed by the Mac mini worker; GitHub queue -> worker -> GitHub status loop is working; marker `GPT_REPLY_RECEIVED_20260702_OK`; safety mode remained PHASE_1_SIMULATION_ONLY
