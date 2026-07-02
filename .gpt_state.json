@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T21:35:01+08:00",
+  "generated_at": "2026-07-01T14:15:05+08:00",
   "state": "IDLE",
   "visible_scaffold": {
     "state": "SCAFFOLD_READY",
@@ -24,13 +24,13 @@
       "warm_poll_seconds": 600,
       "idle_poll_seconds": 1800
     },
-    "reason": "unresolved blocker detected",
-    "timestamp": "2026-06-29T21:31:37+08:00"
+    "reason": "recent worker activity: blocked",
+    "timestamp": "2026-07-01T14:13:54+08:00"
   },
   "safety_mode": "PHASE_1_SIMULATION_ONLY",
-  "latest_status": "LOCAL_WORKER_PRIMARY_ROUTE_READY",
-  "latest_commit": "2267234 2026-06-29 Block unsafe worker task TASK-026-LOCAL-WORKER-PRIMARY-ROUTE",
-  "last_worker_check": "2026-06-29T21:11:10+08:00 / blocked / TASK-026-LOCAL-WORKER-PRIMARY-ROUTE",
+  "latest_status": "BLOCKED_PULL",
+  "latest_commit": "70680e8 2026-06-29 Resolve local worker primary route status",
+  "last_worker_check": "2026-07-01T14:15:05+08:00 / blocked",
   "latest_report": "REPORTS/first_complete_simulation_report.md",
   "worker_poll_intervals": {
     "idle_seconds": 600,

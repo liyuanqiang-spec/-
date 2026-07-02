@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-06-29T21:11:10+08:00",
+  "timestamp": "2026-07-01T14:15:05+08:00",
   "state": "blocked",
-  "detail": "Task TASK-026-LOCAL-WORKER-PRIMARY-ROUTE blocked by risk control",
-  "task": "TASK-026-LOCAL-WORKER-PRIMARY-ROUTE",
+  "detail": "git pull failed",
+  "task": "none",
   "interval_seconds": 600,
   "idle_poll_interval_seconds": 600,
   "active_poll_interval_seconds": 30,

@@ -1,6 +1,6 @@
 # Worker Dashboard
 
-Last dashboard update: `2026-06-29 21:35:01 +0800`
+Last dashboard update: `2026-07-01 14:15:05 +0800`
 
 | Item | Result |
 |---|---|
@@ -11,17 +11,17 @@ Last dashboard update: `2026-06-29 21:35:01 +0800`
 | Worker mode | WARM |
 | Current poll interval | 60s |
 | Consecutive idle checks | 0 |
-| Polling reason | unresolved blocker detected |
+| Polling reason | recent worker activity: blocked |
 | Night quiet window | 22:00-08:00 active=False |
 | Night poll interval | warm 600s, idle 1800s |
 | Current task | None |
 | First pending task | None |
 | Latest completed task | TASK-026A-LOCAL-WORKER-PRIMARY-READY (completed) - Local worker primary route ready / LOCAL_WORKER_PRIMARY_ROUTE_READY |
 | Latest failed or blocked task | None |
-| Latest status | LOCAL_WORKER_PRIMARY_ROUTE_READY |
-| Last worker check | 2026-06-29T21:11:10+08:00 / blocked / TASK-026-LOCAL-WORKER-PRIMARY-ROUTE |
+| Latest status | BLOCKED_PULL |
+| Last worker check | 2026-07-01T14:15:05+08:00 / blocked |
 | Latest report | REPORTS/first_complete_simulation_report.md |
-| Latest push/commit | 2267234 2026-06-29 Block unsafe worker task TASK-026-LOCAL-WORKER-PRIMARY-ROUTE |
+| Latest push/commit | 70680e8 2026-06-29 Resolve local worker primary route status |
 | Worker poll interval | active 30s, warm 60s, idle 600s |
 | Decision required | No unresolved item |
 | Safety mode | PHASE_1_SIMULATION_ONLY |

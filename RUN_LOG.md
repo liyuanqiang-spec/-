@@ -801,3 +801,478 @@ This file records safe worker runs and Codex execution events.
 
 - Event: local_worker_primary_route_ready
 - Detail: Replaced TASK-026 with clean repository-status task TASK-026A. Local Mac mini worker is the primary route; hosted route is parked.
+
+## 2026-07-01 12:20:21 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:21:33 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:22:46 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:23:59 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:25:12 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:26:25 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:27:41 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:28:56 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:30:08 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:31:21 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:32:34 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:33:47 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:35:00 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:36:13 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:37:27 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:38:39 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:39:51 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:41:04 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:42:16 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:43:29 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:44:41 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:45:56 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:47:12 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:48:27 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:49:40 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:50:52 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:52:04 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:53:17 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:54:29 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:55:41 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:57:02 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:58:15 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 12:59:26 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:00:39 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:01:52 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:03:05 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:04:18 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:05:32 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:06:46 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:07:58 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:09:11 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:10:24 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:11:37 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:12:50 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:14:03 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:15:16 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:16:29 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:17:44 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:18:56 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:20:09 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:21:21 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:22:33 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:23:47 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:25:00 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:26:13 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:27:28 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:28:40 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:29:53 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:31:06 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:32:19 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:33:32 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:34:45 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:35:58 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:37:11 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:38:23 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:39:41 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:40:54 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:42:06 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:43:19 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:44:32 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:45:45 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:46:57 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:48:10 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:49:24 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:50:38 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:51:51 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:53:04 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:54:17 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:55:30 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:56:42 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:57:57 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 13:59:11 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 14:00:27 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 14:01:40 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 14:02:53 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 14:04:06 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 14:05:19 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 14:06:31 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 14:07:46 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 14:09:02 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 14:10:17 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 14:11:29 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 14:12:41 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 14:13:53 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
+
+## 2026-07-01 14:15:05 +0800
+
+- Event: blocked
+- Detail: worker sync failed at pull stage
