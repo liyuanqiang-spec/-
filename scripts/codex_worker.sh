@@ -591,7 +591,24 @@ PY
 has_hard_stop_risk() {
   local text
   text="$(cat "$TASK_FILE" 2>/dev/null || true)"
-  text="$(printf '%s' "$text" | sed -E 's/不真实下单//g; s/不真实撤单//g; s/不接实盘//g; s/禁止真实下单//g; s/禁止真实撤单//g; s/禁止连接真实交易账户//g; s/不连接真实交易账户//g; s/Do not place or cancel real orders//Ig; s/Do not connect real trading accounts//Ig; s/Do not use danger-full-access//Ig')"
+  text="$(printf '%s' "$text" | sed -E \
+    -e 's/不真实下单//g' \
+    -e 's/不真实撤单//g' \
+    -e 's/不接实盘//g' \
+    -e 's/禁止真实下单//g' \
+    -e 's/禁止真实撤单//g' \
+    -e 's/禁止连接真实交易账户//g' \
+    -e 's/不连接真实交易账户//g' \
+    -e 's/Do not call brokers//Ig' \
+    -e 's/Do not connect trading accounts//Ig' \
+    -e 's/Do not connect real trading accounts//Ig' \
+    -e 's/Do not place or cancel orders//Ig' \
+    -e 's/Do not place or cancel real orders//Ig' \
+    -e 's/Do not move funds//Ig' \
+    -e 's/Do not transfer funds//Ig' \
+    -e 's/Do not read or expose secrets//Ig' \
+    -e 's/Do not expose secrets//Ig' \
+    -e 's/Do not use danger-full-access//Ig')"
   grep -Eiq '真实交易|真实下单|实盘|撤单|资金划转|保证金划转|删除原始数据|删除raw|API Key|api key|password|密码|token|密钥|secret|danger-full-access|dangerously-bypass|real trading|real order|cancel order|fund transfer|delete raw data' <<< "$text"
 }
 

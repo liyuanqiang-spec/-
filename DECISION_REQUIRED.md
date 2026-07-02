@@ -179,6 +179,8 @@ No current user action required for normal safe GitHub status-file supervision.
 
 - Item: Task TASK-029-GPT-REPLY-ROUNDTRIP contains a blocked trading/fund/secret/deletion/danger risk
 - Current action: worker stopped before execution
+- Current action: false-positive fixed; task restored to pending for retry.
+- Resolution: GPT reply was repository-status-only. The blocked words appeared inside negative safety restrictions. Worker risk scanner now strips common negative English restrictions before matching.
 - A 推荐: keep simulation-only and rewrite the task as safe research work
 - B: explicitly authorize the blocked setup/action
 - C: cancel this task
