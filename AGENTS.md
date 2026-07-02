@@ -18,6 +18,7 @@ Allowed:
 - Backtesting
 - Simulated trading
 - Report generation
+- Safe local CLI/tool installation when explicitly queued by ChatGPT and unrelated to broker login, trading, funds, or secrets
 
 Forbidden:
 
@@ -28,6 +29,16 @@ Forbidden:
 - Deleting original/raw data
 - Leaking API keys, passwords, tokens, or secrets
 - Using `danger-full-access`
+
+## Reusable Skills
+
+Before executing ChatGPT-authored queue tasks, read any directly relevant project skill under `.codex/skills/`.
+
+For GPT-to-Codex task handoff, status checks, repository roundtrips, and local Mac mini worker communication, use:
+
+```text
+.codex/skills/gpt-codex-github-handoff/SKILL.md
+```
 
 ## Execution Rules
 
@@ -73,6 +84,7 @@ Rules:
 - `RUN_LOG.md` is the execution record.
 - `DECISION_REQUIRED.md` is the human-confirmation queue.
 - `RISK_CONTROL.md` is the binding risk boundary.
+- The established GPT-Codex GitHub route is recorded in `PROJECT_MEMORY.md` and `.codex/skills/gpt-codex-github-handoff/SKILL.md`.
 
 ## Stop Conditions
 
