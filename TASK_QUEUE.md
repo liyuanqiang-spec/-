@@ -148,3 +148,12 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Created: 2026-07-02
 - Last update: updated by worker
 - Result: IWENCAI_SKILLHUB_SETUP_BLOCKED_20260702; Codex replied to GPT that SkillHub CLI was not available locally, the CLI-only setup endpoint was not reachable from this worker session, `skillhub_export/iwencai_skillhub_install_report.md` was written, and no tar.gz export was produced.
+
+### TASK-033-SILVER-V1-STATUS-REFRESH
+- Status: pending
+- Type: repository_simulation_status
+- Title: Refresh silver option V1 baseline
+- Request: Use only the existing repository code and small repository fixtures. Refresh the owner-visible worker status, run the existing unit tests and compile checks, rerun the offline silver-option candidate scan and two-leg replay sample, and write `REPORTS/silver_option_v1_status_refresh.md`. The report must state what currently works, the sample-level result, the exact missing data fields, and the next single repository-local simulation task. Keep `PHASE_1_SIMULATION_ONLY`.
+- Expected output: `TASK_QUEUE.md`, `STATUS.md`, `RUN_LOG.md`, `WORKER_DASHBOARD.md`, and `GPT_VISIBLE_STATUS.md` are refreshed; `REPORTS/silver_option_v1_status_refresh.md` exists; include marker `SILVER_OPTION_V1_REFRESH_READY_20260907` or one precise repository-local block marker.
+- Safety: repository_only_simulation
+- Created: 2026-09-07
