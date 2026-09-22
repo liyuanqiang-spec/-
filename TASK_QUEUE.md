@@ -7,13 +7,14 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 ## Tasks
 
 ### TASK-035-NATIVE-DISPATCH-SMOKE
-- Status: pending
+- Status: running
 - Type: local_status_check
 - Title: Verify repaired native scheduled local dispatch
 - Request: This is a harmless acceptance probe explicitly created for the owner's request to repair task delivery. On the next native scheduled heartbeat, verify actual local macOS execution without collecting identifiers, write REPORTS/native_dispatch_smoke_20260922.md containing execution time, LOCAL_NATIVE_DISPATCH_PICKED_UP_20260922 and LOCAL_NATIVE_DISPATCH_ROUNDTRIP_OK_20260922, then update this task and visible status and push the sanitized result. Do not install software, run old TASK-033, or repeat TASK-034. Only mark completed after a real scheduled run; the interactive setup turn must leave this pending.
 - Expected output: A fresh scheduled local pickup and GitHub writeback receipt, proving more than configuration persistence.
 - Safety: repository_status_only
 - Created: 2026-09-22
+- Pickup: LOCAL_NATIVE_DISPATCH_PICKED_UP_20260922; 2026-09-22T12:03:33+08:00; native scheduled heartbeat github.
 
 ### TASK-034-LOCAL-LMSTUDIO-QWEN35
 - Status: completed
