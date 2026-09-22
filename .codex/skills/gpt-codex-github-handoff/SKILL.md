@@ -1,5 +1,12 @@
 # GPT-Codex GitHub Handoff Skill
 
+## 2026-09-22 live verification overrides historical claims
+
+The legacy GitHub queue worker is NOT currently installed or running on the local Mac mini. Its last repository heartbeat is 2026-07-02. The local project instructions designate the old TASK_QUEUE loop as legacy. Writing a queue file alone does not launch local Codex.
+
+TASK-034 has been explicitly taken over by the owner-authorized current local Codex task. Do not describe historical handshake success as current connectivity. Require a fresh task-specific pickup marker and an execution result. Pending without pickup means not started.
+
+
 ## Purpose
 
 This skill records the working communication route between ChatGPT and the local Mac mini Codex worker.
@@ -112,3 +119,6 @@ Use this skill when the owner says or implies:
 - "用之前测试过的链路"
 - "本地 worker"
 - "Mac mini worker"
+
+### Current supervision (2026-09-22)
+The native Codex heartbeat `GitHub 本机接单核验` is active every 10 minutes in the local takeover task. It detects newly queued tasks and missing/failed receipts, and stays quiet when unchanged. It is a monitor, NOT an unrestricted auto-executor. It does not revive the legacy shell worker or execute old TASK-033. A new task still needs a real local pickup; never say queued means running.
