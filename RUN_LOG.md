@@ -1389,3 +1389,7 @@ LOCAL_LLM_READY_20260922。本机 LM Studio 与指定 Qwen3.5-4B MLX 4bit 已安
 修复：用户再次明确要求“接收并执行”，因此原生 Codex 自动化 github 已由只核验提醒改为每 10 分钟领取、执行、回写授权范围内的新任务。保持旧 TASK-033 不执行、TASK-034 不重复安装，防止重复领取。普通 ChatGPT 聊天文字本身不会触发本机任务，必须成功写入 GitHub TASK_QUEUE.md。
 
 证据边界：自动化更新工具已确认 ACTIVE，配置已持久化。直接本机执行及 GitHub 回写已经实测；新版定时触发尚待下一次空闲调度核验，不能把配置保存冒充自动触发成功。
+
+## 2026-09-22T12:04:15+08:00 原生定时接单验收通过
+
+LOCAL_NATIVE_DISPATCH_ROUNDTRIP_OK_20260922。此次实际 heartbeat 自动领取 TASK-035，推送 running 后在本机完成只读检测并写回结果。已验证定时唤醒、队列领取、本机执行、GitHub 回执闭环。详见 REPORTS/native_dispatch_smoke_20260922.md。TASK-034 未重复安装，TASK-033 未执行。
