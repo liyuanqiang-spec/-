@@ -1823,3 +1823,7 @@ Status: `WORKER_COMPLETED`
 ## 2026-09-22 TASK-034 本机领取
 
 LOCAL_LLM_TASK_PICKED_UP_20260922。已在实际 Mac mini 上接手，体检为 M4 / 16GB / macOS 26.6.2，LM Studio 官方安装包下载中。旧 worker 服务及其支持目录不存在，最后仓库心跳为 2026-07-02；旧队列入队不能代表本机开始执行。
+
+## 2026-09-22 TASK-034 实测回执
+
+LOCAL_LLM_READY_20260922。本机 LM Studio 与指定 Qwen3.5-4B MLX 4bit 已安装、哈希验证并真实运行，正常中文约 36 Token/秒。两项行为测试通过，严格策略提取未通过；最终官方入口上下文回报 61952，4096 未保持，限制已在报告披露。旧 GitHub shell 接单器不在运行，原生 10 分钟核验仅监督，不代表自动执行新任务。详见 REPORTS/local_lmstudio_qwen35_20260922.md。

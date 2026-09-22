@@ -188,3 +188,11 @@ Status: `TASK_010_SYNCED_TASK_011_BLOCKED`
 - Visible state: `IDLE`
 - Current task: None
 - Decision required: none
+
+# TASK-034 部署与链路核验
+
+## 2026-09-22 TASK-034 实测回执
+
+LOCAL_LLM_READY_20260922。本机 LM Studio 与指定 Qwen3.5-4B MLX 4bit 已安装、哈希验证并真实运行，正常中文约 36 Token/秒。两项行为测试通过，严格策略提取未通过；最终官方入口上下文回报 61952，4096 未保持，限制已在报告披露。旧 GitHub shell 接单器不在运行，原生 10 分钟核验仅监督，不代表自动执行新任务。详见 REPORTS/local_lmstudio_qwen35_20260922.md。
+
+变更：任务状态、部署报告、通道文档与技能说明。验证：实际硬件、安装签名、权重哈希、运行参数及三次真实推理。无交易边界变更。开放问题：严格策略提取与最终上下文长度。下一步：在单独授权的后续任务里强化提取提示词并解决运行时参数问题。

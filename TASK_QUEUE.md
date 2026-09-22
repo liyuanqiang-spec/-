@@ -7,7 +7,7 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 ## Tasks
 
 ### TASK-034-LOCAL-LMSTUDIO-QWEN35
-- Status: running
+- Status: completed
 - Type: local_package_setup
 - Title: Mac mini preflight and LM Studio Qwen3.5-4B local deployment
 - Request: Execute `TASK_QUEUE/CODEX_TASK_034_local_lmstudio_qwen35_20260922.md` on the owner's actual local Mac mini. First inspect hardware and existing software, then install LM Studio and the exact MLX 4bit model if compatible and permitted, run the three local text tests, and return measured evidence. Preserve all existing sandbox and approval boundaries. Follow `RISK_CONTROL.md` and the detailed task hard stops. Keep `PHASE_1_SIMULATION_ONLY`.
@@ -15,7 +15,8 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Safety: local_package_setup_only
 - Priority: next pending task for the owner's current request; existing tasks remain unchanged.
 - Created: 2026-09-22
-- Dispatch state: LOCAL_LLM_TASK_PICKED_UP_20260922; current owner-authorized local Codex session took over. Legacy queue worker is absent; this is direct local pickup, not automatic dispatch.
+- Dispatch state: completed by owner-authorized local Codex takeover. Legacy worker remains retired.
+- Result: LOCAL_LLM_READY_20260922. LM Studio 0.4.25+1 and exact Qwen3.5-4B MLX 4bit run locally; about 36 tokens/s. Two behavior checks pass, strict extraction fails due to added sell/rebuy inference. Final official model context reports 61952 despite requested 4096. See REPORTS/local_lmstudio_qwen35_20260922.md.
 
 ### TASK-019A
 - Status: completed
