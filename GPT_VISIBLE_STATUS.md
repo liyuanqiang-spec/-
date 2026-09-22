@@ -28,3 +28,7 @@
 - ChatGPT writes safe work into `TASK_QUEUE.md`.
 - The Mac mini worker pulls `main`, executes safe repository work, refreshes status files, commits, and pushes back.
 - `DECISION_REQUIRED.md` is only for unresolved human decisions; resolved history must not change the visible state.
+
+## 2026-09-22 TASK-034 本机领取
+
+LOCAL_LLM_TASK_PICKED_UP_20260922。已在实际 Mac mini 上接手，体检为 M4 / 16GB / macOS 26.6.2，LM Studio 官方安装包下载中。旧 worker 服务及其支持目录不存在，最后仓库心跳为 2026-07-02；旧队列入队不能代表本机开始执行。

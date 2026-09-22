@@ -1371,3 +1371,7 @@ This file records safe worker runs and Codex execution events.
 
 - Event: local_review_trigger_dry_run
 - Detail: LOCAL_REVIEW_TRIGGER_DRY_RUN_READY before final worker commit for Worker processed TASK-032A-IWENCAI-SKILLHUB-PACKAGE
+
+## 2026-09-22 TASK-034 本机领取
+
+LOCAL_LLM_TASK_PICKED_UP_20260922。已在实际 Mac mini 上接手，体检为 M4 / 16GB / macOS 26.6.2，LM Studio 官方安装包下载中。旧 worker 服务及其支持目录不存在，最后仓库心跳为 2026-07-02；旧队列入队不能代表本机开始执行。

@@ -7,7 +7,7 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 ## Tasks
 
 ### TASK-034-LOCAL-LMSTUDIO-QWEN35
-- Status: pending
+- Status: running
 - Type: local_package_setup
 - Title: Mac mini preflight and LM Studio Qwen3.5-4B local deployment
 - Request: Execute `TASK_QUEUE/CODEX_TASK_034_local_lmstudio_qwen35_20260922.md` on the owner's actual local Mac mini. First inspect hardware and existing software, then install LM Studio and the exact MLX 4bit model if compatible and permitted, run the three local text tests, and return measured evidence. Preserve all existing sandbox and approval boundaries. Follow `RISK_CONTROL.md` and the detailed task hard stops. Keep `PHASE_1_SIMULATION_ONLY`.
@@ -15,7 +15,7 @@ Worker rule: execute the first task whose Status is `pending` and whose Safety i
 - Safety: local_package_setup_only
 - Priority: next pending task for the owner's current request; existing tasks remain unchanged.
 - Created: 2026-09-22
-- Dispatch state: queued by ChatGPT; local worker pickup and installation not yet verified.
+- Dispatch state: LOCAL_LLM_TASK_PICKED_UP_20260922; current owner-authorized local Codex session took over. Legacy queue worker is absent; this is direct local pickup, not automatic dispatch.
 
 ### TASK-019A
 - Status: completed
